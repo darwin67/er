@@ -10,13 +10,12 @@
 <link href='{{ "css/styles.css" | relURL }}' rel="stylesheet">
 
 <!-- Icon -->
-<link rel="icon" 
+<link rel="icon"
 {{ if .Site.Params.favicon }}
-  href="{{ .Site.Params.favicon | relURL }}" 
-{{ else }} 
+  href="{{ .Site.Params.favicon | relURL }}"
+{{ else }}
   href='{{ "/favicon.ico" | relURL }}'
 {{ end }}
 type="image/x-icon"/>
 
 <link href='{{ "/feed.xml" | relURL }}' rel="alternate" type="application/atom+xml" title="{{ .Site.Title }}" />
-{{ template "_internal/google_analytics_async.html" . }}
