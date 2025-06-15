@@ -1,22 +1,22 @@
 {{ define "main" }}
-<main class="center mv4 content-width ph3">
-  <div class="f3 fw6 heading-color heading-font post-title">{{ .Title }}</div>
-  <p class="silver f6 mt1 mb4 post-meta">
+<main class="mx-auto my-4 content-width px-3">
+  <div class="text-xl font-semibold heading-color font-sans post-title">{{ .Title }}</div>
+  <p class="text-gray-400 text-sm mt-1 mb-4 post-meta">
     {{ if not .Date.IsZero }}<time>{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
     {{ if or .Params.tags .Params.categories .Params.series }} | {{ end }}
     {{ if isset .Params "categories" }}
-    categories: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="link silver">{{ . }}</a> {{ end }} ]
+    categories: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
     {{ end }}
     {{ if isset .Params "tags" }}
-    tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="link silver">{{ . }}</a> {{ end }} ]
+    tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
     {{ end }}
   </p>
-  <div class="lh-copy post-content">{{ .Content }}</div>
+  <div class="leading-normal post-content prose">{{ .Content }}</div>
 </main>
 {{ partial "table-of-contents" . }}
 
 
-<div class="pagination tc tr-l db fixed-l bottom-2-l right-2-l mb3 mb0-l">
+<div class="pagination text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
   {{ partial "back-to-top.html" . }}<br>
   <p class="mb0 mt2">
   {{ with .PrevInSection }}{{ if . }}<a href="{{ .Permalink }}">prev post</a>{{ end }}{{ end }}

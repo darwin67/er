@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-body-text bg-background;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-main font-semibold tracking-normal;
+  }
+}
+
+@layer components {
+  .main-color {
+    @apply text-main;
+  }
+  .secondary-color {
+    @apply text-secondary;
+  }
+  .bg-main-color {
+    @apply bg-main text-white;
+  }
+  .heading-font, .global-font {
+    @apply font-sans;
+  }
+  .heading-color {
+    @apply text-heading-text;
+  }
+  .content-width {
+    @apply max-w-content;
+  }
+  
+  .post-content a, .list-pages a, .pagination a {
+    @apply border-b border-black/40 no-underline text-inherit;
+  }
+  
+  main a:hover, .list-pages a:hover, .pagination a:hover, #tag-cloud a:hover {
+    @apply border-b border-body-text text-body-text;
+  }
+  
+  pre {
+    @apply text-[0.9em] p-5 overflow-auto leading-[1.25em];
+  }
+  
+  p code {
+    @apply py-1 px-2 text-[0.9em] bg-[#f8f8f8];
+  }
+  
+  #tag-cloud {
+    @apply max-w-[250px];
+  }
+  
+  #contents-list > .toc-list {
+    @apply max-w-[250px] overflow-hidden fixed right-8;
+  }
+  
+  @media (min-width: 1200px) {
+    #contents-list > .toc-list, #tag-cloud {
+      @apply block top-[100px];
+    }
+    #tag-cloud {
+      @apply transition-opacity duration-500;
+    }
+  }
+  
+  @media (min-width: 1330px) {
+    #contents-list > .toc-list {
+      @apply max-w-[300px] right-12;
+    }
+  }
+  
+  #contents-list ol {
+    @apply list-none;
+  }
+  
+  figure {
+    @apply my-8 mx-4;
+  }
+  
+  img {
+    @apply block mx-auto shadow-md;
+  }
+  
+  figcaption {
+    @apply text-center mt-2;
+  }
+  
+  blockquote {
+    @apply border-l-4 border-secondary m-0 pl-4;
+  }
+  
+  blockquote p {
+    @apply text-[#666] mt-0 leading-normal italic;
+  }
+  
+  blockquote p > cite {
+    @apply uppercase normal-case tracking-wider text-sm block;
+  }
+  
+  table {
+    @apply text-sm border-collapse my-8 mx-auto p-0;
+  }
+  
+  table tr {
+    @apply border-t border-[#ccc] bg-white m-0 p-0;
+  }
+  
+  table tr:nth-child(2n) {
+    @apply bg-[#f8f8f8];
+  }
+  
+  table tr th[align="center"], table tr td[align="center"] {
+    @apply text-center;
+  }
+  
+  table tr th, table tr td {
+    @apply border border-[#ccc] text-left m-0 py-[6px] px-[13px];
+  }
+}

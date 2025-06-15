@@ -5,10 +5,36 @@ A configurable blog theme for Hugo, with elements inspired by [this blog](https:
 ## Features
 - produces an Atom feed at `feed.xml`(taken from [this discussion](https://github.com/comfusion/after-dark/issues/32)). It generates the latest 15 posts by default.
 - Open graph tags
-- tag and category pages
-- table of contents for your posts (from [tocbot](https://github.com/tscanlin/tocbot))
-- renders Math with KaTeX
-- tag cloud on big screens
+- Tag and category pages
+- Table of contents for your posts (from [tocbot](https://github.com/tscanlin/tocbot))
+- Renders Math with KaTeX
+- Tag cloud on big screens
+- Styled with TailwindCSS
+
+## Installation
+
+### Tailwind CSS
+
+The theme now uses TailwindCSS for styling. To set up the development environment:
+
+1. Navigate to the theme directory:
+   ```
+   cd themes/er
+   ```
+
+2. Install the dependencies:
+   ```
+   npm install
+   ```
+
+3. Build the CSS:
+   ```
+   # Development mode with watch
+   npm run dev
+   
+   # Production build
+   npm run build
+   ```
 
 ## Configurations
 
@@ -37,7 +63,7 @@ disableKinds = ['RSS']
 ```
 ### Customize the colors
 
-This theme uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables), and if you want to change the colours on this theme, you can override the `variables.css` in `layouts/partials/css`. This is loaded before the theme css. 
+This theme uses TailwindCSS for styling. You can customize the colors by editing the `tailwind.config.js` file in the theme directory. The main colors are defined in the `theme.extend.colors` section.
 
 ### Google analytics
 
@@ -63,6 +89,14 @@ Math rendering is off by default, can be turned on for individual posts or pages
 
 Tag cloud is shown by default. To disable, add `showTagCloud = false` under the `[params]` section, similar to `showtoc`. You can also configure the maximum number of tags you want to show in your tag cloud, using the `maxTags` key under `[params]`. This number is 50 by default. 
 
-### back to top button
+### Back to top button
 
-Back to top button is also shown by default. To disable, add `showScrollToTop = false` under `[params]`. 
+Back to top button is also shown by default. To disable, add `showScrollToTop = false` under `[params]`.
+
+## Development
+
+To modify the theme styles:
+
+1. Edit the files in `assets/css/` directory
+2. Run `npm run dev` to see your changes in real-time
+3. Run `npm run build` before deploying to production

@@ -1,11 +1,11 @@
-<nav class="{{ with .Site.Menus.main }}{{ if lt (len .) 3 }} flex {{ else }} flex-ns{{ end }}{{ end }} justify-between border-box pa3 pl3-l pr2-l mt1 mt0-ns" id="navbar">
+<nav class="{{ with .Site.Menus.main }}{{ if lt (len .) 3 }} flex {{ else }} md:flex{{ end }}{{ end }} justify-between box-border p-3 pl-3 lg:pl-3 pr-2 lg:pr-2 mt-1 md:mt-0" id="navbar">
   <div class="flex">
-    <a class="f4 fw6 ttu no-underline dim bg-main-color pv1 ph2 br2" id="site-title" href='{{ "" | relURL }}' title="Home">{{ .Site.Title }}</a>
+    <a class="text-lg font-semibold uppercase no-underline hover:opacity-80 bg-main-color py-1 px-2 rounded" id="site-title" href='{{ "" | relURL }}' title="Home">{{ .Site.Title }}</a>
   </div>
   {{ with .Site.Menus.main }}
-  <div class="{{ if lt (len . ) 3 }} flex-grow {{ else }} flex-ns mt2 mt0-ns{{ end }} pv1">
+  <div class="{{ if lt (len . ) 3 }} flex-grow {{ else }} md:flex mt-2 md:mt-0{{ end }} py-1">
     {{ range . }}
-      <a class="link dim dark-gray f6 dib mr2 mr3-l ttu tracked" href='{{.URL}}' title="{{ .Name }}">{{ .Name }}</a>
+      <a class="hover:opacity-80 text-gray-700 text-sm inline-block mr-2 lg:mr-3 uppercase tracking-wide" href='{{.URL}}' title="{{ .Name }}">{{ .Name }}</a>
     {{ end }}
   </div>
   {{ end }}

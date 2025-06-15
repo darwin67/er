@@ -1,14 +1,14 @@
 {{ define "main" }}
-<main class="center mv4 content-width ph3">
-  <h1 class="f2 fw6 heading-font">{{ .Title }}</h1>
+<main class="mx-auto my-4 content-width px-3">
+  <h1 class="text-2xl font-semibold font-sans">{{ .Title }}</h1>
   {{ .Content }}
   <ul class="list-pages">
     {{ range .Data.Pages }}
-      <li class="lh-copy"><a href="{{ .Permalink | relURL }}" class="link f5">{{ .Title }}</a> - <time>{{ .Date.Format "02 Jan 2006" }}</time></li>
+      <li class="leading-normal"><a href="{{ .Permalink | relURL }}" class="text-base">{{ .Title }}</a> - <time>{{ .Date.Format "02 Jan 2006" }}</time></li>
     {{ end }}
   </ul>
 </main>
-<div class="pagination tc db fixed-l bottom-2-l right-2-l mb3 mb0-l">
+<div class="pagination text-center block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
 {{ partial "back-to-top.html" . }}
 </div>
 {{ end }}
