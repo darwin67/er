@@ -1,23 +1,26 @@
 {
-  "name": "er-theme-tailwind",
+  "name": "er-theme",
   "version": "1.0.0",
-  "description": "Er theme with Tailwind CSS",
+  "description": "Er theme with CSS",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tailwindcss -i ./assets/css/input.css -o ./static/css/styles.css --watch",
-    "build": "npx tailwindcss -i ./assets/css/input.css -o ./static/css/styles.css --minify"
+    "dev:css": "npx @tailwindcss/cli -i ./assets/css/app.css -o ./assets/css/main.css --watch",
+    "dev:server": "hugo server --disableFastRender",
+    "build:css": "npx @tailwindcss/cli -i ./assets/css/app.css -o ./assets/css/main.css --minify",
+    "build": "npx run build:css && hugo --minify"
   },
   "keywords": [
     "hugo",
-    "theme",
-    "tailwind"
+    "theme"
   ],
   "author": "Darwin Wu",
   "license": "MIT",
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0"
-  }
+    "@tailwindcss/cli": "^4.0.12",
+    "@tailwindcss/typography": "^0.5.16",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4.0.12"
+  },
+  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a"
 }

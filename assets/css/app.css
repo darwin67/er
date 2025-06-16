@@ -1,0 +1,117 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+/* Base styles from tailwind.config.js */
+@theme {
+    --color-main: #8c6056;
+    --color-secondary: #afd5aa;
+    --color-body-text: #3d3d3d;
+    --color-heading-text: #383838;
+    --color-background: #fff;
+    --font-sans: "Source Sans Pro", sans-serif;
+    --max-width-content: 650px;
+}
+
+/* Layout */
+body {
+    font-family: var(--font-sans);
+    color: var(--color-body-text);
+    background-color: var(--color-background);
+}
+
+.content-wrapper {
+    max-width: var(--max-width-content);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-main);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+a:hover {
+    border-bottom: 1px solid #3d3d3d;
+    color: #3d3d3d;
+}
+
+/* Code blocks */
+pre {
+    font-size: 0.9em;
+    padding: 10px 20px;
+    line-height: 1.25em;
+    overflow-x: auto;
+}
+
+p code {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9em;
+    background-color: #f8f8f8;
+    border-radius: 0.25rem;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 0.25rem solid var(--color-secondary);
+    padding-left: 1rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Tables */
+table {
+    font-size: 14px;
+    margin: 2rem auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+
+th,
+td {
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+/* Utility classes for colors */
+.text-main {
+    color: var(--color-main);
+}
+.text-secondary {
+    color: var(--color-secondary);
+}
+.text-body {
+    color: var(--color-body-text);
+}
+.text-heading {
+    color: var(--color-heading-text);
+}
+.bg-main {
+    background-color: var(--color-main);
+}
+.bg-secondary {
+    background-color: var(--color-secondary);
+}
+.bg-body {
+    background-color: var(--color-body-text);
+}
+.bg-heading {
+    background-color: var(--color-heading-text);
+}
+.bg-background {
+    background-color: var(--color-background);
+}
