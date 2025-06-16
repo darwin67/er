@@ -11,7 +11,7 @@
 {{- $custom := resources.Get "css/custom.css" -}}
 
 {{- $css := slice $main $custom | resources.Concat "css/main.css" | resources.Minify -}}
-<link rel="preload" as="style" href="{{- $css.Permalink -}}" />
+<link rel="stylesheet" href="{{- $css.Permalink -}}" />
 
 <!-- Icon -->
 <link rel="icon"
