@@ -8,9 +8,9 @@
 
 <!-- CSS -->
 {{- $main := resources.Get "css/main.css" -}}
-{{- $app := resources.Get "css/app.css" -}}
+{{- $custom := resources.Get "css/custom.css" -}}
 
-{{- $css := slice $main $app | resources.Concat "css/main.css" | resources.Minify -}}
+{{- $css := slice $main $custom | resources.Concat "css/main.css" | resources.Minify -}}
 <link rel="preload styleheet" as="style" href="{{- $css.Permalink -}}" />
 
 <!-- Icon -->
