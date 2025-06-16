@@ -1,15 +1,15 @@
 {{ define "main" }}
-<main class="center mv4 content-width ph3">
+<main class="mx-auto my-4 max-w-[650px] px-3">
   {{ $type := .Type }}
-  <h1 class="f2 fw6 heading-font">{{ .Title }}</h1>
+  <h1 class="text-2xl font-semibold font-sans">{{ .Title }}</h1>
   {{ .Content }}
-  <ul class="list-pages list pl0">
+  <ul class="list-none p-0">
     {{ range $key, $value := .Data.Terms }}
-      <li class="lh-copy di bg-light-gray ph1"><a href="{{ $key | urlize }}" class="link f5">{{ $key }}&nbsp;({{ len $value }})</a></li>
+      <li class="leading-normal inline-block bg-gray-100 px-1"><a href="{{ $key | urlize }}" class="border-b border-black/40 no-underline text-sm hover:border-[#3d3d3d] hover:text-[#3d3d3d]">{{ $key }}&nbsp;({{ len $value }})</a></li>
     {{ end }}
   </ul>
 </main>
-<div class="pagination tc db fixed-l bottom-2-l right-2-l mb3 mb0-l">
+<div class="text-center block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
 {{ partial "back-to-top.html" . }}
 </div>
 {{ end }}
