@@ -5,7 +5,13 @@
 {{ hugo.Generator }}
 
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
-<link href='{{ "css/styles.css" | relURL }}' rel="stylesheet">
+
+<!-- CSS -->
+{{- $main := resources.Get "main.css" -}}
+{{- $app := resources.Get "app.css" -}}
+
+{{- $css := slice $main $app | resources.Concat "main.css" | minify -}}
+<link rel="preload styleheet" as="style" href="{{- $css.Permalink -}}" />
 
 <!-- Icon -->
 <link rel="icon"
