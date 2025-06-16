@@ -1,16 +1,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta content='text/html; charset=utf-8' http-equiv='content-type' />
-{{ partial "open_graph.html" . }}
-{{ hugo.Generator }}
 
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
 
 <!-- CSS -->
 {{- $main := resources.Get "css/main.css" -}}
 {{- $custom := resources.Get "css/custom.css" -}}
-
-{{- $css := slice $main $custom | resources.Concat "css/main.css" -}}
+{{- $css := slice $main $custom | resources.Concat "css/main.css" | resources.Minify -}}
 <link rel="stylesheet" href="{{- $css.Permalink -}}" />
 
 <!-- Icon -->
@@ -23,3 +20,6 @@
 type="image/x-icon"/>
 
 <link href='{{ "/feed.xml" | relURL }}' rel="alternate" type="application/atom+xml" title="{{ .Site.Title }}" />
+
+{{ hugo.Generator }}
+{{ partial "open_graph.html" . }}
