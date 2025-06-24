@@ -7,7 +7,7 @@
 <!-- CSS -->
 {{- $main := resources.Get "css/main.css" -}}
 {{- $custom := resources.Get "css/custom.css" -}}
-{{- $css := slice $main $custom | resources.Concat "css/main.css" | resources.Minify -}}
+{{- $css := slice $main $custom | resources.Concat "css/bundle.css" | resources.Minify -}}
 <link rel="stylesheet" href="{{- $css.Permalink -}}" />
 
 <!-- Icon -->
