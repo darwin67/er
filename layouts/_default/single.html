@@ -1,6 +1,7 @@
 {{ define "main" }}
-<main class="mx-auto my-4 max-w-[650px] px-3">
-  <div class="text-xl font-semibold text-[#383838] font-sans">{{ .Title }}</div>
+<main class="mx-auto my-4 max-w-2xl px-3">
+  <div class="text-2xl font-semibold text-[#383838] font-sans">{{ .Title }}</div>
+
   <p class="text-gray-400 text-sm mt-1 mb-4 post-meta">
     {{ if not .Date.IsZero }}<time>{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
     {{ if or .Params.tags .Params.categories .Params.series }} | {{ end }}
@@ -11,7 +12,7 @@
     tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
     {{ end }}
   </p>
-  <div class="leading-normal prose">{{ .Content }}</div>
+  <div class="leading-normal prose-lg">{{ .Content }}</div>
 </main>
 {{ partial "table-of-contents" . }}
 

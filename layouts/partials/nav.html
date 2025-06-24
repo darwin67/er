@@ -1,7 +1,15 @@
 <nav class="{{ with .Site.Menus.main }}{{ if lt (len .) 3 }} flex {{ else }} md:flex{{ end }}{{ end }} justify-between box-border p-3 pl-3 lg:pl-3 pr-2 lg:pr-2 mt-1 md:mt-0" id="navbar">
-  <div class="flex">
-    <a class="text-lg font-semibold uppercase no-underline hover:opacity-80 bg-[#8c6056] text-white py-1 px-2 rounded" id="site-title" href='{{ "" | relURL }}' title="Home">{{ .Site.Title }}</a>
+  <div class="flex text-white">
+    <a
+      id="site-title"
+      class="text-lg font-semibold uppercase no-underline hover:opacity-80 bg-[#8c6056] py-1 px-2 rounded text-white"
+      href='{{ "" | relURL }}'
+      title="Home"
+    >
+      {{ .Site.Title }}
+    </a>
   </div>
+
   {{ with .Site.Menus.main }}
   <div class="{{ if lt (len . ) 3 }} flex-grow {{ else }} md:flex mt-2 md:mt-0{{ end }} py-1">
     {{ range . }}
