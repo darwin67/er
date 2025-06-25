@@ -12,10 +12,9 @@
     tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
     {{ end }}
   </p>
-  <div class="leading-normal prose-lg">{{ .Content }}</div>
+  <div class="leading-normal prose-lg post-content">{{ .Content }}</div>
 </main>
 {{ partial "table-of-contents" . }}
-
 
 <div class="text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
   {{ partial "back-to-top.html" . }}<br>

@@ -1683,6 +1683,13 @@
       }
     }
   }
+  .hover\:text-white {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-white);
+      }
+    }
+  }
   .hover\:opacity-80 {
     &:hover {
       @media (hover: hover) {
