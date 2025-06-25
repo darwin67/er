@@ -1,5 +1,5 @@
  <!-- ignore empty links with + -->
-{{ $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content }}
+{{ $headers := findRE "<h[1-6].*?>(.|\n)+?</h[1-6]>" .Content }}
 <!-- at least one header to link to -->
 {{ $has_headers := ge (len $headers) 1 }}
 <!-- a post can explicitly disable Table of Contents with toc: false -->
