@@ -1,9 +1,9 @@
 {{ $maxtags := .Site.Params.maxTags | default 50 }}
 {{ if .Site.Params.showTagCloud | default true }}
-<div class="dn tr fixed right-2" id="tag-cloud">
-    tags <br>
+<div class="hidden text-right fixed right-8 top-[100px] max-w-[250px] lg:block transition-opacity duration-500" id="tag-cloud">
+    <div class="text-lg">tags</div>
     {{ range first $maxtags .Site.Taxonomies.tags.ByCount }}
-    <a class="silver no-underline" href="{{ "/tags/" | relLangURL }}{{ .Name | urlize }}">{{ .Name }}</a></li>
+    <a class="text-gray-400 no-underline hover:border-b hover:border-[#3d3d3d] hover:text-[#3d3d3d]" href="{{ "/tags/" | relLangURL }}{{ .Name | urlize }}">{{ .Name }}</a></li>
   {{ end }}
 </div>
 {{ end }}

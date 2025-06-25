@@ -3,13 +3,13 @@
 
 name = "Er"
 license = "MIT"
-licenselink = "https://github.com/lingxz/er/blob/master/LICENSE.md"
+licenselink = "https://github.com/darwin67/er/blob/master/LICENSE.md"
 description = "A clean Hugo theme for blogging"
-homepage = "http://github.com/lingxz/er"
+homepage = "http://github.com/darwin67/er"
 tags = ["responsive", "white", "blog"]
 features = ["responsive", "blog"]
-min_version = "0.57.0"
+min_version = "0.136.0"
 
 [author]
-  name = "Lingyi Hu"
-  homepage = "https://theconfused.me"
+  name = "Darwin Wu"
+  homepage = "https://darwindwu.com"

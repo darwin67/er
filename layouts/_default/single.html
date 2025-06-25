@@ -1,6 +1,7 @@
 {{ define "main" }}
-<main class="mx-auto my-4 content-width px-3">
-  <div class="text-xl font-semibold heading-color font-sans post-title">{{ .Title }}</div>
+<main class="mx-auto my-4 max-w-2xl">
+  <div class="text-3xl font-semibold text-[#383838] font-sans">{{ .Title }}</div>
+
   <p class="text-gray-400 text-sm mt-1 mb-4 post-meta">
     {{ if not .Date.IsZero }}<time>{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
     {{ if or .Params.tags .Params.categories .Params.series }} | {{ end }}
@@ -11,14 +12,13 @@
     tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
     {{ end }}
   </p>
-  <div class="leading-normal post-content prose">{{ .Content }}</div>
+  <div class="leading-normal prose-lg post-content">{{ .Content }}</div>
 </main>
 {{ partial "table-of-contents" . }}
 
-
-<div class="pagination text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
+<div class="text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
   {{ partial "back-to-top.html" . }}<br>
-  <p class="mb0 mt2">
+  <p class="mb-0 mt-2">
   {{ with .PrevInSection }}{{ if . }}<a href="{{ .Permalink }}">prev post</a>{{ end }}{{ end }}
   {{ with .NextInSection }}{{ if . }}<a href="{{ .Permalink }}">next post</a>{{ end }}{{ end }}
   </p>

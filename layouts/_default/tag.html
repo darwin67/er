@@ -1,14 +1,19 @@
 {{ define "main" }}
-<main class="center mv4 content-width ph3">
-  <h1 class="f2 fw6 heading-font"><span class="secondary-color">#</span> {{ .Data.Term }}</h1>
+<main class="mx-auto my-8 max-w-[650px]">
+  <h1 class="text-3xl font-semibold font-sans mb-5">
+    <span class="text-gray-400">#</span> {{ .Data.Term }}
+  </h1>
   {{ .Content }}
-  <ul class="list-pages">
+  <ul class="list-none">
     {{ range .Data.Pages }}
-      <li class="lh-copy"><a href="{{ .Permalink | relURL }}" class="link f5">{{ .Title }}</a> - <time>{{ .Date.Format "02 Jan 2006" }}</time></li>
+      <li class="leading-relaxed flex justify-between">
+        <a href="{{ .Permalink | relURL }}" class="no-underline text-base border-b border-black/40 text-inherit hover:border-[#3d3d3d] hover:text-[#3d3d3d]">{{ .Title }}</a>
+        <time>{{ .Date.Format "02 Jan 2006" }}</time>
+      </li>
     {{ end }}
   </ul>
 </main>
-<div class="pagination tc db fixed-l bottom-2-l right-2-l mb3 mb0-l">
+<div class="text-center block lg:fixed lg:bottom-8 lg:right-8 mb-4 lg:mb-0">
 {{ partial "back-to-top.html" . }}
 </div>
 {{ end }}
