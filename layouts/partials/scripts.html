@@ -5,6 +5,19 @@
 <script src="{{ "js/tocbot-4.4.2.min.js" | absURL }}"></script>
 <link rel="stylesheet" href="{{ "css/tocbot-4.4.2.css" | absURL }}">
 <style>.is-active-link::before { background-color: var(--secondary-color); }</style>
+
+<script type="text/javascript">
+if (document.getElementById("contents-list") !== null && document.getElementsByClassName("post-content").length !== 0) {
+  tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '#contents-list',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '.post-content',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h1, h2, h3, h4',
+  });
+}
+</script>
 {{ end }}
 {{ end }}
 
@@ -46,22 +59,6 @@ function topFunction() {
 }
 {{ end }}
 
-{{ if .Site.Params.showtoc | default true }}
-{{ $headers := findRE "<h[1-6].*?>(.|\n)+?</h[1-6]>" .Content }}
-{{ $has_headers := ge (len $headers) 1 }}
-{{ if and $has_headers (ne .Params.toc false) }}
-if (document.getElementById("contents-list") !== null && document.getElementsByClassName("post-content").length !== 0) {
-  tocbot.init({
-    // Where to render the table of contents.
-    tocSelector: '#contents-list',
-    // Where to grab the headings to build the table of contents.
-    contentSelector: '.post-content',
-    // Which headings to grab inside of the contentSelector element.
-    headingSelector: 'h1, h2, h3, h4',
-  });
-}
-{{ end }}
-{{ end }}
 </script>
 {{ end }}
 
