@@ -23,3 +23,4 @@ hugo.linux
 /.claude/
 
 /demo/public/
+/demo/.hugo_build.lock
