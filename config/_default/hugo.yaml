@@ -1,0 +1,12 @@
+enableRobotsTXT: true
+enableGitInfo: true
+paginate: 10
+summaryLength: 70
+
+build:
+  noJSConfigInAssets: true
+  writeStats: true
+
+params:
+  mainSections:
+    - posts

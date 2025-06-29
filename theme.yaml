@@ -1,0 +1,14 @@
+name: Er
+license: MIT
+licenseLink: https://github.com/darwin67/er/blob/main/LICENSE.md
+description: A clean Hugo theme for blogging
+homepage: https://github.com/darwin67/er
+tags:
+  - responsive
+  - white
+  - blog
+min_version: 0.136.0
+
+author:
+  name: Darwin Wu
+  homepage: https://darwindwu.com
