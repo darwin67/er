@@ -1,7 +1,6 @@
 title: "Er Demo"
 languageCode: "en-us"
-baseURL: "https://er.example"
-
-module:
-  imports:
-    - path: github.com/darwin67/er
+baseURL: "https://er-demo.pages.dev"
+# module:
+#   imports:
+#     - path: github.com/darwin67/er
