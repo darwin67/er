@@ -1,8 +1,10 @@
-# Er.
+# Hugo - Er theme
 
 Forked from https://github.com/lingxz/er.
 
 A configurable blog theme for Hugo, with elements inspired by [this blog](https://aranair.github.io/posts/).
+
+Checkout the [Demo](https://er-demo.pages.dev).
 
 ## Features
 - produces an Atom feed at `feed.xml`(taken from [this discussion](https://github.com/comfusion/after-dark/issues/32)). It generates the latest 15 posts by default.
