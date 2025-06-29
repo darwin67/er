@@ -6,7 +6,3 @@ summaryLength: 70
 build:
   noJSConfigInAssets: true
   writeStats: true
-
-params:
-  mainSections:
-    - posts
