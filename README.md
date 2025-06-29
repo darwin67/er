@@ -1,6 +1,10 @@
-# Er.
+# Hugo - Er theme
 
-A configurable blog theme for Hugo, with elements inspired by [this blog](https://aranair.github.io/posts/). 
+Forked from https://github.com/lingxz/er.
+
+A configurable blog theme for Hugo, with elements inspired by [this blog](https://aranair.github.io/posts/).
+
+Checkout the [Demo](https://er-demo.pages.dev).
 
 ## Features
 - produces an Atom feed at `feed.xml`(taken from [this discussion](https://github.com/comfusion/after-dark/issues/32)). It generates the latest 15 posts by default.
@@ -13,34 +17,24 @@ A configurable blog theme for Hugo, with elements inspired by [this blog](https:
 
 ## Installation
 
-### Tailwind CSS
+### Git submodule
 
-The theme now uses TailwindCSS for styling. To set up the development environment:
+```sh
+git submodule add git@github.com:darwin67/er.git themes/er
+git submodule update
+```
 
-1. Navigate to the theme directory:
-   ```
-   cd themes/er
-   ```
+### Hugo module
 
-2. Install the dependencies:
-   ```
-   npm install
-   ```
-
-3. Build the CSS:
-   ```
-   # Development mode with watch
-   npm run dev
-   
-   # Production build
-   npm run build
-   ```
+``` sh
+hugo mod get github.com/darwin67/er
+```
 
 ## Configurations
 
 ### Favicon
 
-You can put your favicon at `static/favicon.ico`, the theme will automatically look for it there. If you want to choose a different path, please set the `favicon` parameter in `[params]` in the config. 
+You can put your favicon at `static/favicon.ico`, the theme will automatically look for it there. If you want to choose a different path, please set the `favicon` parameter in `[params]` in the config.
 
 ### Atom feed
 
@@ -87,7 +81,7 @@ Math rendering is off by default, can be turned on for individual posts or pages
 
 ### Tag cloud
 
-Tag cloud is shown by default. To disable, add `showTagCloud = false` under the `[params]` section, similar to `showtoc`. You can also configure the maximum number of tags you want to show in your tag cloud, using the `maxTags` key under `[params]`. This number is 50 by default. 
+Tag cloud is shown by default. To disable, add `showTagCloud = false` under the `[params]` section, similar to `showtoc`. You can also configure the maximum number of tags you want to show in your tag cloud, using the `maxTags` key under `[params]`. This number is 50 by default.
 
 ### Back to top button
 
@@ -97,6 +91,5 @@ Back to top button is also shown by default. To disable, add `showScrollToTop = 
 
 To modify the theme styles:
 
-1. Edit the files in `assets/css/` directory
-2. Run `npm run dev` to see your changes in real-time
-3. Run `npm run build` before deploying to production
+1. Run `make dev` in the `demo` directory
+2. Run `npm run dev:css` to have the CSS generation live when changes are made to demo

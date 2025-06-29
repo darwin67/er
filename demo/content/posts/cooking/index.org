@@ -1,0 +1,59 @@
+#+TITLE: The Art of Simple Pasta: A Weekend Kitchen Adventure
+#+AUTHOR: Home Cook
+#+DATE: <2025-06-13 Fri>
+#+TAGS[]: cooking pasta italian comfort-food
+
+* Introduction
+
+There's something magical about the simplicity of a perfectly cooked pasta dish. Today, I'm sharing my go-to recipe for /Aglio e Olio/ - a classic Italian pasta that proves you don't need many ingredients to create something extraordinary.
+
+[[ingredients.jpg]]
+
+* Ingredients
+
+- 400g spaghetti
+- 6 cloves garlic, thinly sliced
+- 1/2 cup extra virgin olive oil
+- 1 tsp red pepper flakes
+- Fresh parsley, chopped
+- Parmigiano-Reggiano cheese
+- Sea salt and black pepper
+
+* The Cooking Process
+
+** Preparing the Base
+
+The secret to great /Aglio e Olio/ lies in the gentle cooking of garlic in olive oil. Heat the oil in a large pan over medium-low heat, then add the sliced garlic. The goal is golden, fragrant garlic - never brown or burnt.
+
+[[garlic.jpg]]
+
+** Bringing It Together
+
+Once your spaghetti is al dente, reserve a cup of the starchy pasta water before draining. This liquid gold will help create a silky sauce that clings to every strand.
+
+Add the hot pasta directly to the garlic oil, along with a splash of pasta water. Toss vigorously - this is where the magic happens as the starch emulsifies with the oil.
+
+[[pasta.jpg]]
+
+* The Final Touch
+
+Finish with fresh parsley, a generous grating of cheese, and a crack of black pepper. The dish should be glossy, aromatic, and utterly irresistible.
+
+[[serve.jpg]]
+
+* Reflection
+
+Cooking this dish reminds me why I love simple Italian cuisine. With just a handful of quality ingredients and proper technique, you can create something that feeds both the body and soul. The key is respecting each component and understanding how they work together.
+
+** Tips for Success
+
+- Use the best olive oil you can afford
+- Don't rush the garlic - low and slow is the way
+- Save that pasta water - it's crucial for the sauce
+- Serve immediately while everything is hot
+
+/Buon appetito!/
+
+#+BEGIN_QUOTE
+"The best meals are often the simplest ones, made with love and attention to detail."
+#+END_QUOTE
