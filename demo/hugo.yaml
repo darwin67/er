@@ -1,6 +1,5 @@
 title: "Er Demo"
 languageCode: "en-us"
-baseURL: "https://er-demo.pages.dev"
 
 module:
   imports:
