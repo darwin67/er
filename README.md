@@ -1,6 +1,8 @@
 # Er.
 
-A configurable blog theme for Hugo, with elements inspired by [this blog](https://aranair.github.io/posts/). 
+Forked from https://github.com/lingxz/er.
+
+A configurable blog theme for Hugo, with elements inspired by [this blog](https://aranair.github.io/posts/).
 
 ## Features
 - produces an Atom feed at `feed.xml`(taken from [this discussion](https://github.com/comfusion/after-dark/issues/32)). It generates the latest 15 posts by default.
@@ -31,7 +33,7 @@ The theme now uses TailwindCSS for styling. To set up the development environmen
    ```
    # Development mode with watch
    npm run dev
-   
+
    # Production build
    npm run build
    ```
@@ -40,7 +42,7 @@ The theme now uses TailwindCSS for styling. To set up the development environmen
 
 ### Favicon
 
-You can put your favicon at `static/favicon.ico`, the theme will automatically look for it there. If you want to choose a different path, please set the `favicon` parameter in `[params]` in the config. 
+You can put your favicon at `static/favicon.ico`, the theme will automatically look for it there. If you want to choose a different path, please set the `favicon` parameter in `[params]` in the config.
 
 ### Atom feed
 
@@ -87,7 +89,7 @@ Math rendering is off by default, can be turned on for individual posts or pages
 
 ### Tag cloud
 
-Tag cloud is shown by default. To disable, add `showTagCloud = false` under the `[params]` section, similar to `showtoc`. You can also configure the maximum number of tags you want to show in your tag cloud, using the `maxTags` key under `[params]`. This number is 50 by default. 
+Tag cloud is shown by default. To disable, add `showTagCloud = false` under the `[params]` section, similar to `showtoc`. You can also configure the maximum number of tags you want to show in your tag cloud, using the `maxTags` key under `[params]`. This number is 50 by default.
 
 ### Back to top button
 
