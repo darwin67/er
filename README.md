@@ -17,28 +17,18 @@ Checkout the [Demo](https://er-demo.pages.dev).
 
 ## Installation
 
-### Tailwind CSS
+### Git submodule
 
-The theme now uses TailwindCSS for styling. To set up the development environment:
+```sh
+git submodule add git@github.com:darwin67/er.git themes/er
+git submodule update
+```
 
-1. Navigate to the theme directory:
-   ```
-   cd themes/er
-   ```
+### Hugo module
 
-2. Install the dependencies:
-   ```
-   npm install
-   ```
-
-3. Build the CSS:
-   ```
-   # Development mode with watch
-   npm run dev
-
-   # Production build
-   npm run build
-   ```
+``` sh
+hugo mod get github.com/darwin67/er
+```
 
 ## Configurations
 
@@ -101,6 +91,5 @@ Back to top button is also shown by default. To disable, add `showScrollToTop = 
 
 To modify the theme styles:
 
-1. Edit the files in `assets/css/` directory
-2. Run `npm run dev` to see your changes in real-time
-3. Run `npm run build` before deploying to production
+1. Run `make dev` in the `demo` directory
+2. Run `npm run dev:css` to have the CSS generation live when changes are made to demo
