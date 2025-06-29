@@ -20,3 +20,4 @@ hugo.linux
 
 /node_modules/
 /.direnv/
+/.claude/

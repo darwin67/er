@@ -1,0 +1,7 @@
+title: "Er Demo"
+languageCode: "en-us"
+baseURL: "https://er.example"
+
+module:
+  imports:
+    - path: github.com/darwin67/er
