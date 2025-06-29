@@ -1,0 +1,666 @@
+#+TITLE: Showcasing Programming Language Syntax Highlighting in Org Mode
+#+AUTHOR: Tech Blogger
+#+DATE: <2025-06-29 Sun>
+#+TAGS[]: orgmode programming syntax-highlighting python javascript rust golang sql html css bash tutorial documentation literate-programming emacs
+#+FILETAGS: :programming:tutorial:orgmode:
+#+CATEGORY: Programming
+#+KEYWORDS: org-mode, syntax highlighting, programming languages, documentation, literate programming, emacs
+#+OPTIONS: toc:t num:t
+
+* Introduction
+
+Org mode provides excellent support for syntax highlighting across numerous programming languages. This post demonstrates how different languages appear when embedded in Org documents using source code blocks. Each example shows both the practical code and how Org mode beautifully renders the syntax.
+
+* Python: Data Processing Made Simple                           :python:data:
+
+Python's clean syntax makes it perfect for data manipulation and analysis:
+
+#+BEGIN_SRC python
+import pandas as pd
+import numpy as np
+
+def analyze_sales_data(filename):
+    """Analyze sales data and return key metrics."""
+    df = pd.read_csv(filename)
+
+    # Calculate monthly totals
+    monthly_sales = df.groupby('month')['sales'].sum()
+
+    # Find top performing products
+    top_products = df.groupby('product')['sales'].sum().sort_values(ascending=False).head(5)
+
+    return {
+        'total_revenue': df['sales'].sum(),
+        'average_monthly': monthly_sales.mean(),
+        'top_products': top_products.to_dict()
+    }
+
+# Usage example
+results = analyze_sales_data('sales_2024.csv')
+print(f"Total revenue: ${results['total_revenue']:,.2f}")
+#+END_SRC
+
+* JavaScript: Modern Web Development                           :javascript:web:frontend:
+
+JavaScript showcases modern ES6+ features and asynchronous programming:
+
+#+BEGIN_SRC javascript
+// Fetch and process user data with modern async/await
+class UserManager {
+    constructor(apiUrl) {
+        this.apiUrl = apiUrl;
+        this.cache = new Map();
+    }
+
+    async fetchUser(userId) {
+        if (this.cache.has(userId)) {
+            return this.cache.get(userId);
+        }
+
+        try {
+            const response = await fetch(`${this.apiUrl}/users/${userId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const user = await response.json();
+            this.cache.set(userId, user);
+            return user;
+        } catch (error) {
+            console.error('Failed to fetch user:', error);
+            return null;
+        }
+    }
+
+    // Arrow function with destructuring
+    formatUserDisplay = ({ name, email, role = 'user' }) => {
+        return `${name} (${email}) - ${role.toUpperCase()}`;
+    };
+}
+
+// Usage with template literals
+const userManager = new UserManager('https://api.example.com');
+const user = await userManager.fetchUser(123);
+console.log(`Welcome: ${userManager.formatUserDisplay(user)}`);
+#+END_SRC
+
+* Rust: Systems Programming with Safety                        :rust:systems:memory:
+
+Rust demonstrates memory safety and performance with its unique ownership system:
+
+#+BEGIN_SRC rust
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::{BufRead, BufReader, Result};
+
+#[derive(Debug, Clone)]
+struct LogEntry {
+    timestamp: String,
+    level: String,
+    message: String,
+}
+
+impl LogEntry {
+    fn new(line: &str) -> Option<Self> {
+        let parts: Vec<&str> = line.splitn(3, ' ').collect();
+        if parts.len() == 3 {
+            Some(LogEntry {
+                timestamp: parts[0].to_string(),
+                level: parts[1].to_string(),
+                message: parts[2].to_string(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+fn analyze_log_file(filename: &str) -> Result<HashMap<String, usize>> {
+    let file = File::open(filename)?;
+    let reader = BufReader::new(file);
+    let mut level_counts = HashMap::new();
+
+    for line in reader.lines() {
+        let line = line?;
+        if let Some(entry) = LogEntry::new(&line) {
+            *level_counts.entry(entry.level).or_insert(0) += 1;
+        }
+    }
+
+    Ok(level_counts)
+}
+
+fn main() -> Result<()> {
+    match analyze_log_file("app.log") {
+        Ok(counts) => {
+            println!("Log level distribution:");
+            for (level, count) in &counts {
+                println!("  {}: {}", level, count);
+            }
+        }
+        Err(e) => eprintln!("Error reading log file: {}", e),
+    }
+    Ok(())
+}
+#+END_SRC
+
+* Go: Concurrent Network Programming                            :golang:concurrency:networking:
+
+Go excels at concurrent programming with goroutines and channels:
+
+#+BEGIN_SRC go
+package main
+
+import (
+    "context"
+    "fmt"
+    "net/http"
+    "sync"
+    "time"
+)
+
+type HealthChecker struct {
+    urls     []string
+    timeout  time.Duration
+    client   *http.Client
+}
+
+type HealthResult struct {
+    URL      string
+    Status   string
+    Duration time.Duration
+    Error    error
+}
+
+func NewHealthChecker(urls []string, timeout time.Duration) *HealthChecker {
+    return &HealthChecker{
+        urls:    urls,
+        timeout: timeout,
+        client: &http.Client{
+            Timeout: timeout,
+        },
+    }
+}
+
+func (hc *HealthChecker) checkURL(ctx context.Context, url string) HealthResult {
+    start := time.Now()
+
+    req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+    if err != nil {
+        return HealthResult{URL: url, Status: "ERROR", Error: err, Duration: time.Since(start)}
+    }
+
+    resp, err := hc.client.Do(req)
+    if err != nil {
+        return HealthResult{URL: url, Status: "DOWN", Error: err, Duration: time.Since(start)}
+    }
+    defer resp.Body.Close()
+
+    status := "UP"
+    if resp.StatusCode >= 400 {
+        status = "DOWN"
+    }
+
+    return HealthResult{
+        URL:      url,
+        Status:   status,
+        Duration: time.Since(start),
+    }
+}
+
+func (hc *HealthChecker) CheckAll(ctx context.Context) []HealthResult {
+    results := make([]HealthResult, len(hc.urls))
+    var wg sync.WaitGroup
+
+    for i, url := range hc.urls {
+        wg.Add(1)
+        go func(index int, u string) {
+            defer wg.Done()
+            results[index] = hc.checkURL(ctx, u)
+        }(i, url)
+    }
+
+    wg.Wait()
+    return results
+}
+
+func main() {
+    urls := []string{
+        "https://google.com",
+        "https://github.com",
+        "https://stackoverflow.com",
+    }
+
+    checker := NewHealthChecker(urls, 5*time.Second)
+    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+    defer cancel()
+
+    results := checker.CheckAll(ctx)
+
+    fmt.Println("Health Check Results:")
+    for _, result := range results {
+        fmt.Printf("%-25s %-6s %v\n", result.URL, result.Status, result.Duration)
+        if result.Error != nil {
+            fmt.Printf("  Error: %v\n", result.Error)
+        }
+    }
+}
+#+END_SRC
+
+* SQL: Database Queries and Analytics                          :sql:database:analytics:
+
+SQL demonstrates complex data querying and analysis capabilities:
+
+#+BEGIN_SRC sql
+-- Complex analytics query showcasing various SQL features
+WITH monthly_metrics AS (
+    SELECT
+        DATE_TRUNC('month', order_date) as month,
+        customer_id,
+        COUNT(*) as order_count,
+        SUM(total_amount) as monthly_spend,
+        AVG(total_amount) as avg_order_value
+    FROM orders
+    WHERE order_date >= CURRENT_DATE - INTERVAL '12 months'
+    GROUP BY DATE_TRUNC('month', order_date), customer_id
+),
+
+customer_segments AS (
+    SELECT
+        customer_id,
+        CASE
+            WHEN SUM(monthly_spend) >= 5000 THEN 'VIP'
+            WHEN SUM(monthly_spend) >= 1000 THEN 'Premium'
+            WHEN SUM(monthly_spend) >= 500 THEN 'Regular'
+            ELSE 'Basic'
+        END as segment,
+        COUNT(DISTINCT month) as active_months,
+        SUM(monthly_spend) as total_spend,
+        AVG(avg_order_value) as lifetime_avg_order
+    FROM monthly_metrics
+    GROUP BY customer_id
+)
+
+SELECT
+    cs.segment,
+    COUNT(*) as customer_count,
+    ROUND(AVG(cs.total_spend), 2) as avg_annual_spend,
+    ROUND(AVG(cs.lifetime_avg_order), 2) as avg_order_value,
+    ROUND(AVG(cs.active_months), 1) as avg_active_months,
+    -- Calculate retention rate
+    ROUND(
+        COUNT(CASE WHEN cs.active_months >= 6 THEN 1 END) * 100.0 / COUNT(*),
+        1
+    ) as retention_rate_6m
+FROM customer_segments cs
+JOIN customers c ON cs.customer_id = c.id
+GROUP BY cs.segment
+ORDER BY avg_annual_spend DESC;
+
+-- Create an index for performance
+CREATE INDEX CONCURRENTLY idx_orders_customer_date
+ON orders (customer_id, order_date DESC)
+WHERE order_date >= CURRENT_DATE - INTERVAL '12 months';
+#+END_SRC
+
+* HTML/CSS: Modern Web Styling                                 :html:css:web:responsive:
+
+HTML and CSS showcase modern web development with responsive design:
+
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Card Component</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .card {
+            background: linear-gradient(135deg, white 0%, #f8fafc 100%);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <article class="card">
+            <div class="card-content">
+                <h2 class="card-title">Modern Web Development</h2>
+                <p class="card-description">
+                    Explore the latest trends in web development with modern CSS Grid,
+                    Flexbox, and responsive design principles.
+                </p>
+                <div class="card-actions">
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</body>
+</html>
+#+END_SRC
+
+* Shell Scripting: System Administration                       :bash:shell:sysadmin:automation:
+
+Bash scripting for system administration and automation:
+
+#+BEGIN_SRC bash
+#!/bin/bash
+
+# Advanced backup script with logging and error handling
+set -euo pipefail  # Exit on error, undefined vars, pipe failures
+
+# Configuration
+readonly SCRIPT_NAME="${0##*/}"
+readonly BACKUP_DIR="/backup"
+readonly LOG_FILE="/var/log/backup.log"
+readonly MAX_BACKUPS=7
+readonly TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+
+# Color codes for output
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[1;33m'
+readonly NC='\033[0m' # No Color
+
+# Logging function
+log() {
+    local level="$1"
+    shift
+    local message="$*"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+    echo -e "${timestamp} [${level}] ${message}" | tee -a "${LOG_FILE}"
+}
+
+log_info() { log "INFO" "$@"; }
+log_warn() { log "WARN" "$@"; }
+log_error() { log "ERROR" "$@"; }
+
+# Error handling
+cleanup() {
+    local exit_code=$?
+    if [[ $exit_code -ne 0 ]]; then
+        log_error "Script failed with exit code $exit_code"
+    fi
+    exit $exit_code
+}
+
+trap cleanup EXIT
+
+# Check if running as root
+check_root() {
+    if [[ $EUID -ne 0 ]]; then
+        log_error "This script must be run as root"
+        exit 1
+    fi
+}
+
+# Create backup directory structure
+setup_backup_dir() {
+    local backup_path="${BACKUP_DIR}/${TIMESTAMP}"
+
+    if ! mkdir -p "$backup_path"; then
+        log_error "Failed to create backup directory: $backup_path"
+        return 1
+    fi
+
+    echo "$backup_path"
+}
+
+# Database backup function
+backup_database() {
+    local db_name="$1"
+    local backup_path="$2"
+    local db_file="${backup_path}/${db_name}_${TIMESTAMP}.sql"
+
+    log_info "Starting database backup for: $db_name"
+
+    if command -v mysqldump >/dev/null 2>&1; then
+        if mysqldump --single-transaction --routines --triggers \
+           --user="${DB_USER:-root}" --password="${DB_PASS}" \
+           "$db_name" > "$db_file"; then
+            log_info "Database backup completed: $db_file"
+            gzip "$db_file"
+            return 0
+        else
+            log_error "Database backup failed for: $db_name"
+            return 1
+        fi
+    else
+        log_warn "mysqldump not found, skipping database backup"
+        return 1
+    fi
+}
+
+# File system backup
+backup_files() {
+    local source_dir="$1"
+    local backup_path="$2"
+    local archive_name="${backup_path}/files_${TIMESTAMP}.tar.gz"
+
+    log_info "Starting file backup from: $source_dir"
+
+    # Exclude common unnecessary files
+    local exclude_patterns=(
+        "*.log"
+        "*.tmp"
+        "*cache*"
+        "node_modules"
+        ".git"
+    )
+
+    local tar_excludes=""
+    for pattern in "${exclude_patterns[@]}"; do
+        tar_excludes+="--exclude=${pattern} "
+    done
+
+    if tar czf "$archive_name" $tar_excludes -C "$(dirname "$source_dir")" \
+       "$(basename "$source_dir")"; then
+        log_info "File backup completed: $archive_name"
+        return 0
+    else
+        log_error "File backup failed for: $source_dir"
+        return 1
+    fi
+}
+
+# Cleanup old backups
+cleanup_old_backups() {
+    log_info "Cleaning up old backups (keeping $MAX_BACKUPS)"
+
+    # Find and remove old backup directories
+    find "$BACKUP_DIR" -maxdepth 1 -type d -name "[0-9]*_[0-9]*" \
+         -printf '%T@ %p\n' | sort -nr | tail -n +$((MAX_BACKUPS + 1)) | \
+         cut -d' ' -f2- | while read -r old_backup; do
+        log_info "Removing old backup: $old_backup"
+        rm -rf "$old_backup"
+    done
+}
+
+# Main backup function
+main() {
+    log_info "Starting backup process"
+
+    check_root
+
+    local backup_path
+    backup_path=$(setup_backup_dir)
+
+    # Backup databases
+    while IFS= read -r database; do
+        [[ -n "$database" ]] && backup_database "$database" "$backup_path"
+    done <<< "${DATABASES:-}"
+
+    # Backup file systems
+    local directories=("/etc" "/home" "/var/www")
+    for dir in "${directories[@]}"; do
+        [[ -d "$dir" ]] && backup_files "$dir" "$backup_path"
+    done
+
+    cleanup_old_backups
+
+    log_info "Backup process completed successfully"
+    echo -e "${GREEN}✓ Backup completed: $backup_path${NC}"
+}
+
+# Script usage
+usage() {
+    cat << EOF
+Usage: $SCRIPT_NAME [OPTIONS]
+
+A comprehensive backup script for databases and file systems.
+
+OPTIONS:
+    -h, --help      Show this help message
+    -d, --database  Database name to backup
+    -v, --verbose   Enable verbose output
+
+EXAMPLES:
+    $SCRIPT_NAME
+    $SCRIPT_NAME -d myapp_production
+
+ENVIRONMENT VARIABLES:
+    DB_USER         Database username (default: root)
+    DB_PASS         Database password
+    DATABASES       Newline-separated list of databases to backup
+
+EOF
+}
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -d|--database)
+            DATABASES="${DATABASES:-}${2}\n"
+            shift 2
+            ;;
+        -v|--verbose)
+            set -x
+            shift
+            ;;
+        *)
+            log_error "Unknown option: $1"
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+# Run main function
+main "$@"
+#+END_SRC
+
+* Conclusion                                                    :summary:
+
+Org mode's syntax highlighting capabilities make it an excellent choice for technical documentation, blog posts, and educational materials. The examples above demonstrate how different programming languages are beautifully rendered with appropriate color coding and formatting.
+
+Key benefits of using Org mode for technical content:
+
+- **Universal Language Support**: From systems languages like Rust and Go to web technologies like JavaScript and CSS
+- **Consistent Formatting**: All code blocks maintain consistent indentation and styling
+- **Export Flexibility**: Content can be exported to HTML, PDF, LaTeX, and many other formats
+- **Literate Programming**: Code and documentation can be seamlessly integrated
+
+Whether you're writing technical tutorials, documenting APIs, or creating educational content, Org mode provides the tools needed to present code clearly and professionally.
+
+#+BEGIN_EXAMPLE
+To use these code blocks in your own Org documents, simply use:
+#+BEGIN_SRC language_name
+your code here
+#+END_SRC
+#+END_EXAMPLE
+
+* About This Post
+
+This demonstration was created to showcase the versatility of Org mode's syntax highlighting across different programming paradigms - from data science with Python to systems programming with Rust, from web development with JavaScript and HTML/CSS to database work with SQL, and system administration with Bash scripting.
+
+Each example represents real-world, practical code that demonstrates both the language's capabilities and Org mode's excellent presentation features.
