@@ -4,3 +4,8 @@ languageCode: "en-us"
 module:
   imports:
     - path: github.com/darwin67/er
+
+markup:
+  highlight:
+    style: nordic
+    tabWidth: 2
