@@ -1,0 +1,6 @@
+#+title: '{{ replace .File.ContentBaseName "-" " " | title }}'
+#+date: {{ .Date }}
+#+uuid: {{ crypto.FNV32a (printf "%s%d" .File.Filename now.UnixNano) }}
+#+draft: true
+#+category:
+#+tags[]:
