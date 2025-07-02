@@ -1,4 +1,5 @@
 <script src="{{ "js/alpine-3.14.8.min.js" | absURL }}"></script>
+<script src="{{ "js/flexsearch-0.8.2.bundle.min.js" | absURL }}"></script>
 
 {{ if .Site.Params.showtoc | default true }}
 {{ $headers := findRE "<h[1-6].*?>(.|\n)+?</h[1-6]>" .Content }}
