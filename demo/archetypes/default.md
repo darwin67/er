@@ -1,8 +1,8 @@
 ---
 title: '{{ replace .File.ContentBaseName "-" " " | title }}'
 date: {{ .Date }}
+id: {{ .File.UniqueID }}
 draft: true
-uuid: {{ hash.FNV32a (printf "%s%d" .File.Filename now.UnixNano) }}
 category:
 tags: []
 ---
