@@ -11,9 +11,9 @@
   </div>
 
   {{ with .Site.Menus.main }}
-  <div class="{{ if lt (len . ) 3 }} flex-grow {{ else }} md:flex mt-2 md:mt-0{{ end }} py-1">
+  <div class="{{ if lt (len . ) 3 }} flex-grow {{ else }} md:flex mt-2 md:mt-0{{ end }} py-1 ml-3">
     {{ range . }}
-      <a class="hover:opacity-80 text-gray-700 text-sm inline-block mr-2 lg:mr-3 uppercase tracking-wide" href='{{.URL}}' title="{{ .Name }}">{{ .Name }}</a>
+      <a class="hover:opacity-80 text-gray-700 text-sm inline-block mx-1 uppercase tracking-wide" href='{{ .URL }}' title="{{ .Name }}">{{ .Name }}</a>
     {{ end }}
   </div>
   {{ end }}
