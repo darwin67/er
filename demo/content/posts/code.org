@@ -1,6 +1,7 @@
 #+TITLE: Showcasing Programming Language Syntax Highlighting in Org Mode
 #+AUTHOR: Tech Blogger
 #+DATE: <2025-06-29 Sun>
+#+ID: 0ea30f043f508b7a8cff0f14247bd1df
 #+TAGS[]: orgmode programming syntax-highlighting python javascript rust golang sql html css bash tutorial documentation literate-programming emacs
 #+FILETAGS: :programming:tutorial:orgmode:
 #+CATEGORY: Programming
