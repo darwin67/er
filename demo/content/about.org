@@ -1,0 +1,4 @@
+#+title: About
+#+menus: main
+
+This is a demo website for showcasing the Er theme.

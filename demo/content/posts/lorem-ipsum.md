@@ -1,6 +1,7 @@
 ---
 title: 'Lorem Ipsum'
 date: '2025-05-23'
+id: a7cd2e2fe63f174d28da19ec3424c714
 tags: [lorem-ipsum]
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: "The Complete Markdown Guide: Write Better Documentation in Minutes"
 date: 2025-05-28
+id: 0fe1ac16bfcecf3b054c11620df4f0c4
 author: "Technical Writing Team"
 tags:
   - markdown

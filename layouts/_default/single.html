@@ -4,12 +4,17 @@
 
   <p class="text-gray-400 text-sm mt-1 mb-4 post-meta">
     {{ if not .Date.IsZero }}<time>{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
-    {{ if or .Params.tags .Params.categories .Params.series }} | {{ end }}
+    {{ if or .Params.tags .Params.categories .Params.series }}
     {{ if isset .Params "categories" }}
+    <span class="block">
     categories: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
+    </span>
     {{ end }}
     {{ if isset .Params "tags" }}
+    <span class="block">
     tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
+    </span>
+    {{ end }}
     {{ end }}
   </p>
   <div class="leading-normal prose-lg post-content">{{ .Content }}</div>
