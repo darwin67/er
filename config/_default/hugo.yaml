@@ -6,3 +6,17 @@ summaryLength: 70
 build:
   noJSConfigInAssets: true
   writeStats: true
+
+outputFormats:
+  SearchIndex:
+    mediaType: application/json
+    baseName: searchindex
+    isPlainText: true
+    isHTML: false
+    notAlternative: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - SearchIndex
