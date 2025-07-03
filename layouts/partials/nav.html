@@ -17,4 +17,8 @@
     {{ end }}
   </div>
   {{ end }}
+
+  {{ if .Site.Params.search | default true }}
+  {{ partial "search.html" }}
+  {{ end }}
 </nav>
