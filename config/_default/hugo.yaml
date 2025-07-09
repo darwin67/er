@@ -15,8 +15,3 @@ outputFormats:
     isHTML: false
     notAlternative: true
 
-outputs:
-  home:
-    - HTML
-    - RSS
-    - SearchIndex

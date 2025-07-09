@@ -1,7 +1,7 @@
 {{- $.Scratch.Add "searchindex" slice -}}
 
-{{- range (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) -}}
-  {{- $.Scratch.Add "searchindex" (dict "id" .Params.id "type" .Type "title" .Title "href" .RelPermalink "summary" (.Summary | plainify) "content" .Plain) -}}
+{{- range .Site.RegularPages -}}
+  {{- $.Scratch.Add "searchindex" (dict "id" .File.UniqueID "type" .Type "title" .Title "href" .RelPermalink "summary" (.Summary | plainify) "content" (.Content | plainify) "date" (.Date.Format "2006-01-02")) -}}
 {{- end -}}
 
 {{- $.Scratch.Get "searchindex" | jsonify -}}

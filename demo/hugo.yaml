@@ -11,3 +11,9 @@ markup:
   highlight:
     style: nordic
     tabWidth: 2
+
+outputs:
+  home:
+  - HTML
+  - RSS
+  - SearchIndex
