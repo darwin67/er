@@ -43,6 +43,7 @@
     --color-main: #8c6056;
     --color-secondary: #afd5aa;
     --color-body-text: #3d3d3d;
+    --color-heading-text: #383838;
     --color-background: #fff;
     --max-width-content: 650px;
   }
@@ -1104,6 +1105,9 @@
   .bg-\[var\(--bg3\)\] {
     background-color: var(--bg3);
   }
+  .bg-\[var\(--color-main\)\] {
+    background-color: var(--color-main);
+  }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
   }
@@ -1239,6 +1243,9 @@
   .text-\[\#383838\] {
     color: #383838;
   }
+  .text-\[var\(--color-heading-text\)\] {
+    color: var(--color-heading-text);
+  }
   .text-\[var\(--fg\)\] {
     color: var(--fg);
   }
@@ -1344,6 +1351,13 @@
       }
     }
   }
+  .hover\:border-\[var\(--color-body-text\)\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-body-text);
+      }
+    }
+  }
   .hover\:bg-\[var\(--bg2\)\] {
     &:hover {
       @media (hover: hover) {
@@ -1355,6 +1369,13 @@
     &:hover {
       @media (hover: hover) {
         color: #3d3d3d;
+      }
+    }
+  }
+  .hover\:text-\[var\(--color-body-text\)\] {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-body-text);
       }
     }
   }

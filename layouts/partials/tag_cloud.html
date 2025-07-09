@@ -3,7 +3,7 @@
 <div class="hidden text-right fixed right-8 top-[100px] max-w-[250px] lg:block transition-opacity duration-500" id="tag-cloud">
     <div class="text-lg">tags</div>
     {{ range first $maxtags .Site.Taxonomies.tags.ByCount }}
-    <a class="text-gray-400 no-underline hover:border-b hover:border-[#3d3d3d] hover:text-[#3d3d3d]" href="{{ "/tags/" | relLangURL }}{{ .Name | urlize }}">{{ .Name }}</a></li>
+    <a class="text-gray-400 no-underline hover:border-b hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]" href="{{ "/tags/" | relLangURL }}{{ .Name | urlize }}">{{ .Name }}</a></li>
   {{ end }}
 </div>
 {{ end }}
