@@ -43,7 +43,6 @@
     --color-main: #8c6056;
     --color-secondary: #afd5aa;
     --color-body-text: #3d3d3d;
-    --color-heading-text: #383838;
     --color-background: #fff;
     --max-width-content: 650px;
   }
@@ -1039,23 +1038,6 @@
   .gap-3 {
     gap: calc(var(--spacing) * 3);
   }
-  .gap-8 {
-    gap: calc(var(--spacing) * 8);
-  }
-  .space-y-1 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 1) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
-  .space-x-1 {
-    :where(& > :not(:last-child)) {
-      --tw-space-x-reverse: 0;
-      margin-inline-start: calc(calc(var(--spacing) * 1) * var(--tw-space-x-reverse));
-      margin-inline-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-x-reverse)));
-    }
-  }
   .divide-y {
     :where(& > :not(:last-child)) {
       --tw-divide-y-reverse: 0;
@@ -1069,9 +1051,6 @@
     :where(& > :not(:last-child)) {
       border-color: var(--bg2);
     }
-  }
-  .self-end {
-    align-self: flex-end;
   }
   .overflow-hidden {
     overflow: hidden;
@@ -1125,20 +1104,11 @@
   .bg-\[var\(--bg3\)\] {
     background-color: var(--bg3);
   }
-  .bg-background {
-    background-color: var(--color-background);
-  }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
   }
   .bg-gray-500 {
     background-color: var(--color-gray-500);
-  }
-  .bg-main {
-    background-color: var(--color-main);
-  }
-  .bg-secondary {
-    background-color: var(--color-secondary);
   }
   .bg-transparent {
     background-color: transparent;
@@ -1215,9 +1185,6 @@
   .text-right {
     text-align: right;
   }
-  .align-middle {
-    vertical-align: middle;
-  }
   .font-sans {
     font-family: var(--font-sans);
   }
@@ -1272,12 +1239,6 @@
   .text-\[\#383838\] {
     color: #383838;
   }
-  .text-\[var\(--color-main\)\] {
-    color: var(--color-main);
-  }
-  .text-\[var\(--color-secondary\)\] {
-    color: var(--color-secondary);
-  }
   .text-\[var\(--fg\)\] {
     color: var(--fg);
   }
@@ -1298,12 +1259,6 @@
   }
   .text-inherit {
     color: inherit;
-  }
-  .text-main {
-    color: var(--color-main);
-  }
-  .text-secondary {
-    color: var(--color-secondary);
   }
   .text-white {
     color: var(--color-white);
@@ -1603,33 +1558,6 @@ th, td {
   padding: 0.5rem;
   border: 1px solid #e2e8f0;
 }
-.text-main {
-  color: var(--color-main);
-}
-.text-secondary {
-  color: var(--color-secondary);
-}
-.text-body {
-  color: var(--color-body-text);
-}
-.text-heading {
-  color: var(--color-heading-text);
-}
-.bg-main {
-  background-color: var(--color-main);
-}
-.bg-secondary {
-  background-color: var(--color-secondary);
-}
-.bg-body {
-  background-color: var(--color-body-text);
-}
-.bg-heading {
-  background-color: var(--color-heading-text);
-}
-.bg-background {
-  background-color: var(--color-background);
-}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
@@ -1649,16 +1577,6 @@ th, td {
 @property --tw-skew-y {
   syntax: "*";
   inherits: false;
-}
-@property --tw-space-y-reverse {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0;
-}
-@property --tw-space-x-reverse {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0;
 }
 @property --tw-divide-y-reverse {
   syntax: "*";
@@ -1817,8 +1735,6 @@ th, td {
       --tw-rotate-z: initial;
       --tw-skew-x: initial;
       --tw-skew-y: initial;
-      --tw-space-y-reverse: 0;
-      --tw-space-x-reverse: 0;
       --tw-divide-y-reverse: 0;
       --tw-border-style: solid;
       --tw-leading: initial;

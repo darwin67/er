@@ -87,31 +87,3 @@ td {
     border: 1px solid #e2e8f0;
 }
 
-/* Utility classes for colors */
-.text-main {
-    color: var(--color-main);
-}
-.text-secondary {
-    color: var(--color-secondary);
-}
-.text-body {
-    color: var(--color-body-text);
-}
-.text-heading {
-    color: var(--color-heading-text);
-}
-.bg-main {
-    background-color: var(--color-main);
-}
-.bg-secondary {
-    background-color: var(--color-secondary);
-}
-.bg-body {
-    background-color: var(--color-body-text);
-}
-.bg-heading {
-    background-color: var(--color-heading-text);
-}
-.bg-background {
-    background-color: var(--color-background);
-}
