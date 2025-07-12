@@ -3,11 +3,27 @@
 
 /* Base styles from tailwind.config.js */
 @theme {
+    /* Core Colors */
     --color-main: #8c6056;
     --color-secondary: #afd5aa;
     --color-body-text: #3d3d3d;
     --color-heading-text: #383838;
     --color-background: #fff;
+
+    /* Extended Palette */
+    --color-main-light: #a87266;
+    --color-main-dark: #704e44;
+    --color-secondary-light: #c4e0bf;
+    --color-secondary-dark: #8fb88a;
+    --color-background-alt: #f5f5f5;
+    --color-border: #e8e8e8;
+
+    /* Accent Colors */
+    --color-warm-accent: #d4a574;
+    --color-neutral-accent: #b8a082;
+    --color-cool-accent: #9db8a1;
+    --color-blush-accent: #c49a8e;
+
     --font-sans: "Source Sans Pro", sans-serif;
     --max-width-content: 650px;
 }

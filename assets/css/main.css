@@ -45,6 +45,16 @@
     --color-body-text: #3d3d3d;
     --color-heading-text: #383838;
     --color-background: #fff;
+    --color-main-light: #a87266;
+    --color-main-dark: #704e44;
+    --color-secondary-light: #c4e0bf;
+    --color-secondary-dark: #8fb88a;
+    --color-background-alt: #f5f5f5;
+    --color-border: #e8e8e8;
+    --color-warm-accent: #d4a574;
+    --color-neutral-accent: #b8a082;
+    --color-cool-accent: #9db8a1;
+    --color-blush-accent: #c49a8e;
     --max-width-content: 650px;
   }
 }
@@ -217,9 +227,6 @@
   }
   .inset-0 {
     inset: calc(var(--spacing) * 0);
-  }
-  .top-3 {
-    top: calc(var(--spacing) * 3);
   }
   .top-3\.5 {
     top: calc(var(--spacing) * 3.5);
@@ -991,9 +998,6 @@
   .grow {
     flex-grow: 1;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
@@ -1053,6 +1057,11 @@
       border-color: var(--bg2);
     }
   }
+  .divide-\[var\(--color-border\)\] {
+    :where(& > :not(:last-child)) {
+      border-color: var(--color-border);
+    }
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -1084,17 +1093,14 @@
   .border-\[var\(--bg2\)\] {
     border-color: var(--bg2);
   }
-  .border-black {
-    border-color: var(--color-black);
+  .border-\[var\(--color-border\)\] {
+    border-color: var(--color-border);
   }
   .border-black\/40 {
     border-color: color-mix(in srgb, #000 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-black) 40%, transparent);
     }
-  }
-  .bg-\[\#8c6056\] {
-    background-color: #8c6056;
   }
   .bg-\[var\(--bg1\)\] {
     background-color: var(--bg1);
@@ -1104,6 +1110,15 @@
   }
   .bg-\[var\(--bg3\)\] {
     background-color: var(--bg3);
+  }
+  .bg-\[var\(--color-background\)\] {
+    background-color: var(--color-background);
+  }
+  .bg-\[var\(--color-background-alt\)\] {
+    background-color: var(--color-background-alt);
+  }
+  .bg-\[var\(--color-border\)\] {
+    background-color: var(--color-border);
   }
   .bg-\[var\(--color-main\)\] {
     background-color: var(--color-main);
@@ -1144,9 +1159,6 @@
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
   }
-  .py-0 {
-    padding-block: calc(var(--spacing) * 0);
-  }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
   }
@@ -1155,9 +1167,6 @@
   }
   .py-1\.5 {
     padding-block: calc(var(--spacing) * 1.5);
-  }
-  .py-2 {
-    padding-block: calc(var(--spacing) * 2);
   }
   .py-2\.5 {
     padding-block: calc(var(--spacing) * 2.5);
@@ -1240,11 +1249,14 @@
     --tw-tracking: var(--tracking-wide);
     letter-spacing: var(--tracking-wide);
   }
-  .text-\[\#383838\] {
-    color: #383838;
+  .text-\[var\(--color-body-text\)\] {
+    color: var(--color-body-text);
   }
   .text-\[var\(--color-heading-text\)\] {
     color: var(--color-heading-text);
+  }
+  .text-\[var\(--color-neutral-accent\)\] {
+    color: var(--color-neutral-accent);
   }
   .text-\[var\(--fg\)\] {
     color: var(--fg);
@@ -1279,8 +1291,8 @@
   .no-underline {
     text-decoration-line: none;
   }
-  .underline {
-    text-decoration-line: underline;
+  .caret-\[var\(--color-body-text\)\] {
+    caret-color: var(--color-body-text);
   }
   .caret-\[var\(--fg\)\] {
     caret-color: var(--fg);
@@ -1324,6 +1336,11 @@
     --tw-duration: 500ms;
     transition-duration: 500ms;
   }
+  .placeholder\:text-\[var\(--color-neutral-accent\)\] {
+    &::placeholder {
+      color: var(--color-neutral-accent);
+    }
+  }
   .placeholder\:text-\[var\(--fg3\)\] {
     &::placeholder {
       color: var(--fg3);
@@ -1337,17 +1354,17 @@
       }
     }
   }
-  .hover\:border-\[\#3d3d3d\] {
-    &:hover {
-      @media (hover: hover) {
-        border-color: #3d3d3d;
-      }
-    }
-  }
   .hover\:border-\[var\(--bg3\)\] {
     &:hover {
       @media (hover: hover) {
         border-color: var(--bg3);
+      }
+    }
+  }
+  .hover\:border-\[var\(--color-background-alt\)\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-background-alt);
       }
     }
   }
@@ -1365,10 +1382,10 @@
       }
     }
   }
-  .hover\:text-\[\#3d3d3d\] {
+  .hover\:bg-\[var\(--color-border\)\] {
     &:hover {
       @media (hover: hover) {
-        color: #3d3d3d;
+        background-color: var(--color-border);
       }
     }
   }
@@ -1398,9 +1415,19 @@
       border-color: var(--bg4);
     }
   }
+  .focus\:border-\[var\(--color-main-light\)\] {
+    &:focus {
+      border-color: var(--color-main-light);
+    }
+  }
   .focus\:bg-\[var\(--bg2\)\] {
     &:focus {
       background-color: var(--bg2);
+    }
+  }
+  .focus\:bg-\[var\(--color-border\)\] {
+    &:focus {
+      background-color: var(--color-border);
     }
   }
   .focus\:ring-0 {
