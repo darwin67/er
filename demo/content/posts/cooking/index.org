@@ -1,6 +1,7 @@
 #+TITLE: The Art of Simple Pasta: A Weekend Kitchen Adventure
 #+AUTHOR: Home Cook
 #+DATE: <2025-06-13 Fri>
+#+ID: 8590be11529c53014e3c6104288c73a3
 #+TAGS[]: cooking pasta italian comfort-food
 
 * Introduction

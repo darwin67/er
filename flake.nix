@@ -35,6 +35,7 @@
             tailwindcss
             go # Added Go for Hugo modules
             claude-code
+            gemini-cli
 
             # LSP
             yaml-language-server

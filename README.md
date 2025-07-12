@@ -7,11 +7,12 @@ A configurable blog theme for Hugo, with elements inspired by [this blog](https:
 Checkout the [demo](https://er-6wj.pages.dev).
 
 ## Features
-- produces an Atom feed at `feed.xml`(taken from [this discussion](https://github.com/comfusion/after-dark/issues/32)). It generates the latest 15 posts by default.
+
+<!-- - produces an Atom feed at `feed.xml`(taken from [this discussion](https://github.com/comfusion/after-dark/issues/32)). It generates the latest 15 posts by default. -->
 - Open graph tags
 - Tag and category pages
 - Table of contents for your posts (from [tocbot](https://github.com/tscanlin/tocbot))
-- Renders Math with KaTeX
+<!-- - Renders Math with KaTeX -->
 - Tag cloud on big screens
 - Styled with TailwindCSS
 
@@ -36,36 +37,36 @@ hugo mod get github.com/darwin67/er
 
 You can put your favicon at `static/favicon.ico`, the theme will automatically look for it there. If you want to choose a different path, please set the `favicon` parameter in `[params]` in the config.
 
-### Atom feed
+<!-- ### Atom feed -->
 
-In order to enable Atom feed (instead of RSS), put this in your `config.toml`:
+<!-- In order to enable Atom feed (instead of RSS), put this in your `config.toml`: -->
 
-```toml
-[outputs]
-home = ["HTML", "Atom"]
+<!-- ```toml -->
+<!-- [outputs] -->
+<!-- home = ["HTML", "Atom"] -->
 
-[mediaTypes]
-[mediaTypes."application/atom"]
-suffix = "xml"
+<!-- [mediaTypes] -->
+<!-- [mediaTypes."application/atom"] -->
+<!-- suffix = "xml" -->
 
-[outputFormats.Atom]
-mediaType = "application/atom"
-baseName = "feed"
-isPlainText = false
+<!-- [outputFormats.Atom] -->
+<!-- mediaType = "application/atom" -->
+<!-- baseName = "feed" -->
+<!-- isPlainText = false -->
 
-disableKinds = ['RSS']
-```
-### Customize the colors
+<!-- disableKinds = ['RSS'] -->
+<!-- ``` -->
+<!-- ### Customize the colors -->
 
-This theme uses TailwindCSS for styling. You can customize the colors by editing the `tailwind.config.js` file in the theme directory. The main colors are defined in the `theme.extend.colors` section.
+<!-- This theme uses TailwindCSS for styling. You can customize the colors by editing the `tailwind.config.js` file in the theme directory. The main colors are defined in the `theme.extend.colors` section. -->
 
-### Google analytics
+<!-- ### Google analytics -->
 
-Google analytics tracking code can be added to `config.toml` like this:
+<!-- Google analytics tracking code can be added to `config.toml` like this: -->
 
-```toml
-googleAnalytics = "UA-123-45"
-```
+<!-- ```toml -->
+<!-- googleAnalytics = "UA-123-45" -->
+<!-- ``` -->
 
 ### Markdown TOC
 
@@ -75,17 +76,17 @@ Table of contents is activated by default, if it detects markdown headings. To t
 showtoc = false
 ```
 
-### Math rendering
+<!-- ### Math rendering -->
 
-Math rendering is off by default, can be turned on for individual posts or pages by setting `math = true` in the frontmatter.
+<!-- Math rendering is off by default, can be turned on for individual posts or pages by setting `math = true` in the frontmatter. -->
 
 ### Tag cloud
 
 Tag cloud is shown by default. To disable, add `showTagCloud = false` under the `[params]` section, similar to `showtoc`. You can also configure the maximum number of tags you want to show in your tag cloud, using the `maxTags` key under `[params]`. This number is 50 by default.
 
-### Back to top button
+<!-- ### Back to top button -->
 
-Back to top button is also shown by default. To disable, add `showScrollToTop = false` under `[params]`.
+<!-- Back to top button is also shown by default. To disable, add `showScrollToTop = false` under `[params]`. -->
 
 ## Development
 

@@ -1,6 +1,8 @@
 title: "Er Demo"
 languageCode: "en-us"
 
+sectionPagesMenu: main
+
 module:
   imports:
     - path: github.com/darwin67/er
@@ -9,3 +11,9 @@ markup:
   highlight:
     style: nordic
     tabWidth: 2
+
+outputs:
+  home:
+  - HTML
+  - RSS
+  - SearchIndex

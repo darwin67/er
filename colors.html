@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Scheme Palette</title>
+    <style>
+        @theme {
+            --color-main: #8c6056;
+            --color-secondary: #afd5aa;
+            --color-body-text: #3d3d3d;
+            --color-heading-text: #383838;
+            --color-background: #fff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--color-background);
+            color: var(--color-body-text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--color-heading-text);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: var(--color-heading-text);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .color-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .color-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .color-swatch {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .color-info {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .color-name {
+            font-weight: bold;
+            color: var(--color-heading-text);
+            margin-bottom: 5px;
+        }
+
+        .color-hex {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--color-body-text);
+        }
+
+        .usage-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .example-card {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .example-1 {
+            background: var(--color-background);
+            border: 2px solid var(--color-main);
+        }
+
+        .example-2 {
+            background: var(--color-secondary);
+            color: var(--color-heading-text);
+        }
+
+        .example-3 {
+            background: var(--color-main);
+            color: var(--color-background);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background: var(--color-main);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: var(--color-heading-text);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Extended Color Scheme Palette</h1>
+
+        <div class="section">
+            <h2>Core Colors</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #8c6056;">#8c6056</div>
+                    <div class="color-info">
+                        <div class="color-name">Main Color</div>
+                        <div class="color-hex">Warm Clay</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #afd5aa; color: #333;">#afd5aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Color</div>
+                        <div class="color-hex">Sage Green</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #3d3d3d;">#3d3d3d</div>
+                    <div class="color-info">
+                        <div class="color-name">Body Text</div>
+                        <div class="color-hex">Charcoal</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #383838;">#383838</div>
+                    <div class="color-info">
+                        <div class="color-name">Heading Text</div>
+                        <div class="color-hex">Dark Gray</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #fff; color: #333; border: 1px solid #ddd;">#ffffff</div>
+                    <div class="color-info">
+                        <div class="color-name">Background</div>
+                        <div class="color-hex">Pure White</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extended Palette</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #a87266;">#a87266</div>
+                    <div class="color-info">
+                        <div class="color-name">Main Light</div>
+                        <div class="color-hex">Dusty Rose</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #704e44;">#704e44</div>
+                    <div class="color-info">
+                        <div class="color-name">Main Dark</div>
+                        <div class="color-hex">Rich Brown</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #c4e0bf; color: #333;">#c4e0bf</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Light</div>
+                        <div class="color-hex">Pale Mint</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #8fb88a;">#8fb88a</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Dark</div>
+                        <div class="color-hex">Forest Sage</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #f5f5f5; color: #333;">#f5f5f5</div>
+                    <div class="color-info">
+                        <div class="color-name">Background Alt</div>
+                        <div class="color-hex">Light Gray</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #e8e8e8; color: #333;">#e8e8e8</div>
+                    <div class="color-info">
+                        <div class="color-name">Border Color</div>
+                        <div class="color-hex">Soft Gray</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Accent Colors</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #d4a574;">#d4a574</div>
+                    <div class="color-info">
+                        <div class="color-name">Warm Accent</div>
+                        <div class="color-hex">Golden Sand</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #b8a082;">#b8a082</div>
+                    <div class="color-info">
+                        <div class="color-name">Neutral Accent</div>
+                        <div class="color-hex">Warm Taupe</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #9db8a1;">#9db8a1</div>
+                    <div class="color-info">
+                        <div class="color-name">Cool Accent</div>
+                        <div class="color-hex">Eucalyptus</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #c49a8e;">#c49a8e</div>
+                    <div class="color-info">
+                        <div class="color-name">Blush Accent</div>
+                        <div class="color-hex">Soft Coral</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Usage Examples</h2>
+            <div class="usage-examples">
+                <div class="example-card example-1">
+                    <h3>Card with Main Border</h3>
+                    <p>This card uses the main color as an accent border with white background.</p>
+                    <button class="btn btn-primary">Primary Action</button>
+                    <button class="btn btn-secondary">Secondary Action</button>
+                </div>
+                <div class="example-card example-2">
+                    <h3>Secondary Background</h3>
+                    <p>This card uses the secondary color as background with dark text for contrast.</p>
+                    <button class="btn btn-primary">Learn More</button>
+                </div>
+                <div class="example-card example-3">
+                    <h3>Main Color Background</h3>
+                    <p>This card uses the main color as background with white text for high contrast.</p>
+                    <button class="btn" style="background: rgba(255,255,255,0.2); color: white;">Get Started</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>CSS Variables</h2>
+            <div style="background: #f8f8f8; padding: 20px; border-radius: 8px; font-family: monospace;">
+                <pre style="margin: 0; color: #333;">@theme {
+    /* Core Colors */
+    --color-main: #8c6056;
+    --color-secondary: #afd5aa;
+    --color-body-text: #3d3d3d;
+    --color-heading-text: #383838;
+    --color-background: #fff;
+
+    /* Extended Palette */
+    --color-main-light: #a87266;
+    --color-main-dark: #704e44;
+    --color-secondary-light: #c4e0bf;
+    --color-secondary-dark: #8fb88a;
+    --color-background-alt: #f5f5f5;
+    --color-border: #e8e8e8;
+
+    /* Accent Colors */
+    --color-warm-accent: #d4a574;
+    --color-neutral-accent: #b8a082;
+    --color-cool-accent: #9db8a1;
+    --color-blush-accent: #c49a8e;
+}</pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
