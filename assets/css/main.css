@@ -228,6 +228,9 @@
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
+  .top-3 {
+    top: calc(var(--spacing) * 3);
+  }
   .top-3\.5 {
     top: calc(var(--spacing) * 3.5);
   }
@@ -998,6 +1001,9 @@
   .grow {
     flex-grow: 1;
   }
+  .border-collapse {
+    border-collapse: collapse;
+  }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
@@ -1096,6 +1102,9 @@
   .border-\[var\(--color-border\)\] {
     border-color: var(--color-border);
   }
+  .border-black {
+    border-color: var(--color-black);
+  }
   .border-black\/40 {
     border-color: color-mix(in srgb, #000 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1159,6 +1168,9 @@
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
   }
+  .py-0 {
+    padding-block: calc(var(--spacing) * 0);
+  }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
   }
@@ -1167,6 +1179,9 @@
   }
   .py-1\.5 {
     padding-block: calc(var(--spacing) * 1.5);
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
   }
   .py-2\.5 {
     padding-block: calc(var(--spacing) * 2.5);
@@ -1252,6 +1267,12 @@
   .text-\[var\(--color-body-text\)\] {
     color: var(--color-body-text);
   }
+  .text-\[var\(--color-border\)\] {
+    color: var(--color-border);
+  }
+  .text-\[var\(--color-border-color\)\] {
+    color: var(--color-border-color);
+  }
   .text-\[var\(--color-heading-text\)\] {
     color: var(--color-heading-text);
   }
@@ -1290,6 +1311,9 @@
   }
   .no-underline {
     text-decoration-line: none;
+  }
+  .underline {
+    text-decoration-line: underline;
   }
   .caret-\[var\(--color-body-text\)\] {
     caret-color: var(--color-body-text);
@@ -1335,6 +1359,21 @@
   .duration-500 {
     --tw-duration: 500ms;
     transition-duration: 500ms;
+  }
+  .placeholder\:text-\[var\(--color-background-alt\)\] {
+    &::placeholder {
+      color: var(--color-background-alt);
+    }
+  }
+  .placeholder\:text-\[var\(--color-body-text\)\] {
+    &::placeholder {
+      color: var(--color-body-text);
+    }
+  }
+  .placeholder\:text-\[var\(--color-border\)\] {
+    &::placeholder {
+      color: var(--color-border);
+    }
   }
   .placeholder\:text-\[var\(--color-neutral-accent\)\] {
     &::placeholder {
