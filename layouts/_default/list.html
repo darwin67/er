@@ -4,8 +4,9 @@
   {{ .Content }}
   <ul class="list-none">
     {{ range .Data.Pages }}
-      <li class="leading-normal">
-        <a href="{{ .Permalink | relURL }}" class="text-base border-b border-black/40 no-underline text-inherit hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">{{ .Title }}</a> - <time>{{ .Date.Format "02 Jan 2006" }}</time>
+      <li class="leading-normal flex justify-between">
+        <a href="{{ .Permalink | relURL }}" class="text-base border-b border-black/40 no-underline text-inherit hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">{{ .Title }}</a>
+        <time>{{ .Date.Format "02 Jan 2006" }}</time>
       </li>
     {{ end }}
   </ul>
