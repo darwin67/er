@@ -7,7 +7,7 @@
 {{ if and $has_headers (ne .Params.toc false) }}
 <script src="{{ "js/tocbot-4.4.2.min.js" | absURL }}"></script>
 <link rel="stylesheet" href="{{ "css/tocbot-4.4.2.css" | absURL }}">
-<style>.is-active-link::before { background-color: var(--secondary-color); }</style>
+<style>.is-active-link::before { background-color: var(--color-secondary); }</style>
 
 <script type="text/javascript">
 if (document.getElementById("contents-list") !== null && document.getElementsByClassName("post-content").length !== 0) {
