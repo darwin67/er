@@ -94,3 +94,6 @@ ol {
 #contents-list ol {
   @apply list-none;
 }
+
+/* make sure things that are supposed to be hidden are kept hidden with alpine.js */
+[x-cloak] { display: none !important; }
