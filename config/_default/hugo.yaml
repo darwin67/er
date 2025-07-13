@@ -3,6 +3,8 @@ enableGitInfo: true
 paginate: 10
 summaryLength: 70
 
+sectionPagesMenu: main
+
 build:
   noJSConfigInAssets: true
   writeStats: true
