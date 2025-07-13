@@ -1519,8 +1519,18 @@
       display: block;
     }
   }
+  .xl\:max-w-\[250px\] {
+    @media (width >= 80rem) {
+      max-width: 250px;
+    }
+  }
   .xl\:max-w-\[300px\] {
     @media (width >= 80rem) {
+      max-width: 300px;
+    }
+  }
+  .\32 xl\:max-w-\[300px\] {
+    @media (width >= 96rem) {
       max-width: 300px;
     }
   }

@@ -5,5 +5,5 @@
 <!-- a post can explicitly disable Table of Contents with toc: false -->
 {{ $show_toc := and (ne .Params.toc false) (ne .Site.Params.showtoc false) }}
 {{ if and $has_headers $show_toc }}
-<div class="hidden text-left fixed max-w-[250px] overflow-hidden right-8 top-[100px] xl:block xl:max-w-[300px] xl:right-12" id="contents-list"></div>
+<div class="hidden text-left fixed max-w-[250px] overflow-hidden right-8 top-[100px] xl:block xl:max-w-[250px] 2xl:max-w-[300px] xl:right-12" id="contents-list"></div>
 {{ end }}
