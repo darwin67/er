@@ -30,7 +30,7 @@ npm install
 
 ```bash
 # Watch mode - rebuilds CSS on changes
-npm run dev
+npm run dev:css
 
 # Production build - minified CSS
 npm run build
@@ -63,14 +63,13 @@ This project follows the standard Hugo theme structure:
 
 4. **Configuration**:
    - `theme.toml`: Theme metadata
-   - `tailwind.config.js`: Tailwind CSS configuration
-   - `config/_default/module.yaml`: Hugo module configuration
+   - `config/_default/hugo.yaml`: Hugo module configuration
 
 ## Customization Points
 
 When modifying this theme, focus on:
 
-1. **Tailwind Styling**: Edit `tailwind.config.js` to change colors, typography, etc.
+1. **Tailwind Styling**: Edit `assets/css/app.css` to change colors, typography, etc.
 2. **Layouts**: Modify HTML templates in the layouts directory
 3. **CSS**: Edit files in `assets/css/` directory when adding custom CSS outside of Tailwind
 
@@ -78,7 +77,6 @@ When modifying this theme, focus on:
 
 The build process uses Tailwind CSS to generate the final CSS:
 
-1. Source CSS is located in `assets/css/input.css`
-2. Tailwind processes this file using the configuration in `tailwind.config.js`
-3. The output is written to `static/css/styles.css`
-4. Hugo then incorporates this stylesheet into the final site
+1. Source CSS is located in `assets/css/app.css`
+2. The output is written to `assets/css/main.css`
+3. Hugo then incorporates this stylesheet into the final site
