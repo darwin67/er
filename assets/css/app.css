@@ -90,3 +90,7 @@ ul {
 ol {
   @apply list-decimal;
 }
+
+#contents-list ol {
+  @apply list-none;
+}

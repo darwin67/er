@@ -1642,6 +1642,9 @@ ul {
 ol {
   list-style-type: decimal;
 }
+#contents-list ol {
+  list-style-type: none;
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
