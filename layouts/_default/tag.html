@@ -7,7 +7,7 @@
   <ul class="list-none">
     {{ range .Data.Pages }}
       <li class="leading-relaxed flex justify-between">
-        <a href="{{ .Permalink | relURL }}" class="no-underline text-base border-b border-black/40 text-inherit hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">{{ .Title }}</a>
+        <a href="{{ .Permalink | relURL }}" class="no-underline text-base text-inherit hover:text-[var(--color-body-text)]">{{ .Title }}</a>
         <time>{{ .Date.Format "02 Jan 2006" }}</time>
       </li>
     {{ end }}

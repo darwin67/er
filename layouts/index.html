@@ -10,12 +10,12 @@
         {{ if or .Params.tags .Params.categories }}
         {{ if isset .Params "categories" }}
         <span class="block">
-          categories: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="border-b border-black/40 no-underline text-gray-400 hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">{{ . }}</a> {{ end }} ]
+          categories: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="no-underline text-gray-400 hover:text-[var(--color-body-text)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ if isset .Params "tags" }}
         <span class="block">
-        tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="border-b border-black/40 no-underline text-gray-400 hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">{{ . }}</a> {{ end }} ]
+        tags: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="no-underline text-gray-400 hover:text-[var(--color-body-text)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ end }}

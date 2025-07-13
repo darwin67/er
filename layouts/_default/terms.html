@@ -5,7 +5,11 @@
   {{ .Content }}
   <ul class="list-none p-0">
     {{ range $key, $value := .Data.Terms }}
-      <li class="leading-normal inline-block bg-gray-100 px-1"><a href="{{ $key | urlize }}" class="border-b border-black/40 no-underline text-sm hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">{{ $key }}&nbsp;({{ len $value }})</a></li>
+      <li class="leading-normal inline-block bg-gray-100 px-1 m-1">
+        <a href="{{ $key | urlize }}" class="no-underline text-sm hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">
+          {{ $key }}&nbsp;({{ len $value }})
+        </a>
+      </li>
     {{ end }}
   </ul>
 </main>
