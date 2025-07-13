@@ -30,15 +30,11 @@
 
 /* Layout */
 body {
-    font-family: var(--font-sans);
-    color: var(--color-body-text);
-    background-color: var(--color-background);
+  @apply font-[var(--font-sans)] text-[var(--color-body-text)] bg-[var(--color-background)];
 }
 
 .content-wrapper {
-    max-width: var(--max-width-content);
-    margin-left: auto;
-    margin-right: auto;
+  @apply max-w-[var(--max-width-content)] mx-auto;
 }
 
 /* Typography */
@@ -48,56 +44,42 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--color-main);
+  @apply text-[var(--color-main)];
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  @apply text-inherit no-underline;
 }
 
 a:hover {
-    color: var(--color-neutral-accent);
+  @apply text-[var(--color-neutral-accent)];
 }
 
 /* Code blocks */
 pre {
-    font-size: 0.9em;
-    padding: 10px 20px;
-    line-height: 1.25em;
-    overflow-x: auto;
+  @apply text-sm px-5 py-2.5 leading-tight overflow-x-auto;
 }
 
 p code {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.9em;
-    background-color: #f8f8f8;
-    border-radius: 0.25rem;
+  @apply py-1 px-2 text-sm bg-gray-100 rounded;
 }
 
 /* Blockquotes */
 blockquote {
-    border-left: 0.25rem solid var(--color-blush-accent);
-    padding-left: 1rem;
-    color: #666;
-    font-style: italic;
+  @apply border-l-4 border-[var(--color-blush-accent)] pl-4 text-gray-600 italic;
 }
 
 /* Tables */
 table {
-    font-size: 14px;
-    margin: 2rem auto;
-    width: 100%;
-    border-collapse: collapse;
+  @apply text-sm my-8 mx-auto w-full border-collapse;
 }
 
 tr:nth-child(2n) {
-    background-color: #f8f8f8;
+  @apply bg-gray-100;
 }
 
 th,
 td {
-    padding: 0.5rem;
-    border: 1px solid #e2e8f0;
+  @apply p-2 border border-gray-300;
 }
 
