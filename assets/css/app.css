@@ -77,7 +77,7 @@ p code {
 
 /* Blockquotes */
 blockquote {
-    border-left: 0.25rem solid var(--color-secondary);
+    border-left: 0.25rem solid var(--color-blush-accent);
     padding-left: 1rem;
     color: #666;
     font-style: italic;
