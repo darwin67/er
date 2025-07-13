@@ -1112,15 +1112,6 @@
   .bg-\[var\(--color-main\)\] {
     background-color: var(--color-main);
   }
-  .bg-\[var\(--color-main-dark\)\] {
-    background-color: var(--color-main-dark);
-  }
-  .bg-\[var\(--color-main-light\)\] {
-    background-color: var(--color-main-light);
-  }
-  .bg-\[var\(--color-warm-accent\)\] {
-    background-color: var(--color-warm-accent);
-  }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
   }
@@ -1253,9 +1244,6 @@
     --tw-tracking: var(--tracking-wide);
     letter-spacing: var(--tracking-wide);
   }
-  .text-\[var\(--color-background-alt\)\] {
-    color: var(--color-background-alt);
-  }
   .text-\[var\(--color-body-text\)\] {
     color: var(--color-body-text);
   }
@@ -1267,9 +1255,6 @@
   }
   .text-\[var\(--color-neutral-accent\)\] {
     color: var(--color-neutral-accent);
-  }
-  .text-\[var\(--color-warm-accent\)\] {
-    color: var(--color-warm-accent);
   }
   .text-gray-400 {
     color: var(--color-gray-400);
@@ -1339,11 +1324,6 @@
   .duration-500 {
     --tw-duration: 500ms;
     transition-duration: 500ms;
-  }
-  .placeholder\:text-\[var\(--color-body-text\)\] {
-    &::placeholder {
-      color: var(--color-body-text);
-    }
   }
   .placeholder\:text-\[var\(--color-main\)\] {
     &::placeholder {
