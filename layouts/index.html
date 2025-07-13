@@ -3,7 +3,7 @@
 <main class="mx-auto my-4 max-w-[650px]">
   <ul class="list-none p-0">
     {{ range $paginator.Pages }}
-    <li class="mb-2">
+    <li class="mb-2 list-none">
       <a class="text-lg text-[var(--color-heading-text)] font-sans font-semibold no-underline" href="{{ .Permalink }}">{{ .Title }}</a>
       <p class="text-sm mt-1 text-gray-400">
         <time>{{ .Date.Format "02 Jan 2006" }}</time>
