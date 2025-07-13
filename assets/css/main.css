@@ -992,6 +992,12 @@
   .max-w-3xl {
     max-width: var(--container-3xl);
   }
+  .max-w-\[200px\] {
+    max-width: 200px;
+  }
+  .max-w-\[220px\] {
+    max-width: 220px;
+  }
   .max-w-\[250px\] {
     max-width: 250px;
   }
@@ -1506,6 +1512,11 @@
   .xl\:right-12 {
     @media (width >= 80rem) {
       right: calc(var(--spacing) * 12);
+    }
+  }
+  .xl\:block {
+    @media (width >= 80rem) {
+      display: block;
     }
   }
   .xl\:max-w-\[300px\] {
