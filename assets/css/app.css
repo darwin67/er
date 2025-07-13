@@ -83,3 +83,14 @@ td {
   @apply p-2 border border-gray-300;
 }
 
+ul {
+  @apply list-disc;
+}
+
+ol {
+  @apply list-decimal;
+}
+
+#contents-list ol {
+  @apply list-none;
+}
