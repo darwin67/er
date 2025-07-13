@@ -1059,13 +1059,6 @@
       margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
-  .space-y-2 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
   .divide-y {
     :where(& > :not(:last-child)) {
       --tw-divide-y-reverse: 0;
@@ -1100,25 +1093,12 @@
     border-style: var(--tw-border-style);
     border-width: 0px;
   }
-  .border-b {
-    border-bottom-style: var(--tw-border-style);
-    border-bottom-width: 1px;
-  }
   .border-solid {
     --tw-border-style: solid;
     border-style: solid;
   }
   .border-\[var\(--color-border\)\] {
     border-color: var(--color-border);
-  }
-  .border-black {
-    border-color: var(--color-black);
-  }
-  .border-black\/40 {
-    border-color: color-mix(in srgb, #000 40%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-black) 40%, transparent);
-    }
   }
   .bg-\[var\(--color-background\)\] {
     background-color: var(--color-background);
@@ -1385,6 +1365,13 @@
       }
     }
   }
+  .hover\:text-\[var\(--color-neutral-accent\)\] {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-neutral-accent);
+      }
+    }
+  }
   .hover\:text-white {
     &:hover {
       @media (hover: hover) {
@@ -1545,7 +1532,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #3d3d3d;
+  color: var(--color-neutral-accent);
 }
 pre {
   font-size: 0.9em;
