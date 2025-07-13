@@ -1,7 +1,14 @@
 title: "Er Demo"
 languageCode: "en-us"
 
-sectionPagesMenu: main
+menus:
+  main:
+    - name: About
+      url: /about
+      weight: 10
+    - name: Posts
+      url: /posts
+      weight: 20
 
 module:
   imports:
