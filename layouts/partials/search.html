@@ -25,6 +25,7 @@
     @keydown.ctrl.k.prevent.document="searchbar = true"
     @keydown.meta.k.prevent.document="searchbar = true"
     @keydown.escape.document="searchbar = false"
+    @click="searchbar = false"
     :class="searchbar ? '' : 'hidden'"
     x-cloak
   >
@@ -36,6 +37,7 @@
       <div
         class="mx-auto max-w-3xl divide-y divide-[var(--color-border)] overflow-hidden rounded-xl bg-[var(--color-background)] shadow-2xl ring-1 ring-black ring-opacity-5"
         x-trap.inert.noscroll.noreturn="searchbar"
+        @click.stop
       >
         <div class="relative">
           <!-- search icon -->
