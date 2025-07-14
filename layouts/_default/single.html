@@ -1,5 +1,5 @@
 {{ define "main" }}
-<main class="mx-auto my-4 max-w-2xl px-3">
+<main class="mx-auto my-4 max-w-2xl px-3 lg:px-0">
   <div class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans">
     {{ .Title }}
   </div>
@@ -19,7 +19,7 @@
     {{ end }}
     {{ end }}
   </p>
-  <div class="leading-normal prose-lg post-content">{{ .Content }}</div>
+  <div class="leading-normal prose lg:prose-lg post-content max-w-none">{{ .Content }}</div>
 </main>
 {{ partial "table-of-contents" . }}
 
