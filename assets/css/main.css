@@ -1500,6 +1500,9 @@
     --tw-tracking: var(--tracking-wide);
     letter-spacing: var(--tracking-wide);
   }
+  .\!text-\[var\(--color-main\)\] {
+    color: var(--color-main) !important;
+  }
   .text-\[var\(--color-body-text\)\] {
     color: var(--color-body-text);
   }

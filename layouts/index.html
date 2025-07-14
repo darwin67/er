@@ -4,7 +4,7 @@
   <ul class="list-none p-0">
     {{ range $paginator.Pages }}
     <li class="mb-2 list-none">
-      <a class="text-lg text-[var(--color-main)] font-sans font-semibold no-underline" href="{{ .Permalink }}">{{ .Title }}</a>
+      <a class="text-lg !text-[var(--color-main)] font-sans font-semibold no-underline" href="{{ .Permalink }}">{{ .Title }}</a>
       <p class="text-sm mt-1 text-gray-400">
         <time>{{ .Date.Format "02 Jan 2006" }}</time>
         {{ if or .Params.tags .Params.categories }}
