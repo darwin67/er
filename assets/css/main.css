@@ -1702,6 +1702,11 @@
       display: flex;
     }
   }
+  .md\:flex-row {
+    @media (width >= 48rem) {
+      flex-direction: row;
+    }
+  }
   .md\:space-x-3 {
     @media (width >= 48rem) {
       :where(& > :not(:last-child)) {
