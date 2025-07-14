@@ -47,6 +47,16 @@ h6 {
   @apply text-[var(--color-main)];
 }
 
+
+h1 > span.tags,
+h2 > span.tags,
+h3 > span.tags,
+h4 > span.tags,
+h5 > span.tags,
+h6 > span.tags {
+  @apply hidden;
+}
+
 a {
   @apply text-inherit no-underline;
 }
