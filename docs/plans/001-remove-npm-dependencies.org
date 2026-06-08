@@ -1,6 +1,6 @@
 #+title: Remove npm/pnpm dependencies, swap Tailwind for the standalone v4 CLI
 #+author: Darwin D. Wu
-#+status: Draft
+#+status: Done
 #+date: <2026-06-08 Mon>
 
 Replace the npm-installed =@tailwindcss/cli= with the Tailwind v4 standalone
@@ -29,30 +29,30 @@ Releases that bundles the typography plugin, which is the only plugin we use.
 
 * Checklist
 
-- [ ] Add a =tailwindcss-v4= derivation to =flake.nix= that =fetchurl=s the
+- [X] Add a =tailwindcss-v4= derivation to =flake.nix= that =fetchurl=s the
   v4.1.10 standalone binary per system (linux/darwin × x64/arm64) and installs
   it as =$out/bin/tailwindcss=, with per-system =sha256=s.
-- [ ] Remove =nodejs_24=, the =corepack= derivation, and the v3 =tailwindcss=
+- [X] Remove =nodejs_24=, the =corepack= derivation, and the v3 =tailwindcss=
   package from the dev shell in =flake.nix=. Wire the new derivation in.
-- [ ] Delete =package.json=, =pnpm-lock.yaml=, =pnpm-workspace.yaml=, and the
+- [X] Delete =package.json=, =pnpm-lock.yaml=, =pnpm-workspace.yaml=, and the
   local =node_modules/= and =.pnpm-store/= directories.
-- [ ] Rewrite =Makefile= with targets =css= (build minified), =css-watch=
+- [X] Rewrite =Makefile= with targets =css= (build minified), =css-watch=
   (rebuild on change), =build= (css + =hugo --minify=), and =serve=
   (=hugo server --disableFastRender=).
-- [ ] Update =AGENTS.md=: drop the pnpm install/build/verify lines (L34,
+- [X] Update =AGENTS.md=: drop the pnpm install/build/verify lines (L34,
   L38–40, L87–88) and replace with the new =make= targets.
-- [ ] Update =README.md:96= to reference =make css-watch= instead of
+- [X] Update =README.md:96= to reference =make css-watch= instead of
   =npm run dev:css=.
-- [ ] Run =nix develop -c make css= and confirm =git diff --exit-code --
+- [X] Run =nix develop -c make css= and confirm =git diff --exit-code --
   assets/css/main.css= is clean (or near-clean — investigate any diff before
   committing).
-- [ ] Run =nix develop -c hugo --minify= against the root theme fixture and
+- [X] Run =nix develop -c hugo --minify= against the root theme fixture and
   =cd demo && nix develop .. -c hugo -b http://example.test= against the demo
   site. Both must build.
-- [ ] Spot-check rendered output: home page, a single post (exercises =prose=),
+- [X] Spot-check rendered output: home page, a single post (exercises =prose=),
   the search modal, and a responsive page (exercises =md:=/=lg:=/=xl:=
   utilities and =text-[var(--…)]= arbitrary values).
-- [ ] Run =./scripts/check-plan-status.sh= and confirm it passes.
+- [X] Run =./scripts/check-plan-status.sh= and confirm it passes.
 
 * Out of scope
 
