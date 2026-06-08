@@ -4,7 +4,7 @@
 [changelog]
 body = """
 {% if version %}\
-    ## [{{ version }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+    ## [v{{ version }}] - {{ timestamp | date(format="%Y-%m-%d") }}
 {% else %}\
     ## [unreleased]
 {% endif %}\
