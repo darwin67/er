@@ -109,4 +109,6 @@ Merges to `main` create or update a `release/next` pull request with a generated
 publishes a GitHub release.
 
 The release workflows require a repository secret named `RELEASE_TOKEN` with
-permission to push branches and tags.
+permission to push branches and tags. The release PR workflow intentionally does
+not use the default `GITHUB_TOKEN` for release branch pushes because events
+created with that token do not trigger normal downstream workflow runs.

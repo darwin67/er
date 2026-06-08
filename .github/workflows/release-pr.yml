@@ -25,16 +25,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  create-release-pr:
+  preflight:
     runs-on: ubuntu-latest
+    outputs:
+      release_token_available: ${{ steps.release-token.outputs.available }}
     steps:
-      - name: Validate release token
+      - name: Check release token
+        id: release-token
         run: |
-          if [ -z "${GH_TOKEN}" ]; then
+          if [ -n "${GH_TOKEN}" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "::error title=Missing RELEASE_TOKEN::Configure the release bot token as the RELEASE_TOKEN repository secret."
             exit 1
           fi
 
+          echo "::notice title=Release automation skipped::Configure RELEASE_TOKEN to enable release PR creation. GITHUB_TOKEN is intentionally not used because pushes made with it do not trigger downstream workflows."
+          echo "available=false" >> "$GITHUB_OUTPUT"
+
+  create-release-pr:
+    needs: preflight
+    if: needs.preflight.outputs.release_token_available == 'true'
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
