@@ -93,7 +93,8 @@ Tag cloud is shown by default. To disable, add `showTagCloud = false` under the 
 To modify the theme styles:
 
 1. Run `make dev` in the `demo` directory
-2. Run `npm run dev:css` to have the CSS generation live when changes are made to demo
+2. Run `make css-watch` from the repo root to rebuild CSS live as the demo
+   templates change
 
 ## Releases
 

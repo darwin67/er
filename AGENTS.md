@@ -30,14 +30,15 @@ Use standard conventional commit formatting such as `fix(feed): support Hugo
 
 ### Environment
 
-- `nix develop` enters the preferred development shell.
-- `pnpm install --frozen-lockfile` installs JavaScript dependencies.
+- `nix develop` enters the preferred development shell. It provides Hugo, the
+  Tailwind v4 standalone CLI, Go, and `git-cliff`. There is no Node toolchain.
 
 ### Building
 
-- `pnpm run dev:css` watches and rebuilds Tailwind CSS.
-- `pnpm run build:css` rebuilds minified Tailwind CSS.
-- `pnpm run build` builds CSS and runs `hugo --minify`.
+- `make css` regenerates `assets/css/main.css` from `assets/css/app.css`.
+- `make css-watch` rebuilds CSS on change.
+- `make build` regenerates CSS and runs `hugo --minify`.
+- `make serve` runs `hugo server --disableFastRender`.
 - `hugo --minify` builds the root theme fixture without regenerating CSS.
 - From `demo/`, `hugo -b http://example.test` builds the demo site.
 
@@ -84,8 +85,7 @@ Treat generated assets deliberately:
 
 Useful checks before finishing work:
 
-- `nix develop -c pnpm install --frozen-lockfile`
-- `nix develop -c pnpm run build:css`
+- `nix develop -c make css`
 - `git diff --exit-code -- assets/css/main.css`
 - `nix develop -c hugo --minify`
 - From `demo/`: `nix develop .. -c hugo -b http://example.test`
