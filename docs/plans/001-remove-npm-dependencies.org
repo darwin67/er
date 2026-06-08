@@ -1,0 +1,64 @@
+#+title: Remove npm/pnpm dependencies, swap Tailwind for the standalone v4 CLI
+#+author: Darwin D. Wu
+#+status: Draft
+#+date: <2026-06-08 Mon>
+
+Replace the npm-installed =@tailwindcss/cli= with the Tailwind v4 standalone
+binary delivered through nix, so the repo no longer needs Node, pnpm, or a
+=package.json= to build CSS.
+
+* Background
+
+The only consumer of npm in this repo is Tailwind's CLI. Hugo templates ship no
+JavaScript built from =node_modules=, and CI workflows do not install npm
+packages. =assets/css/app.css= uses Tailwind v4 syntax (=@import "tailwindcss"=,
+=@plugin=, =@theme=, =@source inline(...)=), so the nixpkgs-provided Tailwind v3
+binary cannot replace it. Tailwind v4 ships a single static binary on GitHub
+Releases that bundles the typography plugin, which is the only plugin we use.
+
+* Decisions
+
+- Pin to *Tailwind v4.1.10* to match the version that produced the committed
+  =assets/css/main.css=. Bumping to v4.3.0 happens in a follow-up so the
+  toolchain change stays auditable.
+- Drop =prettier= and =prettier-plugin-tailwindcss= entirely. Nothing in the
+  repo invokes prettier today (no script, no hook, no CI step). A formatter can
+  return later via nix if wanted.
+- Keep using =Makefile= as the task entry point. Rename targets to =css=,
+  =css-watch=, =build=, =serve=.
+
+* Checklist
+
+- [ ] Add a =tailwindcss-v4= derivation to =flake.nix= that =fetchurl=s the
+  v4.1.10 standalone binary per system (linux/darwin × x64/arm64) and installs
+  it as =$out/bin/tailwindcss=, with per-system =sha256=s.
+- [ ] Remove =nodejs_24=, the =corepack= derivation, and the v3 =tailwindcss=
+  package from the dev shell in =flake.nix=. Wire the new derivation in.
+- [ ] Delete =package.json=, =pnpm-lock.yaml=, =pnpm-workspace.yaml=, and the
+  local =node_modules/= and =.pnpm-store/= directories.
+- [ ] Rewrite =Makefile= with targets =css= (build minified), =css-watch=
+  (rebuild on change), =build= (css + =hugo --minify=), and =serve=
+  (=hugo server --disableFastRender=).
+- [ ] Update =AGENTS.md=: drop the pnpm install/build/verify lines (L34,
+  L38–40, L87–88) and replace with the new =make= targets.
+- [ ] Update =README.md:96= to reference =make css-watch= instead of
+  =npm run dev:css=.
+- [ ] Run =nix develop -c make css= and confirm =git diff --exit-code --
+  assets/css/main.css= is clean (or near-clean — investigate any diff before
+  committing).
+- [ ] Run =nix develop -c hugo --minify= against the root theme fixture and
+  =cd demo && nix develop .. -c hugo -b http://example.test= against the demo
+  site. Both must build.
+- [ ] Spot-check rendered output: home page, a single post (exercises =prose=),
+  the search modal, and a responsive page (exercises =md:=/=lg:=/=xl:=
+  utilities and =text-[var(--…)]= arbitrary values).
+- [ ] Run =./scripts/check-plan-status.sh= and confirm it passes.
+
+* Out of scope
+
+- Replacing Tailwind itself with hand-written CSS. Surveyed: 107 =class="…"=
+  attributes across 16 templates plus the =prose= typography plugin on post
+  bodies. That is a separate, design-level migration, not a toolchain swap.
+- Bumping Tailwind to v4.3.0. Worth doing, but as a follow-up so the diff on
+  the generated =main.css= stays attributable.
+- Introducing a formatter (=treefmt=, =dprint=, etc.) to replace =prettier=.
