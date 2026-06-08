@@ -108,5 +108,9 @@ Merges to `main` create or update a `release/next` pull request with a generated
 `CHANGELOG.md` entry. Merging that release PR creates a `vX.Y.Z` tag and
 publishes a GitHub release.
 
-The release workflows require a repository secret named `RELEASE_TOKEN` with
-permission to push branches and tags.
+The release workflows require a private GitHub App installed on this repository
+with `Contents: write` and `Pull requests: write` permissions. Store its app ID
+and private key as repository secrets named `RELEASE_APP_ID` and
+`RELEASE_APP_PRIVATE_KEY`. The release PR workflow intentionally does not use
+the default `GITHUB_TOKEN` for release branch pushes because events created with
+that token do not trigger normal downstream workflow runs.
