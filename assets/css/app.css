@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
+@source inline("prose-lg prose-sm top-3 border-collapse bg-black py-0 py-2 text-black underline");
 
 /* Base styles from tailwind.config.js */
 @theme {

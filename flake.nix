@@ -6,8 +6,15 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs {
           inherit system;
@@ -18,30 +25,31 @@
         };
         corepack = pkgs.stdenv.mkDerivation {
           name = "corepack";
-          buildInputs = [ pkgs.nodejs_22 ];
+          buildInputs = [ pkgs.nodejs_24 ];
           phases = [ "installPhase" ];
           installPhase = ''
             mkdir -p $out/bin
             corepack enable --install-directory=$out/bin
           '';
         };
-      in {
+      in
+      {
         devShells.default = pkgs.mkShell {
           packages = [ corepack ];
 
           buildInputs = with pkgs; [
             hugo
-            nodejs_22
+            nodejs_24
             tailwindcss
             go # Added Go for Hugo modules
-            claude-code
-            gemini-cli
 
-            # LSP
+            # Tools
+            git-cliff
             yaml-language-server
-            nodePackages.vscode-json-languageserver
+            vscode-json-languageserver
             tailwindcss-language-server
           ];
         };
-      });
+      }
+    );
 }
