@@ -1,82 +1,93 @@
-# CLAUDE.md
+# Agent Guide
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents working in this repository.
 
-## Project Overview
+## Commit Titles
 
-Er is a configurable Hugo theme for blogs with Tailwind CSS styling. The theme features:
+Use conventional commit titles for any commit you create. This repository's
+changelog configuration in `cliff.toml` enables conventional commit parsing, and
+the PR workflow validates conventional commit titles.
 
-- Atom feed generation
-- Open graph tags
-- Tag and category pages
-- Table of contents for posts (using tocbot)
-- Math rendering with KaTeX
-- Tag cloud display
-- Responsive design with Tailwind CSS
+Prefer these commit types because they are grouped or validated today:
+
+- `feat`
+- `fix`
+- `doc`
+- `docs`
+- `perf`
+- `refactor`
+- `style`
+- `test`
+- `chore`
+- `ci`
+- `revert`
+- `security`
+
+Use standard conventional commit formatting such as `fix(feed): support Hugo
+0.162` or `ci(release): align changelog tag validation`.
 
 ## Development Commands
 
-### Setup Development Environment
+### Environment
 
-```bash
-# Using Nix (recommended if you have Nix installed)
-nix develop
+- `nix develop` enters the preferred development shell.
+- `pnpm install --frozen-lockfile` installs JavaScript dependencies.
 
-# Without Nix
-npm install
-```
+### Building
 
-### Theme Development
+- `pnpm run dev:css` watches and rebuilds Tailwind CSS.
+- `pnpm run build:css` rebuilds minified Tailwind CSS.
+- `pnpm run build` builds CSS and runs `hugo --minify`.
+- `hugo --minify` builds the root theme fixture without regenerating CSS.
+- From `demo/`, `hugo -b http://example.test` builds the demo site.
 
-```bash
-# Watch mode - rebuilds CSS on changes
-npm run dev:css
+### Release Tooling
 
-# Production build - minified CSS
-npm run build
-```
+- `git-cliff --config cliff.toml --bumped-version` previews the next semver
+  version.
+- Release tags and changelog headings are expected to use the `vX.Y.Z` form.
 
-### Testing with Hugo
+## Project Structure
 
-```bash
-# Preview the theme with Hugo's built-in server
-# Run from a test site that uses this theme
-hugo server
+This repository is a Hugo theme with Tailwind CSS styling.
 
-# Build the site for production
-hugo --minify
-```
+- `layouts/` contains Hugo templates and partials.
+- `assets/css/app.css` is the Tailwind source.
+- `assets/css/main.css` is generated CSS that is committed to the repo.
+- `static/` contains static CSS and JavaScript assets.
+- `config/_default/hugo.yaml` contains theme-level Hugo configuration.
+- `demo/` contains a demo Hugo site that imports this theme.
 
-## Architecture
+## Working Style
 
-This project follows the standard Hugo theme structure:
+- Prefer minimal, targeted changes that preserve the existing style.
+- Run relevant checks for the area you touch when practical.
+- Commit in small logical chunks. Each commit should be self-reviewable and
+  contain one coherent change with its relevant tests or docs.
+- Do not introduce a second commit-title convention; keep commit types aligned
+  with `cliff.toml` and `.github/workflows/commits.yml`.
+- Add comments only when they describe intent for non-obvious logic,
+  compatibility constraints, workarounds, or safety guardrails.
+- Keep comments succinct and useful for review.
 
-1. **Layouts**: HTML templates for different content types
-   - `_default/`: Base templates for list and single pages
-   - `partials/`: Reusable components (header, footer, navigation)
-   - Special templates for RSS/Atom feed and homepage
+## Generated Assets
 
-2. **Assets**: Source files for CSS
-   - CSS is processed with Tailwind CSS and PostCSS
+Treat generated assets deliberately:
 
-3. **Static**: Generated CSS and other static files
+- If you change `assets/css/app.css` or Tailwind-related markup, regenerate
+  `assets/css/main.css`.
+- If generated CSS changes unexpectedly, inspect the diff before committing.
+- Preserve the explicit Tailwind `@source inline(...)` entries unless you have
+  confirmed the corresponding generated utilities are no longer needed.
 
-4. **Configuration**:
-   - `theme.toml`: Theme metadata
-   - `config/_default/hugo.yaml`: Hugo module configuration
+## Verification
 
-## Customization Points
+Useful checks before finishing work:
 
-When modifying this theme, focus on:
-
-1. **Tailwind Styling**: Edit `assets/css/app.css` to change colors, typography, etc.
-2. **Layouts**: Modify HTML templates in the layouts directory
-3. **CSS**: Edit files in `assets/css/` directory when adding custom CSS outside of Tailwind
-
-## Build Process
-
-The build process uses Tailwind CSS to generate the final CSS:
-
-1. Source CSS is located in `assets/css/app.css`
-2. The output is written to `assets/css/main.css`
-3. Hugo then incorporates this stylesheet into the final site
+- `nix develop -c pnpm install --frozen-lockfile`
+- `nix develop -c pnpm run build:css`
+- `git diff --exit-code -- assets/css/main.css`
+- `nix develop -c hugo --minify`
+- From `demo/`: `nix develop .. -c hugo -b http://example.test`
+- `ruby -e 'require "yaml"; Dir[".github/workflows/*.yml"].each { |f| YAML.load_file(f) }'`
+- `nix develop -c git-cliff --config cliff.toml --bumped-version`
