@@ -25,7 +25,7 @@
         };
         corepack = pkgs.stdenv.mkDerivation {
           name = "corepack";
-          buildInputs = [ pkgs.nodejs_22 ];
+          buildInputs = [ pkgs.nodejs_24 ];
           phases = [ "installPhase" ];
           installPhase = ''
             mkdir -p $out/bin
@@ -39,7 +39,7 @@
 
           buildInputs = with pkgs; [
             hugo
-            nodejs_22
+            nodejs_24
             tailwindcss
             go # Added Go for Hugo modules
 
