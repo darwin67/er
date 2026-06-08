@@ -43,7 +43,8 @@
             tailwindcss
             go # Added Go for Hugo modules
 
-            # LSP
+            # Tools
+            git-cliff
             yaml-language-server
             vscode-json-languageserver
             tailwindcss-language-server
