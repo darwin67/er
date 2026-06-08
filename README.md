@@ -94,3 +94,19 @@ To modify the theme styles:
 
 1. Run `make dev` in the `demo` directory
 2. Run `npm run dev:css` to have the CSS generation live when changes are made to demo
+
+## Releases
+
+Pull request titles must use Conventional Commits. The release workflow uses
+git-cliff to derive the next semver tag from conventional commit history:
+
+- `feat`: minor release
+- `fix` and most other included types: patch release
+- breaking changes marked with `!` or `BREAKING CHANGE`: major release
+
+Merges to `main` create or update a `release/next` pull request with a generated
+`CHANGELOG.md` entry. Merging that release PR creates a `vX.Y.Z` tag and
+publishes a GitHub release.
+
+The release workflows require a repository secret named `RELEASE_TOKEN` with
+permission to push branches and tags.
