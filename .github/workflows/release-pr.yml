@@ -147,7 +147,7 @@ jobs:
         uses: orhun/git-cliff-action@v4
         with:
           config: cliff.toml
-          args: --tag ${{ steps.next-version.outputs.content }}
+          args: --tag ${{ steps.normalized-version.outputs.tag }}
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
@@ -157,7 +157,7 @@ jobs:
         uses: orhun/git-cliff-action@v4
         with:
           config: cliff.toml
-          args: --unreleased --tag ${{ steps.next-version.outputs.content }} --strip header
+          args: --unreleased --tag ${{ steps.normalized-version.outputs.tag }} --strip header
         env:
           OUTPUT: RELEASE_NOTES.md
           GITHUB_REPO: ${{ github.repository }}
