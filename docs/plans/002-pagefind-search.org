@@ -1,0 +1,117 @@
+#+title: Replace FlexSearch modal with Pagefind without regressing UX
+#+author: Darwin D. Wu
+#+status: Draft
+#+date: <2026-06-10 Wed>
+
+Swap the FlexSearch-powered search modal for [[https://pagefind.app/][Pagefind]],
+keeping the existing Alpine.js modal shell, keybindings, accessibility, and
+=Site.Params.search= toggle intact. The goal is a smaller initial payload and a
+simpler index pipeline (no custom Hugo output format) without any user-visible
+regression.
+
+* Background
+
+The current search stack:
+
+- =layouts/partials/search.html= renders the trigger, the modal, and inlines the
+  client code. State, focus trap, and keybindings are Alpine.js
+  (=searchbar=/=searchterm=/=searchresults=). Cmd/Ctrl+K opens, =Escape= closes,
+  Tab cycles through results, =role="dialog"= + =aria-modal=.
+- =static/js/flexsearch-0.8.2.bundle.min.js= ships FlexSearch's Document API.
+  The index is built client-side at page load from a JSON payload.
+- =layouts/_default/list.searchindex.json= emits the payload via a custom Hugo
+  =SearchIndex= output format declared in =config/_default/hugo.yaml=. Every
+  page's =title=, =summary=, and full =content= is shipped on every page load.
+- =demo/hugo.yaml= opts into =SearchIndex= for the home output so the demo site
+  exercises search.
+- The =search= site param (default =true=) gates rendering in
+  =layouts/partials/nav.html=.
+
+Two problems with the status quo:
+
+1. The whole index downloads on first visit, even for users who never open
+   search. Payload grows linearly with the site.
+2. The custom Hugo output format and template are theme-specific machinery that
+   Pagefind makes unnecessary — Pagefind indexes the rendered HTML in =public/=
+   directly.
+
+Pagefind ships a standalone binary (no Node), shards its index, fetches only
+the slices a query needs, and exposes a small JS API we can drive from the
+existing Alpine state. That fits this repo's "no Node toolchain" stance and
+keeps the modal's UX surface unchanged.
+
+* Decisions
+
+- Add =pagefind= to the Nix dev shell so =nix develop= provides the binary
+  alongside Hugo, Tailwind, Go, and =git-cliff=. Match the precedent set by
+  =tailwindcss-v4= in [[file:001-remove-npm-dependencies.org][001-remove-npm-dependencies]].
+- Lazy-load =pagefind.js= on first modal open. Cost is ~one extra round trip on
+  the first Cmd-K, which is preferable to paying bytes on every cold page load.
+- Keep the existing modal markup, Alpine state names, focus trap, keybindings,
+  ARIA attributes, =SEARCH_LIMIT = 5=, and the type-icon switch. Only the
+  engine swaps.
+- Expose page =.Type= via =data-pagefind-meta="type"= on the page wrapper so the
+  existing icon switch in =search.html:67-94= keeps working without a template
+  rewrite.
+- Use Pagefind's query-highlighted =result.excerpt= as the summary. Fall back to
+  =result.meta.summary= for the empty/short-query state so the result row looks
+  the same as today when the user hasn't typed enough to highlight.
+- Delete the =SearchIndex= output format, =list.searchindex.json=, and the
+  bundled =flexsearch-*.bundle.min.js=. No backwards-compat shim — the theme
+  has one consumer pattern and Pagefind replaces it cleanly.
+- Run Pagefind in CI after =hugo --minify= so deployed sites get an index. The
+  generated =public/pagefind/= directory is build output and should be gitignored
+  alongside =public/=.
+
+* Checklist
+
+- [ ] Add a =pagefind= derivation (or use the nixpkgs package if a recent
+  version is available) to =flake.nix= and wire it into the dev shell. Confirm
+  =nix develop -c pagefind --version= works on darwin/linux × x64/arm64.
+- [ ] Annotate the base layout: add =data-pagefind-body= to the main content
+  wrapper, =data-pagefind-meta="title"= and =data-pagefind-meta="summary"= where
+  Pagefind would otherwise guess, and =data-pagefind-meta="type"= driven by
+  Hugo's =.Type=. Add =data-pagefind-ignore= to nav and footer partials so
+  chrome doesn't pollute results.
+- [ ] Remove the =SearchIndex= output format block from
+  =config/_default/hugo.yaml=, delete =layouts/_default/list.searchindex.json=,
+  and remove =SearchIndex= from =demo/hugo.yaml='s home outputs.
+- [ ] Delete =static/js/flexsearch-0.8.2.bundle.min.js=.
+- [ ] Rewrite the inline script in =layouts/partials/search.html= to lazy-import
+  =/pagefind/pagefind.js= on first modal open, debounce =searchterm= input, run
+  =pagefind.search(query)=, take the first 5 results, and map each to
+  ={ href, title, summary, type }= matching the existing render shape. Preserve
+  every Alpine directive, keybinding, focus trap, ARIA attribute, and the
+  empty-state messaging.
+- [ ] Update =Makefile=: add an =index= target that runs =pagefind --site public=
+  and have =build= depend on it after =hugo --minify=. Update =serve= guidance
+  in the README if local dev needs the index (probably keep =serve= unchanged
+  and document the =build= + static-serve flow for search testing).
+- [ ] Update the release / build GitHub workflow(s) to invoke Pagefind after
+  Hugo builds, so deploy artifacts include =public/pagefind/=.
+- [ ] Add =public/pagefind/= to =.gitignore= if =public/= isn't already covered.
+- [ ] Document the new flow in =CLAUDE.md= (Development Commands → Building,
+  Verification): mention =make index= and that search requires the built
+  =public/pagefind/= directory to be served alongside the site.
+- [ ] Run =nix develop -c make build && pagefind --site public= at the theme
+  root and inside =demo/=. Serve =public/= statically and confirm the modal
+  returns hits.
+- [ ] Manual UX verification with the [[file:../../scripts/check-plan-status.sh][check-plan-status]] companion =verify=
+  skill or by hand: Cmd-K opens, Escape closes, Tab cycles results, screen
+  reader announces the dialog, empty state renders, =Site.Params.search: false=
+  hides the trigger.
+- [ ] Run =./scripts/check-plan-status.sh= and confirm it passes.
+
+* Out of scope
+
+- Pagefind UI (=pagefind-ui.js= / =pagefind-modular-ui=). We're keeping the
+  Alpine-driven modal so styling stays consistent with the rest of the theme
+  and we don't ship a second component system.
+- Multi-language indexing. The current theme is single-language; Pagefind
+  supports =data-pagefind-language= but that's a follow-up if/when the theme
+  grows i18n.
+- Search analytics, filters, or faceting. Pagefind supports filters via
+  =data-pagefind-filter=, but the existing UX has none — adding them is a
+  design change, not a migration.
+- Replacing Alpine.js with a different reactive layer. The modal already works;
+  Alpine isn't the bottleneck.
