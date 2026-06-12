@@ -14,6 +14,7 @@ Checkout the [demo](https://er-6wj.pages.dev).
 - Table of contents for your posts (from [tocbot](https://github.com/tscanlin/tocbot))
 <!-- - Renders Math with KaTeX -->
 - Tag cloud on big screens
+- Optional Pagefind search
 - Styled with TailwindCSS
 
 ## Installation
@@ -88,13 +89,52 @@ Tag cloud is shown by default. To disable, add `showTagCloud = false` under the 
 
 <!-- Back to top button is also shown by default. To disable, add `showScrollToTop = false` under `[params]`. -->
 
+### Search
+
+Search is disabled by default. To enable the search UI, set `search = true`
+under `[params]`:
+
+```toml
+[params]
+search = true
+```
+
+Search uses [Pagefind](https://pagefind.app/), so enabling the UI also requires
+your site build to generate and deploy a Pagefind index. Run Pagefind after
+Hugo renders the site:
+
+```sh
+hugo --minify
+pagefind --site public --force-language en
+```
+
+Deploy `public/pagefind/` with the rest of `public/`. If `search = true` is set
+but `public/pagefind/` is missing, the search assets or index files will 404.
+
 ## Development
+
+The preferred development shell is `nix develop`; it provides Hugo, Pagefind,
+Watchexec, Tailwind, Go, and release tooling.
+
+To run the demo site from the repository root:
+
+```sh
+make dev
+```
+
+This builds the demo into `demo/public/`, rebuilds its Pagefind index, and then
+starts Hugo's live-reload server at `http://127.0.0.1:1414/`. While the server
+runs, a file watcher refreshes `demo/public/pagefind/` after content, template,
+asset, or config changes.
 
 To modify the theme styles:
 
-1. Run `make dev` in the `demo` directory
+1. Run `make dev` from the repo root
 2. Run `make css-watch` from the repo root to rebuild CSS live as the demo
    templates change
+
+At the theme root, `make build` runs `pagefind --site public --force-language
+en` after Hugo and writes `public/pagefind/` for the root fixture.
 
 ## Releases
 

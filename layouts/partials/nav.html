@@ -1,4 +1,4 @@
-<nav class="flex justify-between box-border p-3 pl-3 lg:pl-3 pr-2 lg:pr-2 mt-1 md:mt-0" id="navbar">
+<nav class="flex justify-between box-border p-3 pl-3 lg:pl-3 pr-2 lg:pr-2 mt-1 md:mt-0" id="navbar" data-pagefind-ignore>
   <div class="flex space-x-5">
     <span class="text-white">
       <a
@@ -20,7 +20,7 @@
     {{ end }}
   </div>
 
-  {{ if .Site.Params.search | default true }}
+  {{ if eq .Site.Params.search true }}
   {{ partial "search.html" }}
   {{ end }}
 </nav>

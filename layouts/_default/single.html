@@ -1,5 +1,5 @@
 {{ define "main" }}
-<main class="mx-auto my-4 max-w-2xl px-3 lg:px-0">
+<main class="mx-auto my-4 max-w-2xl px-3 lg:px-0" data-pagefind-body>
   <div class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans">
     {{ .Title }}
   </div>
@@ -23,7 +23,7 @@
 </main>
 {{ partial "table-of-contents" . }}
 
-<div class="text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
+<div class="text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0" data-pagefind-ignore>
   {{ partial "back-to-top.html" . }}<br>
   <p class="mb-0 mt-2">
   {{ with .PrevInSection }}{{ if . }}<a href="{{ .Permalink }}">prev post</a>{{ end }}{{ end }}

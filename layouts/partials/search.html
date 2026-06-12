@@ -1,167 +1,276 @@
-<div class="flex mx-4 relative" x-data="{ searchbar: false, searchterm: '', searchresults: [], index: createIndex() }">
-  <button
-    type="button"
-    class="flex flex-row gap-3 py-1.5 px-3 outline-0 text-sm rounded md:relative border border-solid border-[var(--color-border)] text-[var(--color-body-text)] bg-[var(--color-background-alt)] caret-[var(--color-body-text)] hover:border-[var(--color-background-alt)] focus:border-[var(--color-main-light)] placeholder:text-[var(--color-neutral-accent)] items-center justify-between"
-    @click="searchbar = true"
-  >
-    <div class="flex flex-row gap-1 items-center text-[var(--color-body-text)]">
-      <!-- search icon -->
-      <svg class="pointer-events-none font-semibold h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+{{- $pagefindPath := "/pagefind/" | relURL -}}
+<link rel="stylesheet" href="{{ "/pagefind/pagefind-component-ui.css" | relURL }}">
+
+<div class="er-pagefind-search flex mx-4 relative" data-pagefind-ignore>
+  <pagefind-config
+    bundle-path="{{ $pagefindPath }}"
+    base-url="{{ "" | relURL }}"
+    excerpt-length="24"
+  ></pagefind-config>
+
+  <pagefind-modal-trigger
+    placeholder="Search"
+    shortcut="mod+k"
+  ></pagefind-modal-trigger>
+
+  <pagefind-modal reset-on-close>
+    <pagefind-modal-header>
+      <pagefind-input
+        placeholder="Search..."
+        debounce="150"
+        autofocus
+      ></pagefind-input>
+    </pagefind-modal-header>
+
+    <pagefind-modal-body>
+      <pagefind-summary default-message=""></pagefind-summary>
+      <pagefind-results max-results="5" hide-sub-results>
+        <script type="text/pagefind-template">
+          {{ `<li class="pf-result er-search-result">
+  <a class="pf-result-card er-search-result-card pf-result-link" href="{{ meta.url | default(url) | safeUrl }}">
+    <span class="er-search-result-heading">
+      {{#if eq(meta.type, "note")}}
+      <svg xmlns="http://www.w3.org/2000/svg" class="er-search-result-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2"></path>
       </svg>
-      <span>Search</span>
-    </div>
-
-    <span class="hidden text-xs md:flex md:flex-row text-center gap-1 items-center">
-      <kbd class="px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-background-alt)] font-semibold">Ctrl</kbd>
-      <kbd class="px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-background-alt)] font-semibold">K</kbd>
+      {{/if}}
+      {{#if eq(meta.type, "blog")}}
+      <svg xmlns="http://www.w3.org/2000/svg" class="er-search-result-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+        <path d="M9 13h-2"></path>
+        <path d="M13 10h-6"></path>
+        <path d="M11 7h-4"></path>
+      </svg>
+      {{/if}}
+      {{#if eq(meta.type, "project")}}
+      <svg xmlns="http://www.w3.org/2000/svg" class="er-search-result-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4"></path>
+        <path d="M14.5 5.5l4 4"></path>
+        <path d="M12 8l-5 -5l-4 4l5 5"></path>
+        <path d="M7 8l-1.5 1.5"></path>
+        <path d="M16 12l5 5l-4 4l-5 -5"></path>
+        <path d="M16 17l-1.5 1.5"></path>
+      </svg>
+      {{/if}}
+      <span class="pf-result-title er-search-result-title">{{ meta.title }}</span>
     </span>
-  </button>
-
-  <div
-    class="relative z-10"
-    role="dialog"
-    aria-modal="searchbar"
-    @keydown.ctrl.k.prevent.document="searchbar = true"
-    @keydown.meta.k.prevent.document="searchbar = true"
-    @keydown.escape.document="searchbar = false"
-    @click="searchbar = false"
-    :class="searchbar ? '' : 'hidden'"
-    x-cloak
-  >
-    <!-- Background backdrop, show/hide based on modal state. -->
-    <div class="fixed inset-0 bg-black/50"></div>
-
-    <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20">
-      <!-- Command palette, show/hide based on modal state. -->
-      <div
-        class="mx-auto max-w-3xl divide-y divide-[var(--color-border)] overflow-hidden rounded-xl bg-[var(--color-background)] shadow-2xl ring-1 ring-black ring-opacity-5"
-        x-trap.inert.noscroll.noreturn="searchbar"
-        @click.stop
-      >
-        <div class="relative">
-          <!-- search icon -->
-          <svg class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[var(--color-main)]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-          </svg>
-          <input
-            type="text"
-            class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-[var(--color-body-text)] placeholder:text-[var(--color-main)] focus:ring-0 sm:text-sm"
-            placeholder="Search..."
-            autocomplete="off"
-            @keydown.debounce="searchterm = $event.target.value; searchresults = searchItems($event.target.value, index)"
-          >
-        </div>
-
-        <!-- Results, show/hide based on command palette state. -->
-        <ul
-          class="max-h-[36rem] scroll-py-10 scroll-pb-2 overflow-y-auto p-0"
-          :class="searchresults.length === 0 && searchterm.length > 0 ? 'hidden' : ''"
-          x-ref="resultlist"
-          @keydown.tab.document="$focus.wrap().next()"
-        >
-          <template x-for="item in searchresults">
-            <li :key="item.id">
-              <a :href="item.href" class="flex flex-col gap-2 text-base p-4 border-0 outline-0 hover:bg-[var(--color-border)] focus:bg-[var(--color-border)]">
-                <div class="flex flex-row gap-2 text-[var(--color-heading-text)]">
-                  <template x-if="item.type === 'note'">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2"></path>
-                    </svg>
-                  </template>
-
-                  <template x-if="item.type === 'blog'">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-align-box-left-top w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
-                      <path d="M9 13h-2"></path>
-                      <path d="M13 10h-6"></path>
-                      <path d="M11 7h-4"></path>
-                    </svg>
-                  </template>
-
-                  <template x-if="item.type === 'project'">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tools w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4"></path>
-                      <path d="M14.5 5.5l4 4"></path>
-                      <path d="M12 8l-5 -5l-4 4l5 5"></path>
-                      <path d="M7 8l-1.5 1.5"></path>
-                      <path d="M16 12l5 5l-4 4l-5 -5"></path>
-                      <path d="M16 17l-1.5 1.5"></path>
-                    </svg>
-                  </template>
-
-                  <div x-text="item.title" class="font-semibold"></div>
-                </div>
-
-                <div x-text="item.summary" class="text-xs pl-8 text-[var(--color-neutral-accent)]"></div>
-              </a>
-            </li>
-          </template>
-        </ul>
-
-        <!-- Empty state, show/hide based on command palette state. -->
-        <div
-          class="px-6 py-14 text-center text-sm sm:px-14"
-          :class="searchresults.length === 0 && searchterm.length > 0 ? '' : 'hidden'"
-        >
-          <svg class="mx-auto h-6 w-6 text-[var(--color-body-text)]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-          </svg>
-
-          <p class="mt-4 font-semibold text-[var(--color-body-text)]">No results found</p>
-          <p class="mt-2 text-[var(--color-body-text)]">We couldn’t find anything with that term. Please try again.</p>
-        </div>
-
-        {{ partial "search-footer.html" }}
-      </div>
-    </div>
+    {{#if excerpt}}
+    <span class="pf-result-excerpt er-search-result-excerpt">{{+ excerpt +}}</span>
+    {{/if}}
+  </a>
+</li>` | safeHTML }}
+        </script>
+        <script type="text/pagefind-template" data-template="placeholder">
+          {{ `<li class="pf-result er-search-result" aria-hidden="true">
+  <div class="pf-result-card er-search-result-card">
+    <span class="pf-result-title pf-skeleton pf-skeleton-title er-search-placeholder-title"></span>
+    <span class="pf-result-excerpt pf-skeleton pf-skeleton-excerpt er-search-placeholder-excerpt"></span>
   </div>
+</li>` | safeHTML }}
+        </script>
+      </pagefind-results>
+    </pagefind-modal-body>
+
+    <pagefind-modal-footer>
+      <pagefind-keyboard-hints></pagefind-keyboard-hints>
+    </pagefind-modal-footer>
+  </pagefind-modal>
 </div>
 
-<!-- import flexsearch before initialization -->
-<script src="{{ "js/flexsearch-0.8.2.bundle.min.js" | absURL }}"></script>
-<script>
-  const SEARCH_LIMIT = 5
-
-  // Initiate and register all contents from "/searchindex.json"
-  const createIndex = () => {
-    const index = new FlexSearch.Document({
-      tokenize: "forward",
-      cache: 100,
-      document: {
-        id: "id",
-        store: ["href", "title", "summary", "type"],
-        index: ["title", "summary", "content"],
-      },
-    })
-
-    // built by template /layouts/_default/list.searchindex.json
-    fetch("/searchindex.json")
-      .then(resp => resp.json())
-      .then(contentList => {
-        contentList.forEach(content => {
-          // console.log(content)
-          index.add(content)
-        })
-        console.log("Indexed contents")
-      })
-      .catch(err => console.error(err))
-
-    return index
+<style>
+  .er-pagefind-search {
+    --pf-text: var(--color-body-text);
+    --pf-text-secondary: var(--color-neutral-accent);
+    --pf-text-muted: var(--color-body-text);
+    --pf-background: var(--color-background);
+    --pf-border: var(--color-border);
+    --pf-border-focus: var(--color-main-light);
+    --pf-hover: var(--color-border);
+    --pf-mark: var(--color-main);
+    --pf-skeleton: var(--color-background-alt);
+    --pf-skeleton-shine: var(--color-border);
+    --pf-outline-focus: var(--color-main-light);
+    --pf-font: var(--font-sans);
+    --pf-input-height: 36px;
+    --pf-input-font-size: 16px;
+    --pf-summary-font-size: 12px;
+    --pf-result-title-font-size: 16px;
+    --pf-result-excerpt-font-size: 12px;
+    --pf-results-gap: 0;
+    --pf-border-radius: 4px;
+    --pf-modal-backdrop: rgb(0 0 0 / 0.5);
+    --pf-modal-max-width: 48rem;
+    --pf-modal-max-height: min(80dvh, 42rem);
+    --pf-modal-top: 5rem;
   }
 
-  const searchItems = (term, index) => {
-    const results = index.search(term, SEARCH_LIMIT, { enrich: true })
-    const dedup = {}
+  .er-pagefind-search .pf-trigger-btn {
+    height: auto !important;
+    gap: 0.75rem !important;
+    justify-content: space-between !important;
+    padding: 0.375rem 0.75rem !important;
+    background: var(--color-background-alt) !important;
+    border-color: var(--color-border) !important;
+    border-radius: 0.25rem !important;
+    color: var(--color-body-text) !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
 
-    for (const result of results.flatMap(r => r.result)) {
-      if (!dedup[result.id]) dedup[result.id] = result.doc
+  .er-pagefind-search .pf-trigger-btn:hover {
+    border-color: var(--color-background-alt) !important;
+  }
+
+  .er-pagefind-search .pf-trigger-icon {
+    width: 1rem !important;
+    height: 1rem !important;
+    background: var(--color-body-text) !important;
+  }
+
+  .er-pagefind-search .pf-trigger-text {
+    color: var(--color-body-text) !important;
+  }
+
+  .er-pagefind-search .pf-trigger-shortcut {
+    gap: 0.25rem !important;
+  }
+
+  .er-pagefind-search .pf-trigger-key,
+  .er-pagefind-search .pf-keyboard-key {
+    min-width: auto !important;
+    height: auto !important;
+    padding: 0.125rem 0.375rem !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 0.25rem !important;
+    background: var(--color-background-alt) !important;
+    color: var(--color-body-text) !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    line-height: 1rem !important;
+  }
+
+  .er-pagefind-search dialog.pf-modal {
+    border-radius: 0.75rem !important;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
+  }
+
+  .er-pagefind-search pagefind-modal-header,
+  .er-pagefind-search .pf-modal-header {
+    padding: 0 !important;
+    border-bottom-color: var(--color-border) !important;
+  }
+
+  .er-pagefind-search pagefind-modal-header .pf-input {
+    height: 3rem !important;
+    color: var(--color-body-text) !important;
+    font-size: 0.875rem !important;
+  }
+
+  .er-pagefind-search pagefind-modal-header .pf-input::placeholder {
+    color: var(--color-main) !important;
+  }
+
+  .er-pagefind-search pagefind-modal-body,
+  .er-pagefind-search .pf-modal-body {
+    max-height: 36rem !important;
+    padding: 0 !important;
+  }
+
+  .er-pagefind-search .pf-summary {
+    margin: 0 !important;
+    padding: 0.5rem 1rem !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    color: var(--color-neutral-accent) !important;
+    font-size: 0.75rem !important;
+  }
+
+  .er-pagefind-search .pf-summary:empty {
+    display: none !important;
+  }
+
+  .er-pagefind-search .pf-results {
+    max-height: 36rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .er-pagefind-search .er-search-result {
+    margin: 0 !important;
+    list-style: none !important;
+  }
+
+  .er-pagefind-search .er-search-result-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    padding: 1rem !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--color-heading-text) !important;
+    text-decoration: none !important;
+  }
+
+  .er-pagefind-search .er-search-result-card:hover,
+  .er-pagefind-search .er-search-result-card:focus,
+  .er-pagefind-search .er-search-result-card:focus-visible,
+  .er-pagefind-search .er-search-result-card[data-pf-selected] {
+    background: var(--color-border) !important;
+    color: var(--color-heading-text) !important;
+  }
+
+  .er-pagefind-search .er-search-result-heading {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+
+  .er-pagefind-search .er-search-result-icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    flex: 0 0 1.5rem !important;
+  }
+
+  .er-pagefind-search .er-search-result-title {
+    margin: 0 !important;
+    color: var(--color-heading-text) !important;
+    font-weight: 600 !important;
+    line-height: 1.5rem !important;
+  }
+
+  .er-pagefind-search .er-search-result-excerpt {
+    display: block !important;
+    margin: 0 !important;
+    padding-left: 2rem !important;
+    color: var(--color-neutral-accent) !important;
+    line-height: 1rem !important;
+  }
+
+  .er-pagefind-search .er-search-result-excerpt mark {
+    background: transparent !important;
+    color: var(--color-main) !important;
+    font-weight: 600 !important;
+  }
+
+  .er-pagefind-search pagefind-modal-footer,
+  .er-pagefind-search .pf-modal-footer {
+    padding: 0.75rem 1rem !important;
+    border-top-color: var(--color-border) !important;
+    background: var(--color-background) !important;
+    color: var(--color-neutral-accent) !important;
+  }
+
+  @media (max-width: 767px) {
+    .er-pagefind-search .pf-trigger-shortcut {
+      display: none !important;
     }
-
-    return Object.values(dedup) || []
   }
-</script>
+</style>
 
+<script type="module" src="{{ "/pagefind/pagefind-component-ui.js" | relURL }}"></script>
