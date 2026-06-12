@@ -1,13 +1,16 @@
-#+title: Replace FlexSearch modal with Pagefind without regressing UX
+#+title: Replace FlexSearch modal with Pagefind components without regressing UX
 #+author: Darwin D. Wu
 #+status: Draft
 #+date: <2026-06-10 Wed>
 
 Swap the FlexSearch-powered search modal for [[https://pagefind.app/][Pagefind]],
-keeping the existing Alpine.js modal shell, keybindings, accessibility, and
+using Pagefind's Component UI where it can be styled to closely match the
+current modal. Make search an explicit opt-in feature because Pagefind requires
+a downstream post-build indexing step. When enabled, keep the existing trigger
+affordance, Cmd/Ctrl+K shortcut, accessibility expectations, and
 =Site.Params.search= toggle intact. The goal is a smaller initial payload and a
 simpler index pipeline (no custom Hugo output format) without any user-visible
-regression.
+regression for sites that opt in.
 
 * Background
 
@@ -24,7 +27,7 @@ The current search stack:
   page's =title=, =summary=, and full =content= is shipped on every page load.
 - =demo/hugo.yaml= opts into =SearchIndex= for the home output so the demo site
   exercises search.
-- The =search= site param (default =true=) gates rendering in
+- The =search= site param (default =true= today) gates rendering in
   =layouts/partials/nav.html=.
 
 Two problems with the status quo:
@@ -36,77 +39,209 @@ Two problems with the status quo:
    directly.
 
 Pagefind ships a standalone binary (no Node), shards its index, fetches only
-the slices a query needs, and exposes a small JS API we can drive from the
-existing Alpine state. That fits this repo's "no Node toolchain" stance and
-keeps the modal's UX surface unchanged.
+the slices a query needs, and includes a Component UI built from web components
+that can provide the modal, input, summary, results, and keyboard-hint pieces.
+That fits this repo's "no Node toolchain" stance and can preserve the modal's
+UX surface if the theme overrides Pagefind's default component styling instead
+of accepting the stock widget appearance.
+
+Because this repository is a Hugo theme, the generated Pagefind index is not
+owned by the theme when a downstream site imports it. The theme can provide the
+search partial, Pagefind metadata/ignore attributes, styling, and documentation,
+but each consuming Hugo site must install Pagefind in its own build environment
+and run it after Hugo has rendered that site's =public/= directory. The expected
+consumer build flow is:
+
+#+begin_src sh
+hugo --minify
+pagefind --site public --force-language en
+#+end_src
+
+That writes =public/pagefind/=, which must be deployed with the rest of
+=public/=. A plain =hugo server= run does not produce a fresh Pagefind index; to
+test search, build the site, run Pagefind, then serve the generated =public/=
+directory statically. If a consuming site enables =Site.Params.search= but does
+not ship =public/pagefind/=, the component UI and/or index files will 404. Those
+sites should either add the post-build Pagefind step or leave
+=params.search = false= / unset.
 
 * Decisions
 
 - Add =pagefind= to the Nix dev shell so =nix develop= provides the binary
   alongside Hugo, Tailwind, Go, and =git-cliff=. Match the precedent set by
   =tailwindcss-v4= in [[file:001-remove-npm-dependencies.org][001-remove-npm-dependencies]].
-- Lazy-load =pagefind.js= on first modal open. Cost is ~one extra round trip on
-  the first Cmd-K, which is preferable to paying bytes on every cold page load.
-- Keep the existing modal markup, Alpine state names, focus trap, keybindings,
-  ARIA attributes, =SEARCH_LIMIT = 5=, and the type-icon switch. Only the
-  engine swaps.
+- Change search from default-on to opt-in. Rendering should require an explicit
+  =params.search = true=, not =.Site.Params.search | default true=. This avoids
+  shipping a broken search trigger for theme consumers who have not installed
+  Pagefind or added the required post-Hugo indexing step.
+- Prefer Pagefind's Component UI over hand-rolled result rendering. Start with
+  =pagefind-modal= and its explicit internal structure
+  (=pagefind-modal-header=, =pagefind-input=, =pagefind-modal-body=,
+  =pagefind-summary=, =pagefind-results=, and optionally
+  =pagefind-keyboard-hints=). Keep the existing theme trigger if
+  =pagefind-modal-trigger= cannot be styled to match the current nav button and
+  keyboard affordance closely.
+- Load the Component UI assets from the generated Pagefind bundle
+  (=pagefind-component-ui.js= and =pagefind-component-ui.css=) in a way that
+  preserves the current payload goal. The Pagefind search index itself should
+  remain lazy via =pagefind-config= without =preload=, so only users who search
+  fetch the index shards. If first-open latency is unacceptable in manual
+  testing, allow eager loading of the component shell while keeping the index
+  lazy.
+- Compute the Pagefind bundle URL through Hugo (for example
+  ="/pagefind/" | relURL=), not as a hard-coded root path. The theme and demo
+  can be served under a subpath, and =pagefind-config='s =bundle-path= must
+  match that base path before the components initialize.
+- Match the current search design closely: same trigger placement and label,
+  same Cmd/Ctrl+K affordance, same overlay/backdrop feel, same modal width and
+  top offset, same input density, same result spacing, same empty/loading
+  states, same light/dark theme behavior, and no stock Pagefind visual reset
+  bleeding into the theme. Pagefind's CSS variables are the first styling
+  layer; add targeted CSS only where variables are insufficient.
+- Preserve the current keyboard and accessibility behavior at the UX level:
+  Cmd/Ctrl+K opens, =Escape= closes, focus lands in the input, focus remains
+  trapped while open, result navigation is keyboard usable, and screen readers
+  get a real dialog/search experience. Pagefind's modal component may replace
+  Alpine's focus trap if manual verification confirms parity.
+- Preserve =SEARCH_LIMIT = 5= behavior via Pagefind component configuration
+  where possible, or via the closest Component UI option/attribute available in
+  the pinned Pagefind version.
 - Expose page =.Type= via =data-pagefind-meta="type"= on the page wrapper so the
   existing icon switch in =search.html:67-94= keeps working without a template
   rewrite.
-- Use Pagefind's query-highlighted =result.excerpt= as the summary. Fall back to
-  =result.meta.summary= for the empty/short-query state so the result row looks
-  the same as today when the user hasn't typed enough to highlight.
+- Let Pagefind's results component render highlighted excerpts when using the
+  Component UI. If preserving the current type icon switch requires a custom
+  result template/component, render Pagefind-highlighted excerpts as sanitized
+  HTML and treat =meta= values as untrusted text.
 - Delete the =SearchIndex= output format, =list.searchindex.json=, and the
   bundled =flexsearch-*.bundle.min.js=. No backwards-compat shim — the theme
   has one consumer pattern and Pagefind replaces it cleanly.
-- Run Pagefind in CI after =hugo --minify= so deployed sites get an index. The
-  generated =public/pagefind/= directory is build output and should be gitignored
-  alongside =public/=.
+- Run Pagefind with =--force-language en= after =hugo --minify= so the index
+  language is stable even if a rendered page lacks or changes =html lang=. The
+  generated =public/pagefind/= directory is build output and is already covered
+  by the existing =public/= ignore rule.
+- Treat Pagefind indexing as a downstream build contract for theme consumers.
+  The theme cannot automatically build an importing site's index; documentation
+  must say that consumers need a Pagefind binary and a post-Hugo step that
+  deploys =public/pagefind/= alongside the site.
+
+* Notes from =../emacs-docs=
+
+=../emacs-docs= uses Pagefind successfully, but for a larger documentation site:
+
+- Its =scripts/build-pagefind.mjs= creates one bundle per manual/version with
+  =--glob=, =--output-subdir=, and =--force-language en=. This theme should not
+  copy the multi-bundle complexity, but it should copy the explicit language and
+  output-path discipline.
+- Its templates put =data-pagefind-body= only on the real article body and
+  =data-pagefind-ignore= on modal, sidebar, breadcrumbs, related links, page
+  navigation, and footer chrome. In this theme, adding =data-pagefind-body=
+  means every intended searchable layout must receive it; otherwise Pagefind
+  will skip pages without that attribute.
+- Its search UI uses Pagefind's component web UI. This plan should now copy
+  that direction, but without copying the visual treatment wholesale: initialize
+  or load the component shell at the right time, focus after it is ready, ensure
+  the modal itself is ignored by the index, and override component styles so the
+  result is visually close to the current modal.
+- Its source filters use =data-pagefind-filter= and component events. Filters
+  are unnecessary for this migration, but a future section/type filter could use
+  the same pattern if the theme later wants faceted search.
 
 * Checklist
 
+** Phase 1: Tooling and rendered HTML
+
 - [ ] Add a =pagefind= derivation (or use the nixpkgs package if a recent
-  version is available) to =flake.nix= and wire it into the dev shell. Confirm
-  =nix develop -c pagefind --version= works on darwin/linux × x64/arm64.
+  version is available) to =flake.nix= and wire it into the dev shell. Prefer a
+  pinned standalone binary or pinned package version, matching the
+  =tailwindcssV4= precedent. Confirm =nix develop -c pagefind --version= works
+  on darwin/linux and x64/arm64.
+- [ ] Make search opt-in in the theme configuration and templates. Update
+  =layouts/partials/nav.html= so the search partial renders only when
+  =params.search = true= is set explicitly. Update any theme/demo config needed
+  to keep the demo exercising search.
 - [ ] Annotate the base layout: add =data-pagefind-body= to the main content
-  wrapper, =data-pagefind-meta="title"= and =data-pagefind-meta="summary"= where
-  Pagefind would otherwise guess, and =data-pagefind-meta="type"= driven by
-  Hugo's =.Type=. Add =data-pagefind-ignore= to nav and footer partials so
-  chrome doesn't pollute results.
+  wrapper(s), =data-pagefind-meta="title"= and =data-pagefind-meta="summary"=
+  where Pagefind would otherwise guess, and =data-pagefind-meta="type"= driven
+  by Hugo's =.Type=. Check every layout that should remain searchable after
+  introducing =data-pagefind-body=, especially home/list pages. Add
+  =data-pagefind-ignore= to the search modal, table of contents, back-to-top,
+  prev/next links, nav, and footer partials so chrome doesn't pollute results.
 - [ ] Remove the =SearchIndex= output format block from
   =config/_default/hugo.yaml=, delete =layouts/_default/list.searchindex.json=,
   and remove =SearchIndex= from =demo/hugo.yaml='s home outputs.
 - [ ] Delete =static/js/flexsearch-0.8.2.bundle.min.js=.
-- [ ] Rewrite the inline script in =layouts/partials/search.html= to lazy-import
-  =/pagefind/pagefind.js= on first modal open, debounce =searchterm= input, run
-  =pagefind.search(query)=, take the first 5 results, and map each to
-  ={ href, title, summary, type }= matching the existing render shape. Preserve
-  every Alpine directive, keybinding, focus trap, ARIA attribute, and the
-  empty-state messaging.
+
+** Phase 2: Search component migration
+
+- [ ] Rewrite =layouts/partials/search.html= around Pagefind's Component UI.
+  Include a Hugo-generated =pagefind-config= with =bundle-path= computed through
+  =relURL= so subpath deployments work. Prefer an explicit modal structure over
+  the empty default:
+  =pagefind-modal=, =pagefind-modal-header=, =pagefind-input=,
+  =pagefind-modal-body=, =pagefind-summary=, =pagefind-results=, and
+  =pagefind-modal-footer= / =pagefind-keyboard-hints= only if they match the
+  current UX. Keep the existing theme trigger if needed and wire Cmd/Ctrl+K to
+  open the Pagefind modal.
+- [ ] Style the Pagefind components to closely match the current modal. Use
+  Pagefind Component UI CSS variables for colors, typography, border radius,
+  focus outline, modal width/top/max-height, hover states, marks, and dark mode.
+  Add scoped CSS for result rows, type icons, empty/loading text, and trigger
+  parity only where variables or component attributes are not enough.
+- [ ] Decide whether the current type-icon switch is worth preserving. If yes,
+  expose =.Type= as Pagefind metadata and implement it through Pagefind's custom
+  component/template path or a small post-render enhancement. If that creates
+  brittle coupling to Pagefind internals, explicitly drop the icons only after
+  comparing screenshots and accepting the UX change.
+- [ ] Keep the search payload lazy. Do not set =preload= on =pagefind-config=
+  unless verification shows first-search latency is unacceptable. It is
+  acceptable to load/register the Component UI shell before the first search if
+  that is necessary for Cmd/Ctrl+K and focus behavior.
+
+** Phase 3: Build and documentation
+
 - [ ] Update =Makefile=: add an =index= target that runs =pagefind --site public=
-  and have =build= depend on it after =hugo --minify=. Update =serve= guidance
-  in the README if local dev needs the index (probably keep =serve= unchanged
-  and document the =build= + static-serve flow for search testing).
-- [ ] Update the release / build GitHub workflow(s) to invoke Pagefind after
-  Hugo builds, so deploy artifacts include =public/pagefind/=.
-- [ ] Add =public/pagefind/= to =.gitignore= if =public/= isn't already covered.
-- [ ] Document the new flow in =CLAUDE.md= (Development Commands → Building,
-  Verification): mention =make index= and that search requires the built
+  =--force-language en= and have =build= depend on it after =hugo --minify=.
+  Update =serve= guidance in the README if local dev needs the index (probably
+  keep =serve= unchanged and document the =build= + static-serve flow for search
+  testing).
+- [ ] Update any release / build GitHub workflow(s) that produce a deployable
+  site artifact to invoke Pagefind after Hugo builds, so artifacts include
+  =public/pagefind/=. The current release-note workflows do not build the site;
+  if no deploy workflow exists here, document that downstream consumers must run
+  =make build= or =make index= after their Hugo build.
+- [ ] Keep =.gitignore= as-is if =public/= remains ignored; only add a
+  =public/pagefind/= line if the ignore rules change.
+- [ ] Document the new flow in =AGENTS.md= and =README.md= (Development Commands
+  / Development): mention =make index= and that search requires the built
   =public/pagefind/= directory to be served alongside the site.
-- [ ] Run =nix develop -c make build && pagefind --site public= at the theme
-  root and inside =demo/=. Serve =public/= statically and confirm the modal
-  returns hits.
+- [ ] Document downstream theme-consumer requirements in =README.md=: the theme
+  supplies search markup and styling, but each importing Hugo site must install
+  Pagefind, run =pagefind --site public --force-language en= after its Hugo
+  build, deploy =public/pagefind/=, and set =params.search = true= only after
+  that build step is available. Mention that search is disabled by default.
+
+** Phase 4: Verification
+
+- [ ] Run =nix develop -c make build= at the theme root. From =demo/=, run
+  =nix develop .. -c hugo -b http://example.test= and then
+  =nix develop .. -c pagefind --site public --force-language en=. Serve each
+  =public/= directory statically and confirm the modal returns hits.
 - [ ] Manual UX verification with the [[file:../../scripts/check-plan-status.sh][check-plan-status]] companion =verify=
-  skill or by hand: Cmd-K opens, Escape closes, Tab cycles results, screen
-  reader announces the dialog, empty state renders, =Site.Params.search: false=
-  hides the trigger.
+  skill or by hand: Cmd-K opens, Escape closes, focus starts in the input, Tab
+  remains inside the modal, keyboard result navigation works, screen reader
+  announces the dialog/search UI, empty and loading states render, light/dark
+  styling matches the theme, result count stays near the current 5-result
+  density, unset/false =Site.Params.search= hides the trigger,
+  =Site.Params.search: true= shows it, and desktop/mobile screenshots are close
+  to the existing design.
 - [ ] Run =./scripts/check-plan-status.sh= and confirm it passes.
 
 * Out of scope
 
-- Pagefind UI (=pagefind-ui.js= / =pagefind-modular-ui=). We're keeping the
-  Alpine-driven modal so styling stays consistent with the rest of the theme
-  and we don't ship a second component system.
+- Pagefind's older Default UI (=pagefind-ui.js=). Prefer the newer Component UI
+  (=pagefind-component-ui.js=) because it supports composing the modal from
+  smaller web components while keeping styling close to the existing theme.
 - Multi-language indexing. The current theme is single-language; Pagefind
   supports =data-pagefind-language= but that's a follow-up if/when the theme
   grows i18n.
