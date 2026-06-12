@@ -174,7 +174,7 @@ sites should either add the post-build Pagefind step or leave
 
 ** Phase 2: Search component migration
 
-- [ ] Rewrite =layouts/partials/search.html= around Pagefind's Component UI.
+- [X] Rewrite =layouts/partials/search.html= around Pagefind's Component UI.
   Include a Hugo-generated =pagefind-config= with =bundle-path= computed through
   =relURL= so subpath deployments work. Prefer an explicit modal structure over
   the empty default:
@@ -183,17 +183,17 @@ sites should either add the post-build Pagefind step or leave
   =pagefind-modal-footer= / =pagefind-keyboard-hints= only if they match the
   current UX. Keep the existing theme trigger if needed and wire Cmd/Ctrl+K to
   open the Pagefind modal.
-- [ ] Style the Pagefind components to closely match the current modal. Use
+- [X] Style the Pagefind components to closely match the current modal. Use
   Pagefind Component UI CSS variables for colors, typography, border radius,
   focus outline, modal width/top/max-height, hover states, marks, and dark mode.
   Add scoped CSS for result rows, type icons, empty/loading text, and trigger
   parity only where variables or component attributes are not enough.
-- [ ] Decide whether the current type-icon switch is worth preserving. If yes,
+- [X] Decide whether the current type-icon switch is worth preserving. If yes,
   expose =.Type= as Pagefind metadata and implement it through Pagefind's custom
   component/template path or a small post-render enhancement. If that creates
   brittle coupling to Pagefind internals, explicitly drop the icons only after
   comparing screenshots and accepting the UX change.
-- [ ] Keep the search payload lazy. Do not set =preload= on =pagefind-config=
+- [X] Keep the search payload lazy. Do not set =preload= on =pagefind-config=
   unless verification shows first-search latency is unacceptable. It is
   acceptable to load/register the Component UI shell before the first search if
   that is necessary for Cmd/Ctrl+K and focus behavior.
