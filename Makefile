@@ -13,3 +13,8 @@ css-watch:
 .PHONY: build
 build: css
 	hugo --minify
+	$(MAKE) index
+
+.PHONY: index
+index:
+	pagefind --site public --force-language en
