@@ -1,4 +1,4 @@
-.PHONY: css css-watch build serve
+.PHONY: css css-watch build serve dev
 
 css:
 	tailwindcss -i ./assets/css/app.css -o ./assets/css/main.css
@@ -11,3 +11,6 @@ build: css
 
 serve:
 	hugo server --disableFastRender
+
+dev:
+	nix develop -c hugo server --source demo --disableFastRender
