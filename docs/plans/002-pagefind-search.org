@@ -200,22 +200,23 @@ sites should either add the post-build Pagefind step or leave
 
 ** Phase 3: Build and documentation
 
-- [ ] Update =Makefile=: add an =index= target that runs =pagefind --site public=
+- [X] Update =Makefile=: add an =index= target that runs =pagefind --site public=
   =--force-language en= and have =build= depend on it after =hugo --minify=.
-  Update =serve= guidance in the README if local dev needs the index (probably
-  keep =serve= unchanged and document the =build= + static-serve flow for search
-  testing).
-- [ ] Update any release / build GitHub workflow(s) that produce a deployable
+  Update local development guidance in the README: =hugo server= is still useful
+  for layout checks, but search testing needs a Hugo build, =pagefind=, and a
+  static server for the generated =public/= directory.
+- [X] Update any release / build GitHub workflow(s) that produce a deployable
   site artifact to invoke Pagefind after Hugo builds, so artifacts include
   =public/pagefind/=. The current release-note workflows do not build the site;
   if no deploy workflow exists here, document that downstream consumers must run
-  =make build= or =make index= after their Hugo build.
-- [ ] Keep =.gitignore= as-is if =public/= remains ignored; only add a
+  =make build= or =make index= after their Hugo build. No deploy workflow exists
+  in this repository, so this is documented instead of changing workflows.
+- [X] Keep =.gitignore= as-is if =public/= remains ignored; only add a
   =public/pagefind/= line if the ignore rules change.
-- [ ] Document the new flow in =AGENTS.md= and =README.md= (Development Commands
+- [X] Document the new flow in =AGENTS.md= and =README.md= (Development Commands
   / Development): mention =make index= and that search requires the built
   =public/pagefind/= directory to be served alongside the site.
-- [ ] Document downstream theme-consumer requirements in =README.md=: the theme
+- [X] Document downstream theme-consumer requirements in =README.md=: the theme
   supplies search markup and styling, but each importing Hugo site must install
   Pagefind, run =pagefind --site public --force-language en= after its Hugo
   build, deploy =public/pagefind/=, and set =params.search = true= only after

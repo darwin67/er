@@ -14,6 +14,7 @@ Checkout the [demo](https://er-6wj.pages.dev).
 - Table of contents for your posts (from [tocbot](https://github.com/tscanlin/tocbot))
 <!-- - Renders Math with KaTeX -->
 - Tag cloud on big screens
+- Optional Pagefind search
 - Styled with TailwindCSS
 
 ## Installation
@@ -88,13 +89,59 @@ Tag cloud is shown by default. To disable, add `showTagCloud = false` under the 
 
 <!-- Back to top button is also shown by default. To disable, add `showScrollToTop = false` under `[params]`. -->
 
+### Search
+
+Search is disabled by default. To enable the search UI, set `search = true`
+under `[params]`:
+
+```toml
+[params]
+search = true
+```
+
+Search uses [Pagefind](https://pagefind.app/), so enabling the UI also requires
+your site build to generate and deploy a Pagefind index. Run Pagefind after
+Hugo renders the site:
+
+```sh
+hugo --minify
+pagefind --site public --force-language en
+```
+
+Deploy `public/pagefind/` with the rest of `public/`. If `search = true` is set
+but `public/pagefind/` is missing, the search assets or index files will 404.
+
 ## Development
+
+The preferred development shell is `nix develop`; it provides Hugo, Pagefind,
+Tailwind, Go, and release tooling.
+
+To run the demo site from the repository root:
+
+```sh
+make dev
+```
 
 To modify the theme styles:
 
-1. Run `make dev` in the `demo` directory
+1. Run `make dev` from the repo root
 2. Run `make css-watch` from the repo root to rebuild CSS live as the demo
    templates change
+
+To test search locally in the demo, build the demo site, generate its Pagefind
+index, and serve the generated `demo/public/` directory with any static file
+server:
+
+```sh
+cd demo
+hugo -b http://127.0.0.1:4173/
+pagefind --site public --force-language en
+python3 -m http.server --directory public 4173
+```
+
+`hugo server` does not create a fresh Pagefind index. At the theme root,
+`make build` runs `pagefind --site public --force-language en` after Hugo and
+writes `public/pagefind/` for the root fixture.
 
 ## Releases
 
