@@ -1,0 +1,28 @@
+search:
+  other: Search
+searchPlaceholder:
+  other: Search...
+languageSwitcher:
+  other: Languages
+tags:
+  other: tags
+categories:
+  other: categories
+page:
+  other: Page
+of:
+  other: of
+olderPosts:
+  other: Older Posts
+newerPosts:
+  other: Newer Posts
+prevPost:
+  other: prev post
+nextPost:
+  other: next post
+notFound:
+  other: Sorry, but nothing exists here.
+findSomething:
+  other: Find something
+interestingToRead:
+  other: interesting to read.

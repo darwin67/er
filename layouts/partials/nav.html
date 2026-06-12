@@ -4,7 +4,7 @@
       <a
         id="site-title"
         class="text-lg font-semibold uppercase no-underline hover:opacity-80 bg-[var(--color-main)] py-1 px-2 rounded text-white"
-        href='{{ "" | relURL }}'
+        href='{{ "" | relLangURL }}'
         title='{{ .Site.Title }}'
       >
         {{ .Site.Title }}
@@ -14,13 +14,30 @@
     {{ with .Site.Menus.main }}
     <div class="hidden md:flex md:space-x-3 mt-2 md:mt-0 py-1 font-bold">
       {{ range . }}
-      <a class="hover:opacity-80 text-gray-700 text-sm inline-block uppercase tracking-wide" href='{{ .URL }}' title="{{ .Name }}">{{ .Name }}</a>
+      {{- $url := .URL -}}
+      {{- if .Page -}}
+        {{- $url = .Page.RelPermalink -}}
+      {{- else if not (or (strings.HasPrefix .URL "http://") (strings.HasPrefix .URL "https://") (strings.HasPrefix .URL "#")) -}}
+        {{- $url = .URL | relLangURL -}}
+      {{- end -}}
+      <a class="hover:opacity-80 text-gray-700 text-sm inline-block uppercase tracking-wide" href='{{ $url }}' title="{{ .Name }}">{{ if .Identifier }}{{ or (T .Identifier) .Name }}{{ else }}{{ .Name }}{{ end }}</a>
       {{ end }}
     </div>
     {{ end }}
   </div>
 
+  {{ if gt (len hugo.Sites) 1 }}
+  <div class="hidden md:flex md:space-x-2 mt-2 md:mt-0 py-1 font-bold text-xs uppercase tracking-wide" aria-label="{{ T "languageSwitcher" }}">
+    {{ range hugo.Sites }}
+    {{ $translation := where $.AllTranslations "Lang" .Language.Lang }}
+    {{ $href := .Home.RelPermalink }}
+    {{ with index $translation 0 }}{{ $href = .RelPermalink }}{{ end }}
+    <a class="hover:opacity-80 {{ if eq $.Site.Language.Lang .Language.Lang }}text-[var(--color-main)]{{ else }}text-gray-500{{ end }}" href="{{ $href }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}">{{ .Language.Label | default .Language.Lang }}</a>
+    {{ end }}
+  </div>
+  {{ end }}
+
   {{ if eq .Site.Params.search true }}
-  {{ partial "search.html" }}
+  {{ partial "search.html" . }}
   {{ end }}
 </nav>
