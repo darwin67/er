@@ -167,10 +167,10 @@ sites should either add the post-build Pagefind step or leave
   introducing =data-pagefind-body=, especially home/list pages. Add
   =data-pagefind-ignore= to the search modal, table of contents, back-to-top,
   prev/next links, nav, and footer partials so chrome doesn't pollute results.
-- [ ] Remove the =SearchIndex= output format block from
+- [X] Remove the =SearchIndex= output format block from
   =config/_default/hugo.yaml=, delete =layouts/_default/list.searchindex.json=,
   and remove =SearchIndex= from =demo/hugo.yaml='s home outputs.
-- [ ] Delete =static/js/flexsearch-0.8.2.bundle.min.js=.
+- [X] Delete =static/js/flexsearch-0.8.2.bundle.min.js=.
 
 ** Phase 2: Search component migration
 
