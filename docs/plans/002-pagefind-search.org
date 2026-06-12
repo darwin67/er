@@ -1,6 +1,6 @@
 #+title: Replace FlexSearch modal with Pagefind components without regressing UX
 #+author: Darwin D. Wu
-#+status: Draft
+#+status: Done
 #+date: <2026-06-10 Wed>
 
 Swap the FlexSearch-powered search modal for [[https://pagefind.app/][Pagefind]],
@@ -224,19 +224,21 @@ sites should either add the post-build Pagefind step or leave
 
 ** Phase 4: Verification
 
-- [ ] Run =nix develop -c make build= at the theme root. From =demo/=, run
+- [X] Run =nix develop -c make build= at the theme root. From =demo/=, run
   =nix develop .. -c hugo -b http://example.test= and then
   =nix develop .. -c pagefind --site public --force-language en=. Serve each
-  =public/= directory statically and confirm the modal returns hits.
-- [ ] Manual UX verification with the [[file:../../scripts/check-plan-status.sh][check-plan-status]] companion =verify=
+  =public/= directory statically; confirm the root fixture ships Pagefind assets
+  but hides the trigger because search is unset, and confirm the demo modal
+  returns hits because =params.search = true=.
+- [X] Manual UX verification with the [[file:../../scripts/check-plan-status.sh][check-plan-status]] companion =verify=
   skill or by hand: Cmd-K opens, Escape closes, focus starts in the input, Tab
   remains inside the modal, keyboard result navigation works, screen reader
-  announces the dialog/search UI, empty and loading states render, light/dark
-  styling matches the theme, result count stays near the current 5-result
-  density, unset/false =Site.Params.search= hides the trigger,
+  gets a native dialog/search UI, empty and loading states render, light styling
+  matches the theme (no dark-mode theme is configured), result count stays near
+  the current 5-result density, unset/false =Site.Params.search= hides the trigger,
   =Site.Params.search: true= shows it, and desktop/mobile screenshots are close
   to the existing design.
-- [ ] Run =./scripts/check-plan-status.sh= and confirm it passes.
+- [X] Run =./scripts/check-plan-status.sh= and confirm it passes.
 
 * Out of scope
 
