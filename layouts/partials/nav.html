@@ -26,9 +26,10 @@
     {{ end }}
   </div>
 
-  {{ partial "language-switcher.html" . }}
-
-  {{ if eq .Site.Params.search true }}
-  {{ partial "search.html" . }}
-  {{ end }}
+  <div class="flex items-start md:items-center">
+    {{ if eq .Site.Params.search true }}
+    {{ partial "search.html" . }}
+    {{ end }}
+    {{ partial "language-switcher.html" . }}
+  </div>
 </nav>
