@@ -31,8 +31,8 @@ Use standard conventional commit formatting such as `fix(feed): support Hugo
 ### Environment
 
 - `nix develop` enters the preferred development shell. It provides Hugo,
-  Pagefind, the Tailwind v4 standalone CLI, Go, and `git-cliff`. There is no
-  Node toolchain.
+  Pagefind, Watchexec, the Tailwind v4 standalone CLI, Go, and `git-cliff`.
+  There is no Node toolchain.
 
 ### Building
 
@@ -42,9 +42,9 @@ Use standard conventional commit formatting such as `fix(feed): support Hugo
   `public/pagefind/`.
 - `make index` runs `pagefind --site public --force-language en` against an
   existing `public/` directory.
-- `make dev` runs the demo site with `hugo server --source demo
-  --disableFastRender`. It is useful for template/layout checks, but Pagefind
-  search requires a built `public/pagefind/` directory.
+- `make dev` builds the demo into `demo/public/`, rebuilds its Pagefind index,
+  starts Hugo's live-reload server, and refreshes the Pagefind index after
+  content, template, asset, or config changes.
 - `hugo --minify` builds the root theme fixture without regenerating CSS.
 - From `demo/`, `hugo -b http://example.test` builds the demo site.
 

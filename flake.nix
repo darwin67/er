@@ -76,6 +76,7 @@
             hugo
             pagefind
             tailwindcssV4
+            watchexec
             go # Added Go for Hugo modules
 
             # Tools

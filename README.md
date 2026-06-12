@@ -114,7 +114,7 @@ but `public/pagefind/` is missing, the search assets or index files will 404.
 ## Development
 
 The preferred development shell is `nix develop`; it provides Hugo, Pagefind,
-Tailwind, Go, and release tooling.
+Watchexec, Tailwind, Go, and release tooling.
 
 To run the demo site from the repository root:
 
@@ -122,26 +122,19 @@ To run the demo site from the repository root:
 make dev
 ```
 
+This builds the demo into `demo/public/`, rebuilds its Pagefind index, and then
+starts Hugo's live-reload server at `http://127.0.0.1:1414/`. While the server
+runs, a file watcher refreshes `demo/public/pagefind/` after content, template,
+asset, or config changes.
+
 To modify the theme styles:
 
 1. Run `make dev` from the repo root
 2. Run `make css-watch` from the repo root to rebuild CSS live as the demo
    templates change
 
-To test search locally in the demo, build the demo site, generate its Pagefind
-index, and serve the generated `demo/public/` directory with any static file
-server:
-
-```sh
-cd demo
-hugo -b http://127.0.0.1:4173/
-pagefind --site public --force-language en
-python3 -m http.server --directory public 4173
-```
-
-`hugo server` does not create a fresh Pagefind index. At the theme root,
-`make build` runs `pagefind --site public --force-language en` after Hugo and
-writes `public/pagefind/` for the root fixture.
+At the theme root, `make build` runs `pagefind --site public --force-language
+en` after Hugo and writes `public/pagefind/` for the root fixture.
 
 ## Releases
 

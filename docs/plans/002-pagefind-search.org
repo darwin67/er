@@ -58,12 +58,12 @@ pagefind --site public --force-language en
 #+end_src
 
 That writes =public/pagefind/=, which must be deployed with the rest of
-=public/=. A plain =hugo server= run does not produce a fresh Pagefind index; to
-test search, build the site, run Pagefind, then serve the generated =public/=
-directory statically. If a consuming site enables =Site.Params.search= but does
-not ship =public/pagefind/=, the component UI and/or index files will 404. Those
-sites should either add the post-build Pagefind step or leave
-=params.search = false= / unset.
+=public/=. A plain =hugo server= run does not produce a fresh Pagefind index;
+this repository's =make dev= wraps Hugo's live-reload server with a file watcher
+that refreshes =demo/public/pagefind/= after source changes. If a consuming site
+enables =Site.Params.search= but does not ship =public/pagefind/=, the component
+UI and/or index files will 404. Those sites should either add the post-build
+Pagefind step or leave =params.search = false= / unset.
 
 * Decisions
 
@@ -202,9 +202,9 @@ sites should either add the post-build Pagefind step or leave
 
 - [X] Update =Makefile=: add an =index= target that runs =pagefind --site public=
   =--force-language en= and have =build= depend on it after =hugo --minify=.
-  Update local development guidance in the README: =hugo server= is still useful
-  for layout checks, but search testing needs a Hugo build, =pagefind=, and a
-  static server for the generated =public/= directory.
+  Update local development guidance in the README: =make dev= starts Hugo's
+  live-reload server with a watcher that refreshes the demo Pagefind index after
+  source changes.
 - [X] Update any release / build GitHub workflow(s) that produce a deployable
   site artifact to invoke Pagefind after Hugo builds, so artifacts include
   =public/pagefind/=. The current release-note workflows do not build the site;
