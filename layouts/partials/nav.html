@@ -26,16 +26,7 @@
     {{ end }}
   </div>
 
-  {{ if gt (len hugo.Sites) 1 }}
-  <div class="hidden md:flex md:space-x-2 mt-2 md:mt-0 py-1 font-bold text-xs uppercase tracking-wide" aria-label="{{ T "languageSwitcher" }}">
-    {{ range hugo.Sites }}
-    {{ $translation := where $.AllTranslations "Lang" .Language.Lang }}
-    {{ $href := .Home.RelPermalink }}
-    {{ with index $translation 0 }}{{ $href = .RelPermalink }}{{ end }}
-    <a class="hover:opacity-80 {{ if eq $.Site.Language.Lang .Language.Lang }}text-[var(--color-main)]{{ else }}text-gray-500{{ end }}" href="{{ $href }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}">{{ .Language.Label | default .Language.Lang }}</a>
-    {{ end }}
-  </div>
-  {{ end }}
+  {{ partial "language-switcher.html" . }}
 
   {{ if eq .Site.Params.search true }}
   {{ partial "search.html" . }}

@@ -109,8 +109,11 @@ languages:
 ```
 
 The theme uses each rendered page's language for `<html lang>`,
-language-aware navigation URLs, taxonomy links, and the language switcher. Add
-translated fixed UI strings by overriding the theme's `i18n/*.yaml` keys in
+language-aware navigation URLs, taxonomy links, and the language switcher. The
+language switcher is shown when Hugo renders more than one language site, which
+the theme detects with `len hugo.Sites > 1`.
+
+Add translated fixed UI strings by overriding the theme's `i18n/*.yaml` keys in
 your site.
 
 For example, to change the default English search label, create
