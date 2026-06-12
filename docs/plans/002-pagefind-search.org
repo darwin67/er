@@ -160,7 +160,7 @@ sites should either add the post-build Pagefind step or leave
   =layouts/partials/nav.html= so the search partial renders only when
   =params.search = true= is set explicitly. Update any theme/demo config needed
   to keep the demo exercising search.
-- [ ] Annotate the base layout: add =data-pagefind-body= to the main content
+- [X] Annotate the base layout: add =data-pagefind-body= to the main content
   wrapper(s), =data-pagefind-meta="title"= and =data-pagefind-meta="summary"=
   where Pagefind would otherwise guess, and =data-pagefind-meta="type"= driven
   by Hugo's =.Type=. Check every layout that should remain searchable after

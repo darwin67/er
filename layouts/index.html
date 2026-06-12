@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
-<main class="mx-auto my-4 max-w-[650px]">
+<main class="mx-auto my-4 max-w-[650px]" data-pagefind-body>
   <ul class="list-none p-0">
     {{ range $paginator.Pages }}
     <li class="mb-2 list-none">

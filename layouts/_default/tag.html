@@ -1,5 +1,5 @@
 {{ define "main" }}
-<main class="mx-auto my-8 max-w-[650px]">
+<main class="mx-auto my-8 max-w-[650px]" data-pagefind-body>
   <h1 class="text-3xl font-semibold font-sans mb-5">
     <span class="text-gray-400">#</span> {{ .Data.Term }}
   </h1>
@@ -13,7 +13,7 @@
     {{ end }}
   </ul>
 </main>
-<div class="text-center block lg:fixed lg:bottom-8 lg:right-8 mb-4 lg:mb-0">
+<div class="text-center block lg:fixed lg:bottom-8 lg:right-8 mb-4 lg:mb-0" data-pagefind-ignore>
 {{ partial "back-to-top.html" . }}
 </div>
 {{ end }}

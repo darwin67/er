@@ -1,5 +1,5 @@
 {{ if gt .Paginator.TotalPages 1 }}
-<div class="text-center block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0">
+<div class="text-center block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0" data-pagefind-ignore>
 {{ partial "back-to-top.html" . }}<br>
 <p class="mb-0 mt-2">Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }} <br>
   {{ if .Paginator.HasNext }}<a href="{{ .Paginator.Next.URL | relURL }}" class="no-underline text-inherit hover:text-[var(--color-neutral-accent)]">Older Posts</a>{{ end }}
