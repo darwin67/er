@@ -151,12 +151,12 @@ sites should either add the post-build Pagefind step or leave
 
 ** Phase 1: Tooling and rendered HTML
 
-- [ ] Add a =pagefind= derivation (or use the nixpkgs package if a recent
+- [X] Add a =pagefind= derivation (or use the nixpkgs package if a recent
   version is available) to =flake.nix= and wire it into the dev shell. Prefer a
   pinned standalone binary or pinned package version, matching the
   =tailwindcssV4= precedent. Confirm =nix develop -c pagefind --version= works
   on darwin/linux and x64/arm64.
-- [ ] Make search opt-in in the theme configuration and templates. Update
+- [X] Make search opt-in in the theme configuration and templates. Update
   =layouts/partials/nav.html= so the search partial renders only when
   =params.search = true= is set explicitly. Update any theme/demo config needed
   to keep the demo exercising search.

@@ -19,6 +19,9 @@ markup:
     style: nordic
     tabWidth: 2
 
+params:
+  search: true
+
 outputs:
   home:
   - HTML

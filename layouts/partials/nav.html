@@ -20,7 +20,7 @@
     {{ end }}
   </div>
 
-  {{ if .Site.Params.search | default true }}
+  {{ if eq .Site.Params.search true }}
   {{ partial "search.html" }}
   {{ end }}
 </nav>

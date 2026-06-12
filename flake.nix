@@ -74,6 +74,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             hugo
+            pagefind
             tailwindcssV4
             go # Added Go for Hugo modules
 
