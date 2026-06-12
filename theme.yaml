@@ -7,8 +7,8 @@ tags:
   - responsive
   - white
   - blog
-min_version: 0.136.0
+min_version: 0.158.0
 
 author:
   name: Darwin Wu
-  homepage: https://darwindwu.com
+  homepage: https://dwu.sh
