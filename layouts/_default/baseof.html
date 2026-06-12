@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ or .Site.Language.Locale .Site.Language.Lang }}">
 <head>{{ partial "header.html" . }}</head>
 <body class="font-sans min-h-screen flex flex-col">
   {{ partial "nav.html" . }}

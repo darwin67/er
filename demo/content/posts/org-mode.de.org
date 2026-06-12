@@ -1,0 +1,13 @@
+#+title: Emacs Org Mode: Text strukturieren und Wissen organisieren
+#+date: <2025-06-09 Mon>
+#+tags[]: emacs org-mode produktivitaet notizen wissen
+
+Org Mode ist ein leistungsstarkes Werkzeug fuer strukturierte Notizen, Aufgaben und technische Dokumentation. Es kombiniert einfache Textdateien mit Funktionen fuer Gliederungen, Tabellen, Codebloecke und Veroeffentlichung.
+
+** Warum Org Mode?
+
+Der wichtigste Vorteil ist Kontrolle. Inhalte bleiben lesbar, versionierbar und portabel. Gleichzeitig kann Org Mode aus denselben Dateien Webseiten, Aufgabenlisten oder technische Berichte erzeugen.
+
+** Was diese Demo zeigt
+
+Diese uebersetzte Seite prueft, dass das Theme mehrsprachige Inhalte ausliefert, deutsche Navigation rendert und Pagefind einen eigenen deutschen Suchindex aufbaut.

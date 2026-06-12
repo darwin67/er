@@ -14,6 +14,7 @@ Checkout the [demo](https://er-6wj.pages.dev).
 - Table of contents for your posts (from [tocbot](https://github.com/tscanlin/tocbot))
 <!-- - Renders Math with KaTeX -->
 - Tag cloud on big screens
+- Hugo multilingual sites
 - Optional Pagefind search
 - Styled with TailwindCSS
 
@@ -89,6 +90,49 @@ Tag cloud is shown by default. To disable, add `showTagCloud = false` under the 
 
 <!-- Back to top button is also shown by default. To disable, add `showScrollToTop = false` under `[params]`. -->
 
+### Multilingual sites
+
+The theme supports Hugo multilingual sites. Define languages in the importing
+site config, not in the theme:
+
+```yaml
+defaultContentLanguage: en
+languages:
+  en:
+    locale: en-US
+    label: English
+    weight: 1
+  ja:
+    locale: ja-JP
+    label: 日本語
+    weight: 2
+```
+
+The theme uses each rendered page's language for `<html lang>`,
+language-aware navigation URLs, taxonomy links, and the language switcher. The
+language switcher is shown when Hugo renders more than one language site, which
+the theme detects with `len hugo.Sites > 1`.
+
+Add translated fixed UI strings by overriding the theme's `i18n/*.yaml` keys in
+your site.
+
+For example, to change the default English search label, create
+`i18n/en.yaml` in your site:
+
+```yaml
+search:
+  other: Find
+searchPlaceholder:
+  other: Find something...
+olderPosts:
+  other: Earlier
+newerPosts:
+  other: Later
+```
+
+Site-level i18n files take precedence over the theme defaults. Override only
+the keys you want to phrase differently.
+
 ### Search
 
 Search is disabled by default. To enable the search UI, set `search = true`
@@ -105,11 +149,13 @@ Hugo renders the site:
 
 ```sh
 hugo --minify
-pagefind --site public --force-language en
+pagefind --site public
 ```
 
 Deploy `public/pagefind/` with the rest of `public/`. If `search = true` is set
 but `public/pagefind/` is missing, the search assets or index files will 404.
+For multilingual sites, do not pass `--force-language`; Pagefind reads the
+rendered `<html lang>` values and creates language-specific indexes.
 
 ## Development
 
@@ -133,8 +179,8 @@ To modify the theme styles:
 2. Run `make css-watch` from the repo root to rebuild CSS live as the demo
    templates change
 
-At the theme root, `make build` runs `pagefind --site public --force-language
-en` after Hugo and writes `public/pagefind/` for the root fixture.
+At the theme root, `make build` runs `pagefind --site public` after Hugo and
+writes `public/pagefind/` for the root fixture.
 
 ## Releases
 

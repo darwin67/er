@@ -1,0 +1,28 @@
+search:
+  other: 検索
+searchPlaceholder:
+  other: 検索...
+languageSwitcher:
+  other: 言語
+tags:
+  other: タグ
+categories:
+  other: カテゴリー
+page:
+  other: ページ
+of:
+  other: /
+olderPosts:
+  other: 古い記事
+newerPosts:
+  other: 新しい記事
+prevPost:
+  other: 前の記事
+nextPost:
+  other: 次の記事
+notFound:
+  other: ここには何もありません。
+findSomething:
+  other: 何か
+interestingToRead:
+  other: 読みものを探す。

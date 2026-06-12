@@ -2,8 +2,8 @@
 <main class="mx-auto my-8 max-w-[650px] px-3">
   <div class="text-4xl font-semibold text-[var(--color-heading-text)] font-sans">404</div>
   <p class="leading-normal prose text-xl">
-    Sorry, but nothing exists here. <br>
-    Find something <a href='{{ "" | relURL }}'>interesting to read.</a>
+    {{ T "notFound" }} <br>
+    {{ T "findSomething" }} <a href='{{ "" | relLangURL }}'>{{ T "interestingToRead" }}</a>
   </p>
 </main>
 {{ end }}

@@ -40,8 +40,8 @@ Use standard conventional commit formatting such as `fix(feed): support Hugo
 - `make css-watch` rebuilds CSS on change.
 - `make build` regenerates CSS, runs `hugo --minify`, and builds
   `public/pagefind/`.
-- `make index` runs `pagefind --site public --force-language en` against an
-  existing `public/` directory.
+- `make index` runs `pagefind --site public` against an existing `public/`
+  directory.
 - `make dev` builds the demo into `demo/public/`, rebuilds its Pagefind index,
   starts Hugo's live-reload server, and refreshes the Pagefind index after
   content, template, asset, or config changes.
@@ -95,6 +95,6 @@ Useful checks before finishing work:
 - `git diff --exit-code -- assets/css/main.css`
 - `nix develop -c make build`
 - From `demo/`: `nix develop .. -c hugo -b http://example.test`
-- From `demo/`: `nix develop .. -c pagefind --site public --force-language en`
+- From `demo/`: `nix develop .. -c pagefind --site public`
 - `ruby -e 'require "yaml"; Dir[".github/workflows/*.yml"].each { |f| YAML.load_file(f) }'`
 - `nix develop -c git-cliff --config cliff.toml --bumped-version`

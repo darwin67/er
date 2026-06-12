@@ -11,7 +11,7 @@
 {{- $main := resources.Get "css/main.css" -}}
 {{- $custom := resources.Get "css/custom.css" -}}
 {{- $css := slice $main $custom | resources.Concat "css/bundle.css" | resources.Minify -}}
-<link rel="stylesheet" href="{{- $css.Permalink -}}" />
+<link rel="stylesheet" href="{{- $css.RelPermalink -}}" />
 
 <!-- Icon -->
 <link rel="icon"
@@ -22,7 +22,7 @@
 {{ end }}
 type="image/x-icon"/>
 
-<link href='{{ "/feed.xml" | relURL }}' rel="alternate" type="application/atom+xml" title="{{ .Site.Title }}" />
+<link href='{{ "/feed.xml" | relLangURL }}' rel="alternate" type="application/atom+xml" title="{{ .Site.Title }}" />
 
 {{ hugo.Generator }}
 {{ partial "open_graph.html" . }}
