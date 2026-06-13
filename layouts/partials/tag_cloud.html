@@ -1,6 +1,6 @@
 {{ $maxtags := .Site.Params.maxTags | default 50 }}
 {{ if .Site.Params.showTagCloud | default true }}
-<div class="hidden text-right fixed right-8 top-[100px] max-w-[250px] lg:block transition-opacity duration-500" id="tag-cloud" data-pagefind-ignore>
+<div class="hidden text-right fixed right-3 top-[100px] max-w-[250px] lg:block transition-opacity duration-500" id="tag-cloud" data-pagefind-ignore>
     <a href="{{ "/tags/" | relLangURL }}" class="block text-xl !text-[var(--color-main)]">{{ T "tags" }}</a>
     {{ range first $maxtags .Site.Taxonomies.tags.ByCount }}
     <a class="text-faint no-underline text-sm" href="{{ "/tags/" | relLangURL }}{{ .Name | urlize }}">{{ .Name }}</a></li>
