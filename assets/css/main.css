@@ -1971,6 +1971,10 @@ html {
   margin-left: auto;
   margin-right: auto;
 }
+.related-posts ul {
+  list-style: none;
+  padding-left: 0;
+}
 .post-content p, .post-content ul, .post-content ol, .post-content blockquote:not(.pullquote), .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6, .post-content dl, .post-content hr {
   max-width: var(--max-width-content);
   margin-left: auto;
