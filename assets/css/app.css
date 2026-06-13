@@ -134,9 +134,14 @@ html { scroll-behavior: smooth; }
   max-width: var(--max-width-wide);
 }
 
-.post-header,
-.related-posts {
+.post-header {
   max-width: var(--max-width-content);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.related-posts {
+  max-width: var(--max-width-wide);
   margin-left: auto;
   margin-right: auto;
 }
