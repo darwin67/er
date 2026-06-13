@@ -69,14 +69,17 @@ Two gaps to close:
 
 Smallest set that visibly raises the quality bar for prose.
 
-- [ ] Reading time + word count in ~layouts/_default/single.html~ next to the
+- [X] Reading time + word count in ~layouts/_default/single.html~ next to the
   date. Use ~.ReadingTime~ and ~.WordCount~; gate behind a site param if
-  noisy.
-- [ ] Callout shortcodes under ~layouts/shortcodes/~: ~note~, ~tip~, ~warn~,
+  noisy. (Reading time only; gated to ~Section == "posts"~. Word count not
+  surfaced — felt redundant next to reading time.)
+- [X] Callout shortcodes under ~layouts/shortcodes/~: ~note~, ~tip~, ~warn~,
   ~danger~. Subtle background + left border, no icons required initially.
-- [ ] Figure shortcode ~{{< figure src="…" caption="…" alt="…" >}}~ with a
+  Plus a generic ~callout~ shortcode taking a ~type~ arg, all sharing
+  ~partials/callout.html~.
+- [X] Figure shortcode ~{{< figure src="…" caption="…" alt="…" >}}~ with a
   styled ~<figcaption>~. Keep ~image-modal~ behavior.
-- [ ] Related posts block at the bottom of ~single.html~ via
+- [X] Related posts block at the bottom of ~single.html~ via
   ~.Site.RegularPages.Related .~ with sensible keyword config in
   ~config/_default/hugo.yaml~.
 

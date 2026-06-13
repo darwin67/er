@@ -5,6 +5,18 @@ summaryLength: 70
 
 sectionPagesMenu: main
 
+related:
+  includeNewer: true
+  threshold: 80
+  toLower: true
+  indices:
+    - name: tags
+      weight: 80
+    - name: categories
+      weight: 60
+    - name: date
+      weight: 10
+
 build:
   noJSConfigInAssets: true
   writeStats: true

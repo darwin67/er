@@ -1,0 +1,10 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- $caption := .Get "caption" -}}
+{{- $class := .Get "class" | default "" -}}
+<figure class="figure my-6 {{ $class }}">
+  <img src="{{ $src | relURL }}" alt="{{ $alt }}" loading="lazy" class="mx-auto rounded">
+  {{- with $caption -}}
+  <figcaption class="text-center text-sm text-gray-500 mt-2">{{ . | markdownify }}</figcaption>
+  {{- end -}}
+</figure>

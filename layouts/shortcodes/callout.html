@@ -1,0 +1,2 @@
+{{- $type := .Get "type" | default "note" -}}
+{{- partial "callout.html" (dict "type" $type "title" (.Get "title") "body" (.Inner | markdownify)) -}}

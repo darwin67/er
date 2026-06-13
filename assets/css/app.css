@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
-@source inline("prose-lg prose-sm top-3 border-collapse bg-black py-0 py-2 text-black underline");
+@source inline("prose-lg prose-sm top-3 border-collapse bg-black py-0 py-2 text-black underline callout callout-note callout-tip callout-warn callout-danger");
 
 /* Base styles from tailwind.config.js */
 @theme {
@@ -104,6 +104,31 @@ ol {
 
 #contents-list ol {
   @apply list-none;
+}
+
+/* Callouts */
+.callout {
+  background-color: var(--color-background-alt);
+}
+
+.callout-note   { border-color: var(--color-neutral-accent); }
+.callout-tip    { border-color: var(--color-cool-accent); }
+.callout-warn   { border-color: var(--color-warm-accent); }
+.callout-danger { border-color: var(--color-main); }
+
+.callout > p:last-child,
+.callout .callout-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Figure */
+.prose figure.figure {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose figure.figure > img {
+  margin: 0 auto;
 }
 
 /* make sure things that are supposed to be hidden are kept hidden with alpine.js */

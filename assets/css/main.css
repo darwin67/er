@@ -224,6 +224,9 @@
   .static {
     position: static;
   }
+  .sticky {
+    position: sticky;
+  }
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
@@ -283,6 +286,12 @@
   }
   .my-4 {
     margin-block: calc(var(--spacing) * 4);
+  }
+  .my-5 {
+    margin-block: calc(var(--spacing) * 5);
+  }
+  .my-6 {
+    margin-block: calc(var(--spacing) * 6);
   }
   .my-8 {
     margin-block: calc(var(--spacing) * 8);
@@ -1109,6 +1118,9 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
   .mb-0 {
     margin-bottom: calc(var(--spacing) * 0);
   }
@@ -1127,6 +1139,9 @@
   .mb-5 {
     margin-bottom: calc(var(--spacing) * 5);
   }
+  .ml-1 {
+    margin-left: calc(var(--spacing) * 1);
+  }
   .box-border {
     box-sizing: border-box;
   }
@@ -1138,6 +1153,9 @@
   }
   .flex {
     display: flex;
+  }
+  .grid {
+    display: grid;
   }
   .hidden {
     display: none;
@@ -1267,9 +1285,21 @@
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
+  .rounded-r {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+  .border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
+  }
+  .border-l-4 {
+    border-left-style: var(--tw-border-style);
+    border-left-width: 4px;
   }
   .border-\[var\(--color-border\)\] {
     border-color: var(--color-border);
@@ -1340,8 +1370,17 @@
   .py-2\.5 {
     padding-block: calc(var(--spacing) * 2.5);
   }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  .pt-6 {
+    padding-top: calc(var(--spacing) * 6);
+  }
   .pr-2 {
     padding-right: calc(var(--spacing) * 2);
+  }
+  .pl-0 {
+    padding-left: calc(var(--spacing) * 0);
   }
   .pl-3 {
     padding-left: calc(var(--spacing) * 3);
@@ -1950,6 +1989,31 @@ ol {
 }
 #contents-list ol {
   list-style-type: none;
+}
+.callout {
+  background-color: var(--color-background-alt);
+}
+.callout-note {
+  border-color: var(--color-neutral-accent);
+}
+.callout-tip {
+  border-color: var(--color-cool-accent);
+}
+.callout-warn {
+  border-color: var(--color-warm-accent);
+}
+.callout-danger {
+  border-color: var(--color-main);
+}
+.callout > p:last-child, .callout .callout-body > p:last-child {
+  margin-bottom: 0;
+}
+.prose figure.figure {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.prose figure.figure > img {
+  margin: 0 auto;
 }
 [x-cloak] {
   display: none !important;

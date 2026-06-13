@@ -6,6 +6,9 @@
 
   <p class="text-gray-400 text-sm mt-1 mb-4 post-meta">
     {{ if not .Date.IsZero }}<time class="text-lg">{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
+    {{ if eq .Section "posts" }}
+    <span class="reading-time">&middot; {{ i18n "readingTime" (dict "Count" .ReadingTime) }}</span>
+    {{ end }}
     {{ if or .Params.tags .Params.categories .Params.series }}
     {{ if isset .Params "categories" }}
     <span class="block">
@@ -20,6 +23,21 @@
     {{ end }}
   </p>
   <div class="leading-normal prose lg:prose-lg post-content max-w-none">{{ .Content }}</div>
+
+  {{ $related := first 4 (where (.Site.RegularPages.Related .) "Section" .Section) }}
+  {{ with $related }}
+  <aside class="related-posts mt-10 pt-6 border-t border-[var(--color-border)]" data-pagefind-ignore>
+    <h2 class="text-lg font-semibold mb-3 text-[var(--color-heading-text)]">{{ i18n "relatedPosts" }}</h2>
+    <ul class="list-none pl-0 space-y-1">
+      {{ range . }}
+      <li>
+        <a href="{{ .RelPermalink }}" class="text-[var(--color-main)] hover:text-[var(--color-neutral-accent)]">{{ .Title }}</a>
+        {{ if not .Date.IsZero }}<span class="text-gray-400 text-sm ml-1">&middot; <time>{{ .Date.Format "02 Jan 2006" }}</time></span>{{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  </aside>
+  {{ end }}
 </main>
 {{ partial "table-of-contents" . }}
 

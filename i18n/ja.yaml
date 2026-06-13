@@ -26,3 +26,11 @@ findSomething:
   other: 何か
 interestingToRead:
   other: 読みものを探す。
+readingTime:
+  one: "約 {{ .Count }} 分"
+  other: "約 {{ .Count }} 分"
+words:
+  one: "{{ .Count }} 字"
+  other: "{{ .Count }} 字"
+relatedPosts:
+  other: 関連記事

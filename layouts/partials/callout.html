@@ -1,0 +1,13 @@
+{{- /*
+  Callout partial. Accepts a dict:
+    type:  one of "note" | "tip" | "warn" | "danger" (default "note")
+    title: optional heading text
+    body:  HTML/Markdown body (already rendered)
+*/ -}}
+{{- $type := .type | default "note" -}}
+<aside class="callout callout-{{ $type }} my-5 px-4 py-3 border-l-4 rounded-r">
+  {{- with .title -}}
+  <p class="callout-title font-semibold mb-1">{{ . }}</p>
+  {{- end -}}
+  <div class="callout-body">{{ .body | safeHTML }}</div>
+</aside>
