@@ -92,17 +92,26 @@ h6 {
   margin-right: auto;
 }
 
-/* Code, tables, figures, callouts, and pullquotes get the full canvas. */
+/* Code, tables, figures, images, callouts, and pullquotes get the full
+   canvas. `:has(> img:only-child)` widens paragraphs that wrap a lone
+   image (Hugo's default for plain markdown `![](…)`). */
 .post-content pre,
 .post-content .highlight,
 .post-content .code-block,
 .post-content figure,
 .post-content table,
 .post-content .pullquote,
-.post-content .callout {
+.post-content .callout,
+.post-content img,
+.post-content p:has(> img:only-child) {
   max-width: var(--max-width-wide);
   margin-left: auto;
   margin-right: auto;
+}
+
+.post-content img {
+  display: block;
+  height: auto;
 }
 
 .post-content table {
