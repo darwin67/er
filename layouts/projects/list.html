@@ -20,7 +20,10 @@
         </div>
         {{ else }}
         {{ $seed := hash.FNV32a $page.Title }}
-        {{ $palette := slice "var(--color-main)" "var(--color-secondary-dark)" "var(--color-warm-accent)" "var(--color-cool-accent)" "var(--color-blush-accent)" "var(--color-neutral-accent)" }}
+        {{/* Neutral-leaning pool. The bg-alt tone keeps things calm; the
+             rest are mid-saturation hints that read as variation, not
+             color. */}}
+        {{ $palette := slice "var(--color-background-alt)" "var(--color-border)" "var(--color-faint-text)" "var(--color-muted-text)" "var(--color-neutral-accent)" }}
         {{ $a := index $palette (mod $seed (len $palette)) }}
         {{ $b := index $palette (mod (div $seed 7) (len $palette)) }}
         {{ if eq $a $b }}{{ $b = index $palette (mod (add (div $seed 7) 1) (len $palette)) }}{{ end }}
@@ -29,10 +32,10 @@
         {{ $bg := "" }}
         {{ if eq $pattern 0 }}
           {{/* diagonal stripes */}}
-          {{ $bg = printf "background-image: repeating-linear-gradient(%ddeg, %s, %s 12px, %s 12px, %s 24px);" (int $angle) $a $a $b $b }}
+          {{ $bg = printf "background-image: repeating-linear-gradient(%ddeg, %s, %s 14px, %s 14px, %s 28px);" (int $angle) $a $a $b $b }}
         {{ else if eq $pattern 1 }}
           {{/* dot grid */}}
-          {{ $bg = printf "background-image: radial-gradient(circle at center, %s 18%%, transparent 19%%); background-size: 22px 22px; background-color: %s;" $a $b }}
+          {{ $bg = printf "background-image: radial-gradient(circle at center, %s 14%%, transparent 15%%); background-size: 22px 22px; background-color: %s;" $a $b }}
         {{ else }}
           {{/* two-tone gradient */}}
           {{ $bg = printf "background-image: linear-gradient(%ddeg, %s 0%%, %s 100%%);" (int $angle) $a $b }}
