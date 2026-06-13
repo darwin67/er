@@ -53,15 +53,7 @@
     </dl>
   </div>
 
-  {{ with .Params.cover }}
-  {{ $src := . }}
-  {{ if not (or (hasPrefix $src "/") (hasPrefix $src "http")) }}
-    {{ with $.Resources.GetMatch $src }}{{ $src = .RelPermalink }}{{ end }}
-  {{ end }}
-  <figure class="project-cover">
-    <img src="{{ $src }}" alt="{{ $.Title }} cover" loading="lazy">
-  </figure>
-  {{ end }}
+  {{ partial "project-cover.html" (dict "page" . "wrap_class" "project-cover" "placeholder" false) }}
 
   {{ partial "table-of-contents" . }}
   <div class="leading-normal prose lg:prose-lg post-content max-w-none">{{ .Content }}</div>

@@ -1,0 +1,54 @@
+{{- /*
+  Renders a project cover slot — the real image when `cover` is set on
+  the page, or a deterministic abstract pattern derived from the title
+  when it isn't and `placeholder` is truthy. Used by the projects list
+  and the single page; the latter passes `placeholder=false` so a
+  missing cover renders nothing rather than a giant pattern above the
+  case study.
+
+  Args:
+    page:        the project Page (required)
+    class:       extra classes to append to the wrapper (optional)
+    img_alt:     alt text override for the real-cover <img>
+                 (optional; defaults to "<title> cover")
+    wrap_class:  class for the real-cover wrapper (optional; defaults
+                 to "project-card-cover" — pass "project-cover" on the
+                 single page)
+    placeholder: render the hash pattern when cover is unset
+                 (default true)
+*/ -}}
+{{- $page := .page -}}
+{{- $class := .class | default "" -}}
+{{- $wrap := .wrap_class | default "project-card-cover" -}}
+{{- $alt := .img_alt | default (printf "%s cover" $page.Title) -}}
+{{- $placeholder := true -}}
+{{- if isset . "placeholder" -}}{{- $placeholder = .placeholder -}}{{- end -}}
+{{- $cover := $page.Params.cover -}}
+{{- if $cover -}}
+  {{- $src := $cover -}}
+  {{- if not (or (hasPrefix $src "/") (hasPrefix $src "http")) -}}
+    {{- with $page.Resources.GetMatch $src -}}{{ $src = .RelPermalink }}{{- end -}}
+  {{- end -}}
+  <div class="{{ $wrap }} {{ $class }}">
+    <img src="{{ $src }}" alt="{{ $alt }}" loading="lazy">
+  </div>
+{{- else if $placeholder -}}
+  {{- $seed := hash.FNV32a $page.Title -}}
+  {{/* Neutral-leaning pool. Calm tones with a single mid-weight for
+       variation, so the slot reads as texture rather than color. */}}
+  {{- $palette := slice "var(--color-background-alt)" "var(--color-border)" "var(--color-faint-text)" "var(--color-muted-text)" "var(--color-neutral-accent)" -}}
+  {{- $a := index $palette (mod $seed (len $palette)) -}}
+  {{- $b := index $palette (mod (div $seed 7) (len $palette)) -}}
+  {{- if eq $a $b -}}{{- $b = index $palette (mod (add (div $seed 7) 1) (len $palette)) -}}{{- end -}}
+  {{- $pattern := mod (div $seed 31) 3 -}}
+  {{- $angle := mul 45 (mod (div $seed 11) 4) -}}
+  {{- $bg := "" -}}
+  {{- if eq $pattern 0 -}}
+    {{- $bg = printf "background-image: repeating-linear-gradient(%ddeg, %s, %s 14px, %s 14px, %s 28px);" (int $angle) $a $a $b $b -}}
+  {{- else if eq $pattern 1 -}}
+    {{- $bg = printf "background-image: radial-gradient(circle at center, %s 14%%, transparent 15%%); background-size: 22px 22px; background-color: %s;" $a $b -}}
+  {{- else -}}
+    {{- $bg = printf "background-image: linear-gradient(%ddeg, %s 0%%, %s 100%%);" (int $angle) $a $b -}}
+  {{- end -}}
+  <div class="{{ $wrap }} project-card-cover-placeholder {{ $class }}" style="{{ $bg | safeCSS }}" aria-hidden="true"></div>
+{{- end -}}
