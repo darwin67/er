@@ -1,31 +1,45 @@
-#+TITLE: Citing the classics (Org)
+#+TITLE: The little languages that wouldn't die
 #+DATE: <2025-10-04 Sat>
-#+TAGS[]: meta demo footnotes
+#+TAGS[]: programming history demo footnotes
 #+CATEGORY: tutorials
 
-This post is the org-mode counterpart to the markdown footnote demo —
-same content, different source format.
+Every few years someone declares Lisp dead, and every few years the
+obituary is filed alongside the previous one. The pattern is old
+enough now to be its own genre[fn:graham].
 
-The inline marker is a bracketed superscript[fn:knuth] that links down
-to the corresponding entry, and each entry has a small back-link that
-returns to the citation site. Click the [1] above, then click the
-return link on the "Knuth (1974)" entry below.
+A similar story plays out with Smalltalk. The language slid out of the
+mainstream after Sun's licensing fees made commercial use awkward in
+the early 90s[fn:goldberg], and yet every modern object system carries
+its fingerprints: live image-based development, the model-view-
+controller pattern[fn:reenskaug], the very notion of "sending messages"
+to objects.
 
-Long-form notes work too[fn:observation], including emphasis and
-multi-sentence prose. The styling is unified across markdown and
-org-mode posts even though Hugo's two parsers emit slightly different
-HTML structures — the theme's CSS targets both shapes.
+Forth's story is stranger. It's still inside enough firmware that you
+have probably executed Forth bytecode today without knowing it — the
+Open Firmware standard adopted by Apple, Sun, and IBM[fn:ieee1275] runs
+on a stack VM derived directly from Charles Moore's 1970s work.
 
-One difference worth noting: go-org doesn't natively support repeat
-citations the way Goldmark does. If you cite a source twice in an org
-post each citation needs its own footnote definition. The markdown
-sibling post shows the repeat-citation behavior in action.
+The lesson isn't that these languages were ahead of their time, or
+that the mainstream is wrong, or that you should rewrite your CRUD app
+in any of them. It's that paradigms move at one timescale and the code
+that depends on them moves at another, and the "dead" languages often
+end up doing more lifting per surviving line than the trendy ones.
 
-[fn:knuth] Knuth, D. E. (1974). "Structured Programming with go to
-Statements." /Computing Surveys/, 6(4), 261-301. The original citation
-of "premature optimization is the root of all evil."
+[fn:graham] Graham, P. (2003). "Beating the Averages." Reprinted in
+/Hackers & Painters/, O'Reilly, 2004. Graham frames the recurring
+Lisp-is-dead claim as a feature of the language's culture rather than
+its technical position.
 
-[fn:observation] This page also exercises the theme's other typography
-bits — the prose measure stays at ~65ch, but the footnotes block
-follows the same narrow measure rather than expanding to the wider
-canvas reserved for code and figures.
+[fn:goldberg] Goldberg, A. (1994). "The Story of Smalltalk." /HOPL II/.
+Goldberg's first-hand account of the language's commercial trajectory
+at ParcPlace and IBM.
+
+[fn:reenskaug] Reenskaug, T. (1979). "Models - Views - Controllers."
+Internal Xerox PARC memo. The original MVC formulation, written while
+Reenskaug was visiting the Learning Research Group; the pattern was
+shipped first in Smalltalk-80.
+
+[fn:ieee1275] IEEE Std 1275-1994. "Standard for Boot (Initialization
+Configuration) Firmware: Core Requirements and Practices." Used by
+Sun's SPARC machines, Apple's Open Firmware (1994 – 2006), and IBM's
+RS/6000 line.
