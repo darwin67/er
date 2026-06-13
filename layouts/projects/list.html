@@ -18,6 +18,10 @@
         <div class="project-card-cover">
           <img src="{{ $src }}" alt="{{ $page.Title }} cover" loading="lazy">
         </div>
+        {{ else }}
+        <div class="project-card-cover project-card-cover-placeholder" aria-hidden="true">
+          <span>{{ substr $page.Title 0 1 | upper }}</span>
+        </div>
         {{ end }}
         <div class="project-card-body">
           <div class="project-card-title-row">
