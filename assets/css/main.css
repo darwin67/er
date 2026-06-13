@@ -35,7 +35,7 @@
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --tracking-wide: 0.025em;
-    --leading-tight: 1.25;
+    --leading-snug: 1.375;
     --leading-normal: 1.5;
     --leading-relaxed: 1.625;
     --default-transition-duration: 150ms;
@@ -1488,6 +1488,9 @@
   .italic {
     font-style: italic;
   }
+  .not-italic {
+    font-style: normal;
+  }
   .no-underline {
     text-decoration-line: none;
   }
@@ -1928,6 +1931,26 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-main);
+  scroll-margin-top: 4rem;
+}
+.post-content {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+.post-content h2 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin-top: 2.25rem;
+}
+.post-content h3 {
+  font-size: 1.3rem;
+  line-height: 1.3;
+  margin-top: 1.75rem;
+}
+.post-content h4 {
+  font-size: 1.1rem;
+  line-height: 1.35;
+  margin-top: 1.5rem;
 }
 h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, h6 > span.tags {
   display: none;
@@ -1941,20 +1964,58 @@ a:hover {
 }
 pre {
   overflow-x: auto;
-  padding-inline: calc(var(--spacing) * 5);
-  padding-block: calc(var(--spacing) * 2.5);
-  font-size: var(--text-sm);
-  line-height: var(--tw-leading, var(--text-sm--line-height));
-  --tw-leading: var(--leading-tight);
-  line-height: var(--leading-tight);
-}
-p code {
   border-radius: 0.25rem;
-  background-color: var(--color-gray-100);
-  padding-inline: calc(var(--spacing) * 2);
-  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 5);
+  padding-block: calc(var(--spacing) * 3);
   font-size: var(--text-sm);
   line-height: var(--tw-leading, var(--text-sm--line-height));
+  --tw-leading: var(--leading-snug);
+  line-height: var(--leading-snug);
+  background-color: var(--color-background-alt);
+}
+p code, li code, td code {
+  border-radius: 0.25rem;
+  padding-inline: calc(var(--spacing) * 1.5);
+  padding-block: calc(var(--spacing) * 0.5);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  background-color: var(--color-background-alt);
+  color: var(--color-main-dark);
+}
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+.code-block {
+  position: relative;
+}
+.code-block-lang {
+  position: absolute;
+  top: 0.5rem;
+  right: 3.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-neutral-accent);
+  pointer-events: none;
+}
+.code-block-copy {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  background-color: var(--color-background);
+  color: var(--color-body-text);
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+  cursor: pointer;
+}
+.code-block:hover .code-block-copy, .code-block-copy:focus {
+  opacity: 1;
 }
 blockquote {
   border-left-style: var(--tw-border-style);
@@ -1989,6 +2050,53 @@ ol {
 }
 #contents-list ol {
   list-style-type: none;
+}
+.footnotes {
+  margin-top: calc(var(--spacing) * 10);
+  padding-top: calc(var(--spacing) * 6);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  color: var(--color-gray-600);
+  border-top: 1px solid var(--color-border);
+}
+.footnotes ol {
+  padding-left: calc(var(--spacing) * 5);
+}
+.footnotes li {
+  margin-bottom: calc(var(--spacing) * 1);
+}
+sup a[href^="#fn:"] {
+  color: var(--color-main);
+  text-decoration-line: none;
+  font-size: 0.75em;
+  padding: 0 0.15em;
+}
+.footnote-backref {
+  margin-left: calc(var(--spacing) * 1);
+  color: var(--color-gray-400);
+  text-decoration-line: none;
+}
+.dropcap .post-content > p:first-of-type::first-letter {
+  float: left;
+  font-size: 3.25rem;
+  line-height: 0.85;
+  padding: 0.35rem 0.5rem 0 0;
+  color: var(--color-main);
+  font-weight: 600;
+}
+.pullquote {
+  margin: 1.5rem -1rem;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 4px solid var(--color-main);
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: var(--color-heading-text);
+}
+@media (min-width: 1024px) {
+  .pullquote {
+    margin-left: -2.5rem;
+    margin-right: -2.5rem;
+  }
 }
 .callout {
   background-color: var(--color-background-alt);

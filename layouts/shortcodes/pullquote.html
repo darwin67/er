@@ -1,0 +1,7 @@
+{{- $cite := .Get "cite" -}}
+<blockquote class="pullquote not-prose">
+  <p>{{ .Inner | markdownify }}</p>
+  {{- with $cite -}}
+  <cite class="block mt-2 text-sm text-gray-500 not-italic">&mdash; {{ . | markdownify }}</cite>
+  {{- end -}}
+</blockquote>

@@ -1,5 +1,5 @@
 {{ define "main" }}
-<main class="mx-auto my-4 max-w-2xl px-3 lg:px-0" data-pagefind-body>
+<main class="mx-auto my-4 max-w-2xl px-3 lg:px-0{{ if .Params.dropcap }} dropcap{{ end }}" data-pagefind-body>
   <div class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans">
     {{ .Title }}
   </div>

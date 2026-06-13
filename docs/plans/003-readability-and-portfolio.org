@@ -85,20 +85,21 @@ Smallest set that visibly raises the quality bar for prose.
 
 ** Track 1 typography polish
 
-- [ ] Explicit ~line-height~ (~1.7~) and body size (~1.0625rem~) on prose in
+- [X] Explicit ~line-height~ (~1.7~) and body size (~1.0625rem~) on prose in
   ~assets/css/app.css~. Regenerate ~assets/css/main.css~.
-- [ ] Modular heading scale so h2/h3/h4 are differentiated by size, not just
+- [X] Modular heading scale so h2/h3/h4 are differentiated by size, not just
   color.
-- [ ] ~scroll-margin-top~ on headings so TOC anchors don't hide under sticky
+- [X] ~scroll-margin-top~ on headings so TOC anchors don't hide under sticky
   nav.
-- [ ] Footnote styling — back-reference arrow, dimmer numerals, spacing for
+- [X] Footnote styling — back-reference arrow, dimmer numerals, spacing for
   the ~.footnotes~ block.
-- [ ] Better code block treatment: language label top-right, copy-to-clipboard
+- [X] Better code block treatment: language label top-right, copy-to-clipboard
   button, softer background. Inline ~<code>~ gets a tinted theme color
-  instead of the current flat gray.
-- [ ] Optional drop cap on first paragraph, opt-in via frontmatter
+  instead of the current flat gray. (Copy button + language label injected by
+  ~static/js/code-copy.js~, loaded ~defer~ from ~scripts.html~.)
+- [X] Optional drop cap on first paragraph, opt-in via frontmatter
   ~dropcap: true~.
-- [ ] Pull-quote shortcode ~{{< pullquote >}}~ that breaks the column
+- [X] Pull-quote shortcode ~{{< pullquote >}}~ that breaks the column
   slightly.
 
 ** Track 1 dark mode
