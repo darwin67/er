@@ -6,6 +6,7 @@
 <meta data-pagefind-meta="type[content]" content="{{ .Type }}" />
 
 <script>
+  document.documentElement.setAttribute('data-palette', '{{ .Site.Params.palette | default "clay" }}');
   (function () {
     try {
       var stored = localStorage.getItem('theme');
