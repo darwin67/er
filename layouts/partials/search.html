@@ -156,16 +156,28 @@
   .er-pagefind-search dialog.pf-modal {
     border-radius: 0.75rem !important;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
-    /* Clip child borders to the rounded corners so the header
-       divider terminates flush at the curve instead of overshooting
-       past the modal edge. */
-    overflow: hidden !important;
   }
 
   .er-pagefind-search pagefind-modal-header,
   .er-pagefind-search .pf-modal-header {
+    position: relative !important;
     padding: 0 !important;
-    border-bottom-color: var(--color-border) !important;
+    /* Remove pagefind's default edge-to-edge bottom border; we draw an
+       inset one below so the line ends well clear of the modal's
+       rounded corners instead of running into the curve. */
+    border-bottom: 0 !important;
+  }
+
+  .er-pagefind-search pagefind-modal-header::after,
+  .er-pagefind-search .pf-modal-header::after {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0;
+    height: 1px;
+    background: var(--color-border);
+    pointer-events: none;
   }
 
   .er-pagefind-search pagefind-modal-header .pf-input {
