@@ -1,0 +1,33 @@
+{{- /*
+  Homepage "Featured work" block — surfaces up to 3 projects with
+  `featured: true` in frontmatter. Disabled by default; opt in with
+  `params.showFeaturedProjects: true` in site config.
+
+  Renders nothing when disabled or when no matching projects exist,
+  so it's safe to include unconditionally from layouts/index.html.
+*/ -}}
+{{- if .Site.Params.showFeaturedProjects -}}
+{{- $featured := first 3 (where (where .Site.RegularPages "Section" "projects") "Params.featured" true) -}}
+{{- with $featured -}}
+<section class="featured-projects mb-8">
+  <h2 class="text-sm font-semibold uppercase tracking-wide text-faint mb-3">{{ T "featuredProjects" | default "Featured work" }}</h2>
+  <ul class="featured-project-list list-none p-0">
+    {{ range . }}
+    <li class="featured-project">
+      <a href="{{ .RelPermalink }}">
+        <div class="featured-project-title-row">
+          {{ if .Params.status }}
+          <span class="status-dot status-{{ .Params.status }}" title="{{ humanize .Params.status }}"></span>
+          {{ end }}
+          <span class="featured-project-title">{{ .Title }}</span>
+        </div>
+        {{ with .Params.summary }}
+        <p class="featured-project-summary">{{ . }}</p>
+        {{ end }}
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{- end -}}
+{{- end -}}

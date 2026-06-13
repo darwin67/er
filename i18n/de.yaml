@@ -36,3 +36,25 @@ relatedPosts:
   other: Verwandte Beitraege
 tableOfContents:
   other: Auf dieser Seite
+projects:
+  other: Projekte
+projectRole:
+  other: Rolle
+projectClient:
+  other: Kunde
+projectPeriod:
+  other: Zeitraum
+projectStack:
+  other: Stack
+projectStatus:
+  other: Status
+projectLinks:
+  other: Links
+projectStatus_shipped:
+  other: Live
+projectStatus_wip:
+  other: In Arbeit
+projectStatus_archived:
+  other: Archiviert
+featuredProjects:
+  other: Ausgewaehlte Arbeiten

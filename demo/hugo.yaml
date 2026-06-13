@@ -15,6 +15,9 @@ languages:
         - name: Posts
           url: /posts/
           weight: 20
+        - name: Projects
+          url: /projects/
+          weight: 30
   de:
     locale: de-DE
     label: Deutsch
@@ -28,6 +31,9 @@ languages:
         - name: Beitraege
           url: /posts/
           weight: 20
+        - name: Projekte
+          url: /projects/
+          weight: 30
   ja:
     locale: ja-JP
     label: 日本語
@@ -41,6 +47,9 @@ languages:
         - name: 記事
           url: /posts/
           weight: 20
+        - name: プロジェクト
+          url: /projects/
+          weight: 30
 
 module:
   imports:
@@ -53,6 +62,8 @@ markup:
 
 params:
   search: true
+  showFeaturedProjects: true
+  # palette: nord
 
 outputs:
   home:

@@ -156,6 +156,9 @@
   .er-pagefind-search dialog.pf-modal {
     border-radius: 0.75rem !important;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
+    /* Clip the rounded shell so child borders end at the curve
+       instead of bleeding past it. */
+    overflow: hidden !important;
   }
 
   .er-pagefind-search pagefind-modal-header,
@@ -172,6 +175,16 @@
 
   .er-pagefind-search pagefind-modal-header .pf-input::placeholder {
     color: var(--color-main) !important;
+  }
+
+  /* Suppress pagefind's curved focus ring around the modal input. The
+     modal itself is the focus container, so the input doesn't need a
+     second ring that visually competes with the divider below. */
+  .er-pagefind-search pagefind-modal-header .pf-input:focus,
+  .er-pagefind-search pagefind-modal-header .pf-input:focus-visible {
+    outline: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
   }
 
   .er-pagefind-search pagefind-modal-body,

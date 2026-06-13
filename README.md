@@ -36,6 +36,57 @@ hugo mod get github.com/darwin67/er
 
 ## Configurations
 
+### Projects
+
+The theme ships a `projects` content type for case studies / portfolio
+work, with a dedicated single-page layout, a grid list, and an optional
+"Featured work" block on the homepage. Drop projects under
+`content/projects/` (either single markdown files or page bundles when
+you have a cover image + gallery).
+
+The homepage featured block is **opt-in**:
+
+```yaml
+params:
+  showFeaturedProjects: true
+```
+
+It surfaces up to 3 projects whose frontmatter sets `featured: true`,
+and renders nothing if none match — so flipping the param on without
+any featured content is also safe.
+
+Frontmatter schema (all fields optional except `title` and `date`):
+
+```yaml
+---
+title: "Acme rebuild"
+date: 2025-03-12
+
+role:     "Lead engineer"
+client:   "Acme Co"            # omit for personal work
+period:   "2024 – 2025"
+stack:    [go, postgres, terraform]
+
+repo:     "https://github.com/you/acme"
+live_url: "https://acme.example"
+
+status:   "shipped"            # shipped | wip | archived
+cover:    "cover.jpg"          # relative to the page bundle
+summary:  "Rebuilt the order pipeline; cut p99 latency by 38%."
+
+featured: true                 # surface on the homepage
+---
+```
+
+Helpful shortcodes inside a project page:
+
+- `{{< gallery >}}` — responsive image grid with lightbox.
+- `{{< results >}} ... {{< /results >}}` — metric strip at the top of
+  a case study.
+
+Stacks are a real Hugo taxonomy, so `/stacks/rust/` etc. work out of
+the box.
+
 ### Color palette
 
 The theme ships with two color palettes. Both support a light and dark mode

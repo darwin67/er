@@ -1,6 +1,6 @@
 #+title: Improve readability for long-form writing and add project portfolio support
 #+author: Darwin D. Wu
-#+status: Draft
+#+status: Done
 #+date: <2026-06-12 Fri>
 
 Two related tracks of improvements to this Hugo theme:
@@ -125,41 +125,47 @@ Smallest set that visibly raises the quality bar for prose.
 :CUSTOM_ID: track-2-content-type
 :END:
 
-- [ ] ~archetypes/projects.md~ with structured frontmatter:
+- [X] ~archetypes/projects.md~ with structured frontmatter:
   ~title~, ~date~, ~role~, ~client~, ~period~, ~stack: []~, ~repo~,
   ~live_url~, ~status~ (~shipped~ / ~wip~ / ~archived~), ~cover~,
   ~summary~, ~featured: false~.
-- [ ] Register a ~stacks~ taxonomy in ~config/_default/hugo.yaml~ so
-  ~/stacks/rust/~ etc. work out of the box.
-- [ ] Document the schema in ~README.md~ under a new "Projects" section.
+- [X] Register a ~stacks~ taxonomy in ~config/_default/hugo.yaml~ so
+  ~/stacks/rust/~ etc. work out of the box. (Default `category` and
+  `tag` taxonomies also declared explicitly so adding `stack` doesn't
+  silently drop them.)
+- [X] Document the schema in ~README.md~ under a new "Projects" section.
 
 ** Track 2 layouts
 
-- [ ] ~layouts/projects/single.html~ — case-study template:
-  hero/cover image, meta sidebar (role, period, stack, repo, live link),
-  body, optional gallery, optional outcome strip.
-- [ ] ~layouts/projects/list.html~ — grid of projects with cover thumbnail,
+- [X] ~layouts/projects/single.html~ — case-study template:
+  hero/cover image, meta block (role, client, period, stack, status,
+  repo, live link), body. (Outcome strip + gallery land with the
+  shortcode commit.)
+- [X] ~layouts/projects/list.html~ — grid of projects with cover thumbnail,
   title, one-line summary, stack pills, status dot.
-- [ ] Featured-work block on ~layouts/index.html~ pulling up to 3 projects
+- [X] Featured-work block on ~layouts/index.html~ pulling up to 3 projects
   where ~featured: true~. Hidden when no project content exists.
-- [ ] Status dot styling (shipped / wip / archived) shared between
+- [X] Status dot styling (shipped / wip / archived) shared between
   list and single views.
 
 ** Track 2 supporting shortcodes
 
-- [ ] ~{{< gallery >}}~ shortcode that lays out a responsive image grid and
-  reuses ~partials/image-modal.html~ for lightbox behavior.
-- [ ] ~{{< results >}}~ shortcode for a metric strip at the top of case
-  studies (e.g. "Cut p99 latency 38%").
-- [ ] External-link / repo badges in the project meta sidebar (GitHub and
-  generic-external icons; inline SVG, no font dependency).
+- [X] ~{{< gallery >}}~ shortcode that lays out a responsive image grid and
+  reuses ~partials/image-modal.html~ for lightbox behavior. (Pulls images
+  from the page bundle via ~.Page.Resources.Match~.)
+- [X] ~{{< results >}}~ shortcode for a metric strip at the top of case
+  studies (e.g. "Cut p99 latency 38%"). (Takes one ~metric|label~ per
+  line in the shortcode body.)
+- [X] External-link / repo badges in the project meta sidebar (GitHub and
+  generic-external icons; inline SVG, no font dependency). Shipped with
+  the previous commit as ~layouts/partials/icon-link.html~.
 
 ** Track 2 demo content
 
-- [ ] Add two example projects under ~demo/content/projects/~ — one shipped
+- [X] Add two example projects under ~demo/content/projects/~ — one shipped
   with a cover image and gallery, one wip without — to exercise both
   layouts.
-- [ ] Mark one as ~featured: true~ so the homepage block is exercised.
+- [X] Mark one as ~featured: true~ so the homepage block is exercised.
 
 * Verification
 

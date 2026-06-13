@@ -1,6 +1,8 @@
 {{ define "main" }}
 {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
 <main class="mx-auto my-4 max-w-[650px]">
+  {{ partial "featured-projects.html" . }}
+
   <ul class="list-none p-0">
     {{ range $paginator.Pages }}
     <li class="mb-2 list-none">
@@ -10,12 +12,12 @@
         {{ if or .Params.tags .Params.categories }}
         {{ if isset .Params "categories" }}
         <span class="block">
-          {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
+          {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-main-light)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ if isset .Params "tags" }}
         <span class="block">
-        {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
+        {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-main-light)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ end }}

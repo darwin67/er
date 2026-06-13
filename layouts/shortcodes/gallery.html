@@ -1,0 +1,18 @@
+{{- /*
+  Responsive image gallery. Pulls images from the page bundle.
+  Args:
+    match: glob pattern, default "*.{jpg,jpeg,png,webp,gif}"
+    cols:  preferred min column width in px (default 220)
+*/ -}}
+{{- $match := .Get "match" | default "*.{jpg,jpeg,png,webp,gif}" -}}
+{{- $cols := .Get "cols" | default "220" -}}
+{{- $images := .Page.Resources.Match $match -}}
+{{- if $images -}}
+<div class="gallery" style="--gallery-min: {{ $cols }}px;">
+  {{- range $images -}}
+  <figure class="gallery-item">
+    <img src="{{ .RelPermalink }}" alt="{{ .Title | default .Name }}" loading="lazy">
+  </figure>
+  {{- end -}}
+</div>
+{{- end -}}

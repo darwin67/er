@@ -34,7 +34,7 @@
     <ul class="list-none pl-0 space-y-1">
       {{ range . }}
       <li>
-        <a href="{{ .RelPermalink }}" class="text-[var(--color-main)] hover:text-[var(--color-neutral-accent)]">{{ .Title }}</a>
+        <a href="{{ .RelPermalink }}" class="text-[var(--color-main)] hover:text-[var(--color-main-light)]">{{ .Title }}</a>
         {{ if not .Date.IsZero }}<span class="text-faint text-sm ml-1">&middot; <time>{{ .Date.Format "02 Jan 2006" }}</time></span>{{ end }}
       </li>
       {{ end }}
