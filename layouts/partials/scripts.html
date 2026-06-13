@@ -78,36 +78,25 @@ document.addEventListener('DOMContentLoaded', function() {
 {{ end }}
 
 {{ if .Params.math }}
-<!-- Load KaTeX -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-<script>
-  renderMathInElement(document.body,
-    {
-        delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: false},
-        ]
-    }
-  );
-
-  var inlineMathArray = document.querySelectorAll("script[type='math/tex']");
-  for (var i = 0; i < inlineMathArray.length; i++) {
-    var inlineMath = inlineMathArray[i];
-    var tex = inlineMath.innerText || inlineMath.textContent;
-    var replaced = document.createElement("span");
-    replaced.innerHTML = katex.renderToString(tex, {displayMode: false});
-    inlineMath.parentNode.replaceChild(replaced, inlineMath);
-  }
-
-  var displayMathArray = document.querySelectorAll("script[type='math/tex; mode=display']");
-  for (var i = 0; i < displayMathArray.length; i++) {
-    var displayMath = displayMathArray[i];
-    var tex = displayMath.innerHTML;
-    var replaced = document.createElement("span");
-    replaced.innerHTML = katex.renderToString(tex.replace(/%.*/g, ''), {displayMode: true});
-    displayMath.parentNode.replaceChild(replaced, displayMath);
-  }
-</script>
+<!-- KaTeX 0.16.9 (cdnjs) — loaded only on pages with `math: true`. -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"
+      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+      crossorigin="anonymous">
+<script defer
+        src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+<script defer
+        src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"
+        onload="renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });"></script>
 {{end}}
