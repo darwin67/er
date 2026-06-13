@@ -34,3 +34,5 @@ words:
   other: "{{ .Count }} words"
 relatedPosts:
   other: Related posts
+tableOfContents:
+  other: On this page

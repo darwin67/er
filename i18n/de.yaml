@@ -34,3 +34,5 @@ words:
   other: "{{ .Count }} Woerter"
 relatedPosts:
   other: Verwandte Beitraege
+tableOfContents:
+  other: Auf dieser Seite

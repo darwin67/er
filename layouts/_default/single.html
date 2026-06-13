@@ -24,6 +24,7 @@
       {{ end }}
     </p>
   </div>
+  {{ partial "table-of-contents" . }}
   <div class="leading-normal prose lg:prose-lg post-content max-w-none">{{ .Content }}</div>
 
   {{ $related := first 4 (where (.Site.RegularPages.Related .) "Section" .Section) }}
@@ -41,7 +42,6 @@
   </aside>
   {{ end }}
 </main>
-{{ partial "table-of-contents" . }}
 
 <div class="text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0" data-pagefind-ignore>
   {{ partial "back-to-top.html" . }}<br>

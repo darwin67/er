@@ -34,3 +34,5 @@ words:
   other: "{{ .Count }} 字"
 relatedPosts:
   other: 関連記事
+tableOfContents:
+  other: 目次
