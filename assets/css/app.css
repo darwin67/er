@@ -390,11 +390,16 @@ td {
   border: 1px solid var(--color-border);
 }
 
-ul {
+/* Apply default list markers only inside prose content so layout/nav
+   lists (TOC, related posts, project grids, featured-work, etc.) don't
+   pick up bullets they don't want. */
+.post-content ul,
+.prose ul {
   @apply list-disc;
 }
 
-ol {
+.post-content ol,
+.prose ol {
   @apply list-decimal;
 }
 
@@ -648,6 +653,7 @@ sup a[href^="#fn:"] {
 }
 
 .project-card {
+  list-style: none;
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
   overflow: hidden;
@@ -712,7 +718,14 @@ sup a[href^="#fn:"] {
   padding-bottom: 1.25rem;
 }
 
-.featured-project-list { display: grid; gap: 0.5rem; }
+.featured-project-list {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+.featured-project { list-style: none; }
 
 .featured-project a {
   display: block;
