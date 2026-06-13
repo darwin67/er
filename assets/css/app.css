@@ -29,6 +29,7 @@
 
     --font-sans: "Source Sans Pro", sans-serif;
     --max-width-content: 650px;
+    --max-width-wide: 760px;
 }
 
 /* Layout */
@@ -55,6 +56,57 @@ h5,
 h6 {
   @apply text-[var(--color-main)];
   scroll-margin-top: 4rem;
+}
+
+/* Asymmetric layout for post singles: the outer container is wide enough
+   to give code, tables, figures, and pullquotes breathing room. Prose
+   paragraphs, lists, and headings stay at the readable ~65ch measure by
+   pinning them to a max-width and auto-centering. The selectors target
+   element types rather than direct children so org-mode's nested
+   `.outline-*` wrappers don't break the rule. */
+.post-main {
+  max-width: var(--max-width-wide);
+}
+
+.post-header,
+.related-posts {
+  max-width: var(--max-width-content);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post-content p,
+.post-content ul,
+.post-content ol,
+.post-content blockquote:not(.pullquote),
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6,
+.post-content dl,
+.post-content hr {
+  max-width: var(--max-width-content);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Code, tables, figures, callouts, and pullquotes get the full canvas. */
+.post-content pre,
+.post-content .highlight,
+.post-content .code-block,
+.post-content figure,
+.post-content table,
+.post-content .pullquote,
+.post-content .callout {
+  max-width: var(--max-width-wide);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post-content table {
+  width: 100%;
 }
 
 /* Prose readability: longer measure-aware line-height and modular heading scale. */
@@ -212,21 +264,15 @@ sup a[href^="#fn:"] {
   font-weight: 600;
 }
 
-/* Pull quote: visually wider than the prose column, no italic by default. */
+/* Pull quote: spans the wider canvas, breaking out of the prose measure. */
 .pullquote {
-  margin: 1.5rem -1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   padding: 0.25rem 0 0.25rem 1rem;
   border-left: 4px solid var(--color-main);
   font-size: 1.25rem;
   line-height: 1.45;
   color: var(--color-heading-text);
-}
-
-@media (min-width: 1024px) {
-  .pullquote {
-    margin-left: -2.5rem;
-    margin-right: -2.5rem;
-  }
 }
 
 /* Callouts */
