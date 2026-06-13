@@ -403,30 +403,125 @@ td {
   @apply list-none;
 }
 
-/* Footnotes */
+/* ── Footnotes ────────────────────────────────────────────────────────
+   Wikipedia / research-paper style endnotes. Hugo emits two slightly
+   different markup shapes — Goldmark for markdown and go-org for org
+   files — so most rules target both. Bidirectional linking: the inline
+   superscript [N] jumps to the entry, and each entry has a ↩ that
+   returns to the citation site. Markdown additionally supports repeat
+   citations (multiple back-refs per entry); org doesn't natively. */
+
 .footnotes {
-  @apply mt-10 pt-6 text-sm;
+  max-width: var(--max-width-content);
+  margin: 2.5rem auto 0;
+  padding-top: 1rem;
+  font-size: 0.875rem;
   color: var(--color-muted-text);
   border-top: 1px solid var(--color-border);
 }
 
+.footnotes > hr,
+.footnotes hr.footnotes-separatator {
+  display: none;
+}
+
+.footnotes::before {
+  content: "Notes";
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-faint-text);
+}
+
+/* Markdown: <ol> of <li id="fn:N"> */
 .footnotes ol {
-  @apply pl-5;
+  padding-left: 1.5rem;
+  margin: 0;
 }
 
 .footnotes li {
-  @apply mb-1;
+  margin: 0 0 0.4rem;
 }
 
-sup a[href^="#fn:"] {
-  @apply text-[var(--color-main)] no-underline;
-  font-size: 0.75em;
-  padding: 0 0.15em;
+.footnotes li > p {
+  margin: 0;
+  display: inline;
 }
 
-.footnote-backref {
-  @apply ml-1 no-underline;
+/* Org: <div class="footnote-definition"> with leading <sup> + body */
+.footnotes .footnote-definition {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: baseline;
+  margin: 0 0 0.4rem;
+}
+
+.footnotes .footnote-definition > sup {
+  text-align: right;
+  padding-right: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: var(--color-faint-text);
+}
+
+.footnotes .footnote-definition > sup a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footnotes .footnote-body > p {
+  margin: 0;
+  display: inline;
+}
+
+/* Inline citation markers — render as bracketed `[N]`. */
+.post-content sup a.footnote-ref,
+.post-content sup.footnote-reference a {
+  color: var(--color-main);
+  text-decoration: none;
+  font-size: 0.7em;
+  padding: 0 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-content sup a.footnote-ref::before,
+.post-content sup.footnote-reference a::before { content: "["; }
+.post-content sup a.footnote-ref::after,
+.post-content sup.footnote-reference a::after  { content: "]"; }
+
+.post-content sup a.footnote-ref:hover,
+.post-content sup.footnote-reference a:hover {
+  color: var(--color-main-light);
+  text-decoration: underline;
+}
+
+/* Back-link from the entry to the citation. */
+.footnotes a.footnote-backref {
+  margin-left: 0.35rem;
+  color: var(--color-faint-text);
+  text-decoration: none;
+  font-size: 0.85em;
+}
+
+.footnotes a.footnote-backref:hover {
+  color: var(--color-main);
+}
+
+/* Brief flash highlight on the targeted entry / citation so the eye
+   finds it after a jump. */
+.footnotes li:target,
+.footnotes .footnote-definition:target,
+.post-content sup:target,
+.post-content sup.footnote-reference:target {
+  animation: footnote-flash 1.2s ease-out;
+}
+
+@keyframes footnote-flash {
+  0%   { background-color: var(--color-background-alt); }
+  100% { background-color: transparent; }
 }
 
 /* Drop cap (opt-in via `dropcap: true` frontmatter; template adds the class). */

@@ -1464,6 +1464,12 @@
     --tw-duration: 500ms;
     transition-duration: 500ms;
   }
+  .\[fn\:knuth\] {
+    fn: knuth;
+  }
+  .\[fn\:observation\] {
+    fn: observation;
+  }
   .hover\:border-\[var\(--color-body-text\)\] {
     &:hover {
       @media (hover: hover) {
@@ -2144,29 +2150,94 @@ th, td {
   list-style-type: none;
 }
 .footnotes {
-  margin-top: calc(var(--spacing) * 10);
-  padding-top: calc(var(--spacing) * 6);
-  font-size: var(--text-sm);
-  line-height: var(--tw-leading, var(--text-sm--line-height));
+  max-width: var(--max-width-content);
+  margin: 2.5rem auto 0;
+  padding-top: 1rem;
+  font-size: 0.875rem;
   color: var(--color-muted-text);
   border-top: 1px solid var(--color-border);
 }
+.footnotes > hr, .footnotes hr.footnotes-separatator {
+  display: none;
+}
+.footnotes::before {
+  content: "Notes";
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-faint-text);
+}
 .footnotes ol {
-  padding-left: calc(var(--spacing) * 5);
+  padding-left: 1.5rem;
+  margin: 0;
 }
 .footnotes li {
-  margin-bottom: calc(var(--spacing) * 1);
+  margin: 0 0 0.4rem;
 }
-sup a[href^="#fn:"] {
-  color: var(--color-main);
-  text-decoration-line: none;
-  font-size: 0.75em;
-  padding: 0 0.15em;
+.footnotes li > p {
+  margin: 0;
+  display: inline;
 }
-.footnote-backref {
-  margin-left: calc(var(--spacing) * 1);
-  text-decoration-line: none;
+.footnotes .footnote-definition {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: baseline;
+  margin: 0 0 0.4rem;
+}
+.footnotes .footnote-definition > sup {
+  text-align: right;
+  padding-right: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: var(--color-faint-text);
+}
+.footnotes .footnote-definition > sup a {
+  color: inherit;
+  text-decoration: none;
+}
+.footnotes .footnote-body > p {
+  margin: 0;
+  display: inline;
+}
+.post-content sup a.footnote-ref, .post-content sup.footnote-reference a {
+  color: var(--color-main);
+  text-decoration: none;
+  font-size: 0.7em;
+  padding: 0 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+.post-content sup a.footnote-ref::before, .post-content sup.footnote-reference a::before {
+  content: "[";
+}
+.post-content sup a.footnote-ref::after, .post-content sup.footnote-reference a::after {
+  content: "]";
+}
+.post-content sup a.footnote-ref:hover, .post-content sup.footnote-reference a:hover {
+  color: var(--color-main-light);
+  text-decoration: underline;
+}
+.footnotes a.footnote-backref {
+  margin-left: 0.35rem;
+  color: var(--color-faint-text);
+  text-decoration: none;
+  font-size: 0.85em;
+}
+.footnotes a.footnote-backref:hover {
+  color: var(--color-main);
+}
+.footnotes li:target, .footnotes .footnote-definition:target, .post-content sup:target, .post-content sup.footnote-reference:target {
+  animation: footnote-flash 1.2s ease-out;
+}
+@keyframes footnote-flash {
+  0% {
+    background-color: var(--color-background-alt);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 .dropcap .post-content > p:first-of-type::first-letter {
   float: left;

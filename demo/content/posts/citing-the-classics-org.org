@@ -1,0 +1,31 @@
+#+TITLE: Citing the classics (Org)
+#+DATE: <2025-10-04 Sat>
+#+TAGS[]: meta demo footnotes
+#+CATEGORY: tutorials
+
+This post is the org-mode counterpart to the markdown footnote demo —
+same content, different source format.
+
+The inline marker is a bracketed superscript[fn:knuth] that links down
+to the corresponding entry, and each entry has a small back-link that
+returns to the citation site. Click the [1] above, then click the
+return link on the "Knuth (1974)" entry below.
+
+Long-form notes work too[fn:observation], including emphasis and
+multi-sentence prose. The styling is unified across markdown and
+org-mode posts even though Hugo's two parsers emit slightly different
+HTML structures — the theme's CSS targets both shapes.
+
+One difference worth noting: go-org doesn't natively support repeat
+citations the way Goldmark does. If you cite a source twice in an org
+post each citation needs its own footnote definition. The markdown
+sibling post shows the repeat-citation behavior in action.
+
+[fn:knuth] Knuth, D. E. (1974). "Structured Programming with go to
+Statements." /Computing Surveys/, 6(4), 261-301. The original citation
+of "premature optimization is the root of all evil."
+
+[fn:observation] This page also exercises the theme's other typography
+bits — the prose measure stays at ~65ch, but the footnotes block
+follows the same narrow measure rather than expanding to the wider
+canvas reserved for code and figures.
