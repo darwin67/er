@@ -2434,16 +2434,7 @@ sup a[href^="#fn:"] {
   display: block;
 }
 .project-card-cover-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--color-background-alt) 0%, var(--color-background) 100%);
-  color: var(--color-faint-text);
-  font-family: var(--font-sans);
-  font-size: 3rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  user-select: none;
+  background-color: var(--color-background-alt);
 }
 .project-card-body {
   padding: 0.75rem 0.875rem 0.875rem;

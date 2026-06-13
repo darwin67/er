@@ -685,20 +685,12 @@ sup a[href^="#fn:"] {
   display: block;
 }
 
+/* Pattern placeholder colors come from inline style derived from the
+   page title hash — see layouts/projects/list.html. We just set a
+   sensible default background-color so the inline pattern always sits
+   on something. */
 .project-card-cover-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    linear-gradient(135deg,
-      var(--color-background-alt) 0%,
-      var(--color-background) 100%);
-  color: var(--color-faint-text);
-  font-family: var(--font-sans);
-  font-size: 3rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  user-select: none;
+  background-color: var(--color-background-alt);
 }
 
 .project-card-body { padding: 0.75rem 0.875rem 0.875rem; }
