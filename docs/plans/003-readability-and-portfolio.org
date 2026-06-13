@@ -104,14 +104,19 @@ Smallest set that visibly raises the quality bar for prose.
 
 ** Track 1 dark mode
 
-- [ ] Add a ~[data-theme="dark"]~ variant (or Tailwind v4 ~@variant dark~) to
+- [X] Add a ~[data-theme="dark"]~ variant (or Tailwind v4 ~@variant dark~) to
   ~assets/css/app.css~ covering: body, prose, code blocks, blockquotes,
-  tables, callouts, nav, footer.
-- [ ] Toggle in the nav partial. Respect ~prefers-color-scheme~ on first
+  tables, callouts, nav, footer. (Implemented by overriding the same
+  ~--color-*~ custom properties — every rule reading those vars follows
+  along automatically. A handful of hard-coded Tailwind grays got explicit
+  swaps.)
+- [X] Toggle in the nav partial. Respect ~prefers-color-scheme~ on first
   visit; persist user choice in ~localStorage~.
-- [ ] Avoid FOUC: inline a tiny script in ~<head>~ that sets the attribute
-  before paint.
-- [ ] Verify Pagefind modal and ~image-modal~ both render in dark mode.
+- [X] Avoid FOUC: inline a tiny script in ~<head>~ that sets the attribute
+  before paint (above the stylesheet ~<link>~).
+- [X] Verify Pagefind modal and ~image-modal~ both render in dark mode.
+  (Pagefind already consumes ~--color-*~ vars in ~search.html~ so it follows
+  the theme; ~image-modal~ uses Tailwind ~bg-black/75~ which is mode-neutral.)
 
 * Portfolio Track
 

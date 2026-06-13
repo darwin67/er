@@ -31,5 +31,14 @@
     {{ partial "search.html" . }}
     {{ end }}
     {{ partial "language-switcher.html" . }}
+    <button
+      type="button"
+      class="theme-toggle ml-2"
+      aria-label="Toggle color theme"
+      onclick="toggleTheme()"
+    >
+      <span class="icon-moon" aria-hidden="true">&#9789;</span>
+      <span class="icon-sun"  aria-hidden="true">&#9728;</span>
+    </button>
   </div>
 </nav>

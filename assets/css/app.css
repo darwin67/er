@@ -242,5 +242,75 @@ sup a[href^="#fn:"] {
   margin: 0 auto;
 }
 
+/* Dark mode.
+   Activated by `data-theme="dark"` on <html>, which a tiny inline head
+   script sets before paint based on localStorage or `prefers-color-scheme`.
+   Overrides the same custom properties declared above so all existing rules
+   that read `var(--color-*)` follow along. */
+[data-theme="dark"] {
+  --color-main: #d6a89b;
+  --color-main-light: #e2bbb0;
+  --color-main-dark: #b9897c;
+  --color-secondary: #afd5aa;
+  --color-secondary-light: #c4e0bf;
+  --color-secondary-dark: #8fb88a;
+  --color-body-text: #d8d4cf;
+  --color-heading-text: #ece7e2;
+  --color-background: #1b1a18;
+  --color-background-alt: #26241f;
+  --color-border: #3a352f;
+  --color-warm-accent: #d4a574;
+  --color-neutral-accent: #b8a082;
+  --color-cool-accent: #9db8a1;
+  --color-blush-accent: #c49a8e;
+}
+
+/* Hard-coded Tailwind grays need explicit dark-mode swaps. */
+[data-theme="dark"] blockquote {
+  color: #b8b2ab;
+}
+
+[data-theme="dark"] tr:nth-child(2n) {
+  background-color: var(--color-background-alt);
+}
+
+[data-theme="dark"] th,
+[data-theme="dark"] td {
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .footnotes {
+  color: #a8a39d;
+}
+
+[data-theme="dark"] .footnote-backref {
+  color: #6e6862;
+}
+
+[data-theme="dark"] .post-meta,
+[data-theme="dark"] .text-gray-400 {
+  color: #8a857f !important;
+}
+
+/* Theme toggle button in the nav. */
+.theme-toggle {
+  background: transparent;
+  border: 0;
+  padding: 0.25rem 0.4rem;
+  cursor: pointer;
+  color: var(--color-body-text);
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  color: var(--color-neutral-accent);
+}
+
+.theme-toggle .icon-moon { display: inline; }
+.theme-toggle .icon-sun  { display: none; }
+
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun  { display: inline; }
+
 /* make sure things that are supposed to be hidden are kept hidden with alpine.js */
 [x-cloak] { display: none !important; }
