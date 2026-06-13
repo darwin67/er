@@ -2342,7 +2342,7 @@ sup a[href^="#fn:"] {
 }
 .stack-pill:hover {
   color: var(--color-heading-text);
-  border-color: var(--color-neutral-accent);
+  border-color: var(--color-main-light);
 }
 .project-meta {
   display: grid;
@@ -2415,7 +2415,7 @@ sup a[href^="#fn:"] {
 }
 .project-card:hover {
   transform: translateY(-2px);
-  border-color: var(--color-neutral-accent);
+  border-color: var(--color-main-light);
 }
 .project-card-link {
   display: block;
@@ -2484,7 +2484,7 @@ sup a[href^="#fn:"] {
   transition: border-color 0.15s ease;
 }
 .featured-project a:hover {
-  border-color: var(--color-neutral-accent);
+  border-color: var(--color-main-light);
 }
 .featured-project-title-row {
   display: flex;

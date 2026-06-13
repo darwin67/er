@@ -579,7 +579,7 @@ sup a[href^="#fn:"] {
 
 .stack-pill:hover {
   color: var(--color-heading-text);
-  border-color: var(--color-neutral-accent);
+  border-color: var(--color-main-light);
 }
 
 /* Project meta block on the single page. */
@@ -663,7 +663,7 @@ sup a[href^="#fn:"] {
 
 .project-card:hover {
   transform: translateY(-2px);
-  border-color: var(--color-neutral-accent);
+  border-color: var(--color-main-light);
 }
 
 .project-card-link {
@@ -747,7 +747,7 @@ sup a[href^="#fn:"] {
 }
 
 .featured-project a:hover {
-  border-color: var(--color-neutral-accent);
+  border-color: var(--color-main-light);
 }
 
 .featured-project-title-row {
