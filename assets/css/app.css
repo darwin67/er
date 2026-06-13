@@ -279,6 +279,34 @@ sup a[href^="#fn:"] {
   --color-blush-accent: #c49a8e;
 }
 
+/* Tailwind typography plugin sets its own color vars on .prose; they
+   default to dark grays. Repoint them at the theme palette so prose body
+   text flips with the theme. */
+.prose {
+  --tw-prose-body: var(--color-body-text);
+  --tw-prose-headings: var(--color-heading-text);
+  --tw-prose-lead: var(--color-body-text);
+  --tw-prose-links: var(--color-main);
+  --tw-prose-bold: var(--color-heading-text);
+  --tw-prose-counters: var(--color-muted-text);
+  --tw-prose-bullets: var(--color-muted-text);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-muted-text);
+  --tw-prose-quote-borders: var(--color-blush-accent);
+  --tw-prose-captions: var(--color-muted-text);
+  --tw-prose-code: var(--color-main-dark);
+  --tw-prose-pre-code: var(--color-body-text);
+  --tw-prose-pre-bg: var(--color-background-alt);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
+  --tw-prose-kbd: var(--color-heading-text);
+  --tw-prose-kbd-shadows: 0 0 0;
+}
+
+[data-theme="dark"] .prose {
+  --tw-prose-code: var(--color-main-light);
+}
+
 /* Chroma syntax highlighting palette is baked in for the light theme.
    In dark mode, lift the darkest tokens so they read on the dark
    code-block background. Targets inline `style="color:#…"` from Chroma. */
