@@ -1,0 +1,19 @@
+{{- /*
+  Outcome strip for case studies. Pass one `metric|label` per line, e.g.
+
+    {{< results >}}
+    38%|p99 latency reduction
+    3x|deploys per week
+    {{< /results >}}
+*/ -}}
+<div class="results-strip">
+  {{- range (split (trim .Inner "\n") "\n") -}}
+  {{- $parts := split . "|" -}}
+  {{- if ge (len $parts) 2 -}}
+  <div class="result-cell">
+    <div class="result-metric">{{ trim (index $parts 0) " " }}</div>
+    <div class="result-label">{{ trim (delimit (after 1 $parts) "|") " " }}</div>
+  </div>
+  {{- end -}}
+  {{- end -}}
+</div>

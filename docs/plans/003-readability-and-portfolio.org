@@ -150,12 +150,15 @@ Smallest set that visibly raises the quality bar for prose.
 
 ** Track 2 supporting shortcodes
 
-- [ ] ~{{< gallery >}}~ shortcode that lays out a responsive image grid and
-  reuses ~partials/image-modal.html~ for lightbox behavior.
-- [ ] ~{{< results >}}~ shortcode for a metric strip at the top of case
-  studies (e.g. "Cut p99 latency 38%").
-- [ ] External-link / repo badges in the project meta sidebar (GitHub and
-  generic-external icons; inline SVG, no font dependency).
+- [X] ~{{< gallery >}}~ shortcode that lays out a responsive image grid and
+  reuses ~partials/image-modal.html~ for lightbox behavior. (Pulls images
+  from the page bundle via ~.Page.Resources.Match~.)
+- [X] ~{{< results >}}~ shortcode for a metric strip at the top of case
+  studies (e.g. "Cut p99 latency 38%"). (Takes one ~metric|label~ per
+  line in the shortcode body.)
+- [X] External-link / repo badges in the project meta sidebar (GitHub and
+  generic-external icons; inline SVG, no font dependency). Shipped with
+  the previous commit as ~layouts/partials/icon-link.html~.
 
 ** Track 2 demo content
 
