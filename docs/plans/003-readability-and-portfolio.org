@@ -1,0 +1,187 @@
+#+title: Improve readability for long-form writing and add project portfolio support
+#+author: Darwin D. Wu
+#+status: Draft
+#+date: <2026-06-12 Fri>
+
+Two related tracks of improvements to this Hugo theme:
+
+1. Better readability for long-form essays and notes.
+2. First-class support for showcasing project portfolios / case studies.
+
+Both tracks ship as additive features so existing demo content and downstream
+sites keep rendering unchanged. New behavior is opt-in via frontmatter, content
+type, or site params where reasonable.
+
+* Background
+
+The theme today is a clean blog theme: posts only, a single ~single.html~
+template, no project layouts, no shortcodes directory, and no dark mode. Survey
+of current state:
+
+- Layouts: ~_default/single.html~, ~_default/list.html~,
+  ~_default/tag.html~, ~_default/terms.html~, ~index.html~, ~404.html~.
+- Archetypes: only ~default.md~ / ~default.org~ — minimal frontmatter.
+- CSS: ~assets/css/app.css~ uses Tailwind v4 + the typography plugin, prose
+  max-width ~650px~, Source Sans Pro, no dark mode, no explicit line-height
+  override, no heading scale beyond color.
+- Partials: nav, footer, search (Pagefind), table-of-contents,
+  image-modal, open graph, pagination, back-to-top.
+- Demo content: ~demo/content/~ has posts, an about page, and a cooking bundle
+  — no portfolio examples.
+- Config: ~config/_default/hugo.yaml~ is minimal (pagination, summaryLength,
+  GitInfo, RobotsTXT).
+
+Two gaps to close:
+
+1. Long-form readability is "fine but undifferentiated" — no dark mode,
+   no callouts, no figures, no related posts, no reading time.
+2. Anyone using this theme for a personal site has no way to show project
+   work distinct from blog posts.
+
+* Goals
+
+- Make essays/notes pleasant to read on any device, in either color scheme,
+  without third-party JS beyond what the theme already ships (Alpine, tocbot,
+  Pagefind).
+- Provide a structured "project" content type that downstream sites can drop
+  into ~content/projects/~ and get a case-study layout, a portfolio index, and
+  a featured-work block on the homepage.
+- Keep additions opt-in. A site that does not create ~content/projects/~ or
+  flip a param should render exactly as today.
+- Hold to the existing working style: minimal changes, generated CSS
+  regenerated when ~app.css~ changes, conventional commit titles, small
+  logical commits.
+
+* Non-Goals
+
+- No new runtime dependencies (no Node toolchain, no new JS framework).
+- No CMS or admin UI.
+- No comments system.
+- No analytics integration.
+- No rewriting of existing post layouts beyond additive features.
+
+* Readability Track
+
+** Track 1 quick wins
+:PROPERTIES:
+:CUSTOM_ID: track-1-quick-wins
+:END:
+
+Smallest set that visibly raises the quality bar for prose.
+
+- [ ] Reading time + word count in ~layouts/_default/single.html~ next to the
+  date. Use ~.ReadingTime~ and ~.WordCount~; gate behind a site param if
+  noisy.
+- [ ] Callout shortcodes under ~layouts/shortcodes/~: ~note~, ~tip~, ~warn~,
+  ~danger~. Subtle background + left border, no icons required initially.
+- [ ] Figure shortcode ~{{< figure src="…" caption="…" alt="…" >}}~ with a
+  styled ~<figcaption>~. Keep ~image-modal~ behavior.
+- [ ] Related posts block at the bottom of ~single.html~ via
+  ~.Site.RegularPages.Related .~ with sensible keyword config in
+  ~config/_default/hugo.yaml~.
+
+** Track 1 typography polish
+
+- [ ] Explicit ~line-height~ (~1.7~) and body size (~1.0625rem~) on prose in
+  ~assets/css/app.css~. Regenerate ~assets/css/main.css~.
+- [ ] Modular heading scale so h2/h3/h4 are differentiated by size, not just
+  color.
+- [ ] ~scroll-margin-top~ on headings so TOC anchors don't hide under sticky
+  nav.
+- [ ] Footnote styling — back-reference arrow, dimmer numerals, spacing for
+  the ~.footnotes~ block.
+- [ ] Better code block treatment: language label top-right, copy-to-clipboard
+  button, softer background. Inline ~<code>~ gets a tinted theme color
+  instead of the current flat gray.
+- [ ] Optional drop cap on first paragraph, opt-in via frontmatter
+  ~dropcap: true~.
+- [ ] Pull-quote shortcode ~{{< pullquote >}}~ that breaks the column
+  slightly.
+
+** Track 1 dark mode
+
+- [ ] Add a ~[data-theme="dark"]~ variant (or Tailwind v4 ~@variant dark~) to
+  ~assets/css/app.css~ covering: body, prose, code blocks, blockquotes,
+  tables, callouts, nav, footer.
+- [ ] Toggle in the nav partial. Respect ~prefers-color-scheme~ on first
+  visit; persist user choice in ~localStorage~.
+- [ ] Avoid FOUC: inline a tiny script in ~<head>~ that sets the attribute
+  before paint.
+- [ ] Verify Pagefind modal and ~image-modal~ both render in dark mode.
+
+* Portfolio Track
+
+** Track 2 content type
+:PROPERTIES:
+:CUSTOM_ID: track-2-content-type
+:END:
+
+- [ ] ~archetypes/projects.md~ with structured frontmatter:
+  ~title~, ~date~, ~role~, ~client~, ~period~, ~stack: []~, ~repo~,
+  ~live_url~, ~status~ (~shipped~ / ~wip~ / ~archived~), ~cover~,
+  ~summary~, ~featured: false~.
+- [ ] Register a ~stacks~ taxonomy in ~config/_default/hugo.yaml~ so
+  ~/stacks/rust/~ etc. work out of the box.
+- [ ] Document the schema in ~README.md~ under a new "Projects" section.
+
+** Track 2 layouts
+
+- [ ] ~layouts/projects/single.html~ — case-study template:
+  hero/cover image, meta sidebar (role, period, stack, repo, live link),
+  body, optional gallery, optional outcome strip.
+- [ ] ~layouts/projects/list.html~ — grid of projects with cover thumbnail,
+  title, one-line summary, stack pills, status dot.
+- [ ] Featured-work block on ~layouts/index.html~ pulling up to 3 projects
+  where ~featured: true~. Hidden when no project content exists.
+- [ ] Status dot styling (shipped / wip / archived) shared between
+  list and single views.
+
+** Track 2 supporting shortcodes
+
+- [ ] ~{{< gallery >}}~ shortcode that lays out a responsive image grid and
+  reuses ~partials/image-modal.html~ for lightbox behavior.
+- [ ] ~{{< results >}}~ shortcode for a metric strip at the top of case
+  studies (e.g. "Cut p99 latency 38%").
+- [ ] External-link / repo badges in the project meta sidebar (GitHub and
+  generic-external icons; inline SVG, no font dependency).
+
+** Track 2 demo content
+
+- [ ] Add two example projects under ~demo/content/projects/~ — one shipped
+  with a cover image and gallery, one wip without — to exercise both
+  layouts.
+- [ ] Mark one as ~featured: true~ so the homepage block is exercised.
+
+* Verification
+
+Per CLAUDE.md, run after each track:
+
+- ~nix develop -c make css~
+- ~git diff --exit-code -- assets/css/main.css~ (only the intended diff)
+- ~nix develop -c make build~
+- From ~demo/~: ~nix develop .. -c hugo -b http://example.test~
+- From ~demo/~: ~nix develop .. -c pagefind --site public~
+- Spot check in browser: light + dark mode, mobile width, dark-mode
+  Pagefind modal, TOC anchors, callouts, figure captions, projects list
+  + single, featured block on homepage.
+
+* Sequencing
+
+Suggested order. Each step is its own commit (or small series).
+
+1. Track 1 quick wins — visible polish with no structural risk.
+2. Track 1 typography polish — touches ~app.css~ + ~main.css~ together.
+3. Track 1 dark mode — biggest CSS surface; do after typography settles.
+4. Track 2 content type + layouts — structural; ship together so demo works.
+5. Track 2 supporting shortcodes + demo content — fills in the polish.
+
+* Open Questions
+
+- Should dark mode be the default on first visit, or follow system?
+  (Leaning: follow system, persist override.)
+- Reading time: always on, or behind a site param? (Leaning: always on for
+  posts, off for pages — gate by ~Section == "posts"~.)
+- Should ~stacks~ be a separate taxonomy or reuse ~tags~? (Leaning:
+  separate — tags describe topics, stacks describe technologies.)
+- Copy-button on code blocks: inline JS in the partial, or a tiny
+  ~static/js/~ file? (Leaning: tiny static file, loaded with ~defer~.)
