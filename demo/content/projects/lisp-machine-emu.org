@@ -1,0 +1,37 @@
+#+TITLE: Lisp Machine Emulator
+#+DATE: <2022-08-14 Sun>
+#+ROLE: Solo
+#+PERIOD: 2021 – 2022
+#+STACK[]: common-lisp sbcl docker
+#+REPO: https://github.com/example/lisp-machine-emu
+#+STATUS: archived
+#+SUMMARY: A weekend-project emulator for early-80s Lisp Machine instructions; usable but unmaintained.
+#+TAGS[]: emulators lisp retrocomputing
+
+* Overview
+
+A scratch-built emulator for a subset of the early-80s Lisp Machine
+instruction set. The goal was never compatibility — it was to find out
+what the day-to-day felt like, from cold-boot to a working REPL, on
+top of a modern Lisp runtime.
+
+* What it does
+
+Boots a minimal ROM image, exposes a tagged-memory model, and drops
+the user into a REPL that can ~LOAD~ small Lisp files. Garbage
+collection is a stop-the-world mark-and-sweep; no compaction.
+
+#+BEGIN_SRC lisp
+(defun gc ()
+  "Walk roots, mark reachable cells, then sweep the unmarked free list."
+  (mark-roots)
+  (loop for region in *heap-regions* do
+        (sweep region)))
+#+END_SRC
+
+* Why archived
+
+I learned what I came for; performance plateaued where reasonable
+tuning ran out, and adding a JIT would have been a different project.
+The code still builds and runs on SBCL; it's archived rather than
+abandoned because the existing surface is intentional and works.
