@@ -7,28 +7,29 @@
 
   <ul class="project-grid">
     {{ range .Pages.ByDate.Reverse }}
+    {{ $page := . }}
     <li class="project-card">
-      <a href="{{ .RelPermalink }}" class="project-card-link">
-        {{ with .Params.cover }}
+      <a href="{{ $page.RelPermalink }}" class="project-card-link">
+        {{ with $page.Params.cover }}
         {{ $src := . }}
         {{ if not (or (hasPrefix $src "/") (hasPrefix $src "http")) }}
-          {{ with $.Resources.GetMatch $src }}{{ $src = .RelPermalink }}{{ end }}
+          {{ with $page.Resources.GetMatch $src }}{{ $src = .RelPermalink }}{{ end }}
         {{ end }}
         <div class="project-card-cover">
-          <img src="{{ $src }}" alt="{{ $.Title }} cover" loading="lazy">
+          <img src="{{ $src }}" alt="{{ $page.Title }} cover" loading="lazy">
         </div>
         {{ end }}
         <div class="project-card-body">
           <div class="project-card-title-row">
-            {{ if .Params.status }}
-            <span class="status-dot status-{{ .Params.status }}" title="{{ humanize .Params.status }}"></span>
+            {{ if $page.Params.status }}
+            <span class="status-dot status-{{ $page.Params.status }}" title="{{ humanize $page.Params.status }}"></span>
             {{ end }}
-            <h2 class="project-card-title">{{ .Title }}</h2>
+            <h2 class="project-card-title">{{ $page.Title }}</h2>
           </div>
-          {{ with .Params.summary }}
+          {{ with $page.Params.summary }}
           <p class="project-card-summary">{{ . }}</p>
           {{ end }}
-          {{ with .Params.stack }}
+          {{ with $page.Params.stack }}
           <p class="project-card-stack">
             {{ range first 5 . }}<span class="stack-pill">{{ . }}</span>{{ end }}
           </p>
