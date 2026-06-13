@@ -1,6 +1,6 @@
 #+title: Improve readability for long-form writing and add project portfolio support
 #+author: Darwin D. Wu
-#+status: Draft
+#+status: Done
 #+date: <2026-06-12 Fri>
 
 Two related tracks of improvements to this Hugo theme:
@@ -162,10 +162,10 @@ Smallest set that visibly raises the quality bar for prose.
 
 ** Track 2 demo content
 
-- [ ] Add two example projects under ~demo/content/projects/~ — one shipped
+- [X] Add two example projects under ~demo/content/projects/~ — one shipped
   with a cover image and gallery, one wip without — to exercise both
   layouts.
-- [ ] Mark one as ~featured: true~ so the homepage block is exercised.
+- [X] Mark one as ~featured: true~ so the homepage block is exercised.
 
 * Verification
 
