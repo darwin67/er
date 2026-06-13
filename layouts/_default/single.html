@@ -1,27 +1,47 @@
 {{ define "main" }}
-<main class="mx-auto my-4 max-w-2xl px-3 lg:px-0" data-pagefind-body>
-  <div class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans">
-    {{ .Title }}
-  </div>
+<main class="post-main mx-auto my-4 px-3 lg:px-0{{ if .Params.dropcap }} dropcap{{ end }}" data-pagefind-body>
+  <div class="post-header">
+    <div class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans">
+      {{ .Title }}
+    </div>
 
-  <p class="text-gray-400 text-sm mt-1 mb-4 post-meta">
-    {{ if not .Date.IsZero }}<time class="text-lg">{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
-    {{ if or .Params.tags .Params.categories .Params.series }}
-    {{ if isset .Params "categories" }}
-    <span class="block">
-    {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
-    </span>
-    {{ end }}
-    {{ if isset .Params "tags" }}
-    <span class="block">
-    {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
-    </span>
-    {{ end }}
-    {{ end }}
-  </p>
+    <p class="text-faint text-sm mt-1 mb-4 post-meta">
+      {{ if not .Date.IsZero }}<time class="text-lg">{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
+      {{ if eq .Section "posts" }}
+      <span class="reading-time">&middot; {{ i18n "readingTime" (dict "Count" .ReadingTime) }}</span>
+      {{ end }}
+      {{ if or .Params.tags .Params.categories .Params.series }}
+      {{ if isset .Params "categories" }}
+      <span class="block">
+      {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="text-faint">{{ . }}</a> {{ end }} ]
+      </span>
+      {{ end }}
+      {{ if isset .Params "tags" }}
+      <span class="block">
+      {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-faint">{{ . }}</a> {{ end }} ]
+      </span>
+      {{ end }}
+      {{ end }}
+    </p>
+  </div>
+  {{ partial "table-of-contents" . }}
   <div class="leading-normal prose lg:prose-lg post-content max-w-none">{{ .Content }}</div>
+
+  {{ $related := first 4 (where (.Site.RegularPages.Related .) "Section" .Section) }}
+  {{ with $related }}
+  <aside class="related-posts mt-10 pt-6 border-t border-[var(--color-border)]" data-pagefind-ignore>
+    <h2 class="text-lg font-semibold mb-3 text-[var(--color-heading-text)]">{{ i18n "relatedPosts" }}</h2>
+    <ul class="list-none pl-0 space-y-1">
+      {{ range . }}
+      <li>
+        <a href="{{ .RelPermalink }}" class="text-[var(--color-main)] hover:text-[var(--color-neutral-accent)]">{{ .Title }}</a>
+        {{ if not .Date.IsZero }}<span class="text-faint text-sm ml-1">&middot; <time>{{ .Date.Format "02 Jan 2006" }}</time></span>{{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  </aside>
+  {{ end }}
 </main>
-{{ partial "table-of-contents" . }}
 
 <div class="text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0" data-pagefind-ignore>
   {{ partial "back-to-top.html" . }}<br>

@@ -20,7 +20,7 @@
       {{- else if not (or (strings.HasPrefix .URL "http://") (strings.HasPrefix .URL "https://") (strings.HasPrefix .URL "#")) -}}
         {{- $url = .URL | relLangURL -}}
       {{- end -}}
-      <a class="hover:opacity-80 text-gray-700 text-sm inline-block uppercase tracking-wide" href='{{ $url }}' title="{{ .Name }}">{{ if .Identifier }}{{ or (T .Identifier) .Name }}{{ else }}{{ .Name }}{{ end }}</a>
+      <a class="hover:opacity-80 text-muted text-sm inline-block uppercase tracking-wide" href='{{ $url }}' title="{{ .Name }}">{{ if .Identifier }}{{ or (T .Identifier) .Name }}{{ else }}{{ .Name }}{{ end }}</a>
       {{ end }}
     </div>
     {{ end }}
@@ -31,5 +31,14 @@
     {{ partial "search.html" . }}
     {{ end }}
     {{ partial "language-switcher.html" . }}
+    <button
+      type="button"
+      class="theme-toggle ml-2"
+      aria-label="Toggle color theme"
+      onclick="toggleTheme()"
+    >
+      <span class="icon-moon" aria-hidden="true">&#9789;</span>
+      <span class="icon-sun"  aria-hidden="true">&#9728;</span>
+    </button>
   </div>
 </nav>

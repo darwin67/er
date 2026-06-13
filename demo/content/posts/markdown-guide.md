@@ -219,6 +219,25 @@ You can align columns:
 | Text | Text   | Text  |
 ```
 
+Rendered, that looks like:
+
+| Feature       | Markdown    | HTML equivalent             | Notes                       |
+|---------------|-------------|-----------------------------|-----------------------------|
+| Heading       | `# Title`   | `<h1>Title</h1>`            | One `#` per level, up to 6  |
+| Bold          | `**text**`  | `<strong>text</strong>`     | Or `__text__`               |
+| Italic        | `*text*`    | `<em>text</em>`             | Or `_text_`                 |
+| Inline code   | `` `code` `` | `<code>code</code>`        | Backticks, escape with `\`` |
+| Link          | `[x](url)`  | `<a href="url">x</a>`       | Title via `[x](url "title")` |
+| Image         | `![alt](src)` | `<img src="src" alt="alt">` | Same syntax with a leading `!` |
+
+With column alignment:
+
+| Left         | Center     | Right |
+|:-------------|:----------:|------:|
+| apples       | 1          |  $0.50 |
+| oranges      | 12         |  $4.20 |
+| watermelons  | 3          | $18.00 |
+
 ## Advanced Features
 
 ### Blockquotes

@@ -26,3 +26,13 @@ findSomething:
   other: Finde etwas
 interestingToRead:
   other: Lesenswertes.
+readingTime:
+  one: "{{ .Count }} Min. Lesezeit"
+  other: "{{ .Count }} Min. Lesezeit"
+words:
+  one: "{{ .Count }} Wort"
+  other: "{{ .Count }} Woerter"
+relatedPosts:
+  other: Verwandte Beitraege
+tableOfContents:
+  other: Auf dieser Seite

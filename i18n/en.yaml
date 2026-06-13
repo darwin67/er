@@ -26,3 +26,13 @@ findSomething:
   other: Find something
 interestingToRead:
   other: interesting to read.
+readingTime:
+  one: "{{ .Count }} min read"
+  other: "{{ .Count }} min read"
+words:
+  one: "{{ .Count }} word"
+  other: "{{ .Count }} words"
+relatedPosts:
+  other: Related posts
+tableOfContents:
+  other: On this page

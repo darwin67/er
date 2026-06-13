@@ -11,7 +11,8 @@ Checkout the [demo](https://er-6wj.pages.dev).
 <!-- - produces an Atom feed at `feed.xml`(taken from [this discussion](https://github.com/comfusion/after-dark/issues/32)). It generates the latest 15 posts by default. -->
 - Open graph tags
 - Tag and category pages
-- Table of contents for your posts (from [tocbot](https://github.com/tscanlin/tocbot))
+- Collapsible table of contents at the top of each post (built from Hugo's native `.TableOfContents`)
+- Light and dark mode with a `clay` (warm-earth) or `nord` (arctic) color palette
 <!-- - Renders Math with KaTeX -->
 - Tag cloud on big screens
 - Hugo multilingual sites
@@ -34,6 +35,26 @@ hugo mod get github.com/darwin67/er
 ```
 
 ## Configurations
+
+### Color palette
+
+The theme ships with two color palettes. Both support a light and dark mode
+(the visitor's choice is respected via the moon/sun toggle and persisted in
+`localStorage`).
+
+| Palette | Vibe |
+|---------|------|
+| `clay`  | Warm-earth terracotta + sage. Default. |
+| `nord`  | Arctic Snow Storm (light) / Polar Night (dark). |
+
+Pick one in your site config:
+
+```yaml
+params:
+  palette: nord
+```
+
+If unset, the site uses `clay`.
 
 ### Favicon
 

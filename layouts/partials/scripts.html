@@ -1,30 +1,8 @@
 <script src="{{ "js/alpine-focus-3.14.8.min.js" | absURL }}"></script>
 <script src="{{ "js/alpine-3.14.8.min.js" | absURL }}"></script>
+<script defer src="{{ "js/code-copy.js" | absURL }}"></script>
 
-{{ if .Site.Params.showtoc | default true }}
-{{ $headers := findRE "<h[1-6].*?>(.|\n)+?</h[1-6]>" .Content }}
-{{ $has_headers := ge (len $headers) 1 }}
-{{ if and $has_headers (ne .Params.toc false) }}
-<script src="{{ "js/tocbot-4.4.2.min.js" | absURL }}"></script>
-<link rel="stylesheet" href="{{ "css/tocbot-4.4.2.css" | absURL }}">
-<style>.is-active-link::before { background-color: var(--color-secondary); }</style>
-
-<script type="text/javascript">
-if (document.getElementById("contents-list") !== null && document.getElementsByClassName("post-content").length !== 0) {
-  tocbot.init({
-    // Where to render the table of contents.
-    tocSelector: '#contents-list',
-    // Where to grab the headings to build the table of contents.
-    contentSelector: '.post-content',
-    // Which headings to grab inside of the contentSelector element.
-    headingSelector: 'h1, h2, h3, h4',
-  });
-}
-</script>
-{{ end }}
-{{ end }}
-
-{{ if or (.Site.Params.showTagCloud | default true) (.Site.Params.showtoc | default true) (.Site.Params.showScrollToTop | default true) }}
+{{ if or (.Site.Params.showTagCloud | default true) (.Site.Params.showScrollToTop | default true) }}
 <script type="text/javascript">
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
