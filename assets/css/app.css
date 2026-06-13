@@ -94,7 +94,7 @@ h6 {
 .post-toc[open] > .post-toc-summary::before { transform: rotate(90deg); }
 
 .post-toc-body {
-  padding: 0 0.875rem 0.75rem;
+  padding: 0.25rem 0.875rem 0.875rem;
   font-size: 0.9rem;
 }
 
@@ -105,11 +105,11 @@ h6 {
   margin: 0;
 }
 
-.post-toc-body li { margin: 0.15rem 0; }
+.post-toc-body li { margin: 0.25rem 0; }
 
 .post-toc-body ul ul,
 .post-toc-body ol ol {
-  padding-left: 1rem;
+  padding-left: 1.25rem;
   border-left: 1px solid var(--color-border);
   margin-left: 0.25rem;
 }
