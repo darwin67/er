@@ -190,6 +190,16 @@
     color: var(--color-main) !important;
   }
 
+  /* Suppress pagefind's curved focus ring around the modal input. The
+     modal itself is the focus container, so the input doesn't need a
+     second ring that visually competes with the divider below. */
+  .er-pagefind-search pagefind-modal-header .pf-input:focus,
+  .er-pagefind-search pagefind-modal-header .pf-input:focus-visible {
+    outline: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
   .er-pagefind-search pagefind-modal-body,
   .er-pagefind-search .pf-modal-body {
     max-height: 36rem !important;
