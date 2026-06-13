@@ -1464,11 +1464,17 @@
     --tw-duration: 500ms;
     transition-duration: 500ms;
   }
-  .\[fn\:knuth\] {
-    fn: knuth;
+  .\[fn\:goldberg\] {
+    fn: goldberg;
   }
-  .\[fn\:observation\] {
-    fn: observation;
+  .\[fn\:graham\] {
+    fn: graham;
+  }
+  .\[fn\:ieee1275\] {
+    fn: ieee1275;
+  }
+  .\[fn\:reenskaug\] {
+    fn: reenskaug;
   }
   .hover\:border-\[var\(--color-body-text\)\] {
     &:hover {
@@ -2012,7 +2018,7 @@ html {
   margin-right: auto;
 }
 .related-posts {
-  max-width: var(--max-width-wide);
+  max-width: var(--max-width-content);
   margin-left: auto;
   margin-right: auto;
 }

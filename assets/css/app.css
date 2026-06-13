@@ -230,7 +230,7 @@ html { scroll-behavior: smooth; }
 }
 
 .related-posts {
-  max-width: var(--max-width-wide);
+  max-width: var(--max-width-content);
   margin-left: auto;
   margin-right: auto;
 }
