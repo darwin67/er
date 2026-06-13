@@ -137,14 +137,15 @@ Smallest set that visibly raises the quality bar for prose.
 
 ** Track 2 layouts
 
-- [ ] ~layouts/projects/single.html~ — case-study template:
-  hero/cover image, meta sidebar (role, period, stack, repo, live link),
-  body, optional gallery, optional outcome strip.
-- [ ] ~layouts/projects/list.html~ — grid of projects with cover thumbnail,
+- [X] ~layouts/projects/single.html~ — case-study template:
+  hero/cover image, meta block (role, client, period, stack, status,
+  repo, live link), body. (Outcome strip + gallery land with the
+  shortcode commit.)
+- [X] ~layouts/projects/list.html~ — grid of projects with cover thumbnail,
   title, one-line summary, stack pills, status dot.
-- [ ] Featured-work block on ~layouts/index.html~ pulling up to 3 projects
+- [X] Featured-work block on ~layouts/index.html~ pulling up to 3 projects
   where ~featured: true~. Hidden when no project content exists.
-- [ ] Status dot styling (shipped / wip / archived) shared between
+- [X] Status dot styling (shipped / wip / archived) shared between
   list and single views.
 
 ** Track 2 supporting shortcodes

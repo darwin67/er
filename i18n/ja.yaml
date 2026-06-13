@@ -36,3 +36,25 @@ relatedPosts:
   other: 関連記事
 tableOfContents:
   other: 目次
+projects:
+  other: プロジェクト
+projectRole:
+  other: 役割
+projectClient:
+  other: クライアント
+projectPeriod:
+  other: 期間
+projectStack:
+  other: 使用技術
+projectStatus:
+  other: ステータス
+projectLinks:
+  other: リンク
+projectStatus_shipped:
+  other: 公開済み
+projectStatus_wip:
+  other: 開発中
+projectStatus_archived:
+  other: アーカイブ済み
+featuredProjects:
+  other: 主なプロジェクト

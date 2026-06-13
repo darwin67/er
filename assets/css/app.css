@@ -540,5 +540,212 @@ sup a[href^="#fn:"] {
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 [data-theme="dark"] .theme-toggle .icon-sun  { display: inline; }
 
+/* ── Projects ─────────────────────────────────────────────────────────
+   Case-study meta, status indicator, stack pills, cover image, grid
+   listing, and the homepage featured-work block. */
+
+.status-dot {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+  background-color: var(--color-faint-text);
+}
+
+.status-shipped  { background-color: var(--color-secondary-dark); }
+.status-wip      { background-color: var(--color-warm-accent); }
+.status-archived { background-color: var(--color-faint-text); }
+
+.stack-pill {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  margin: 0.1rem 0.25rem 0.1rem 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-muted-text);
+  background-color: var(--color-background-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  text-decoration: none;
+}
+
+.stack-pill:hover {
+  color: var(--color-heading-text);
+  border-color: var(--color-neutral-accent);
+}
+
+/* Project meta block on the single page. */
+.project-meta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 1rem;
+  margin: 0.5rem 0 1.25rem;
+  font-size: 0.9rem;
+}
+
+.project-meta > div {
+  display: contents;
+}
+
+.project-meta dt {
+  color: var(--color-faint-text);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+
+.project-meta dd {
+  margin: 0;
+  color: var(--color-body-text);
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-main);
+  text-decoration: none;
+}
+
+.icon-link:hover { color: var(--color-neutral-accent); }
+
+.icon-link-label { font-size: 0.85rem; }
+
+.project-cover {
+  max-width: var(--max-width-wide);
+  margin: 1rem auto 1.5rem;
+}
+
+.project-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-border);
+}
+
+/* Project listing grid. */
+.project-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  max-width: var(--max-width-wide);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-card {
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--color-background-alt);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-neutral-accent);
+}
+
+.project-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-card-cover {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--color-background);
+}
+
+.project-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-card-body { padding: 0.75rem 0.875rem 0.875rem; }
+
+.project-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.project-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-heading-text);
+  margin: 0;
+}
+
+.project-card-summary {
+  margin: 0.35rem 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-muted-text);
+  line-height: 1.4;
+}
+
+.project-card-stack {
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Featured-work block on the homepage. */
+.featured-projects {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1.25rem;
+}
+
+.featured-project-list { display: grid; gap: 0.5rem; }
+
+.featured-project a {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  color: inherit;
+  text-decoration: none;
+  background-color: var(--color-background-alt);
+  transition: border-color 0.15s ease;
+}
+
+.featured-project a:hover {
+  border-color: var(--color-neutral-accent);
+}
+
+.featured-project-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.featured-project-title {
+  font-weight: 600;
+  color: var(--color-heading-text);
+}
+
+.featured-project-summary {
+  margin: 0.2rem 0 0;
+  font-size: 0.875rem;
+  color: var(--color-muted-text);
+  line-height: 1.4;
+}
+
 /* make sure things that are supposed to be hidden are kept hidden with alpine.js */
 [x-cloak] { display: none !important; }

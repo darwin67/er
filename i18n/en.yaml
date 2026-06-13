@@ -36,3 +36,25 @@ relatedPosts:
   other: Related posts
 tableOfContents:
   other: On this page
+projects:
+  other: Projects
+projectRole:
+  other: Role
+projectClient:
+  other: Client
+projectPeriod:
+  other: Period
+projectStack:
+  other: Stack
+projectStatus:
+  other: Status
+projectLinks:
+  other: Links
+projectStatus_shipped:
+  other: Shipped
+projectStatus_wip:
+  other: In progress
+projectStatus_archived:
+  other: Archived
+featuredProjects:
+  other: Featured work

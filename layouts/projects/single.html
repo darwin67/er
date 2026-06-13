@@ -1,0 +1,77 @@
+{{ define "main" }}
+<main class="post-main mx-auto my-4 px-3 lg:px-0" data-pagefind-body>
+  <div class="post-header">
+    <p class="text-faint text-xs uppercase tracking-wide mb-1">
+      <a href="{{ "/projects/" | relLangURL }}">{{ T "projects" | default "Projects" }}</a>
+    </p>
+    <h1 class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans mb-1">
+      {{ .Title }}
+    </h1>
+    {{ with .Params.summary }}
+    <p class="text-muted text-lg mb-3">{{ . }}</p>
+    {{ end }}
+
+    <dl class="project-meta">
+      {{ with .Params.role }}
+      <div><dt>{{ T "projectRole" | default "Role" }}</dt><dd>{{ . }}</dd></div>
+      {{ end }}
+      {{ with .Params.client }}
+      <div><dt>{{ T "projectClient" | default "Client" }}</dt><dd>{{ . }}</dd></div>
+      {{ end }}
+      {{ with .Params.period }}
+      <div><dt>{{ T "projectPeriod" | default "Period" }}</dt><dd>{{ . }}</dd></div>
+      {{ end }}
+      {{ with .Params.stack }}
+      <div>
+        <dt>{{ T "projectStack" | default "Stack" }}</dt>
+        <dd>
+          {{ range . }}
+          <a class="stack-pill" href='{{ "/stacks/" | relLangURL }}{{ . | urlize }}'>{{ . }}</a>
+          {{ end }}
+        </dd>
+      </div>
+      {{ end }}
+      {{ if .Params.status }}
+      <div>
+        <dt>{{ T "projectStatus" | default "Status" }}</dt>
+        <dd><span class="status-dot status-{{ .Params.status }}"></span>{{ T (printf "projectStatus_%s" .Params.status) | default (humanize .Params.status) }}</dd>
+      </div>
+      {{ end }}
+      {{ if or .Params.repo .Params.live_url }}
+      <div>
+        <dt>{{ T "projectLinks" | default "Links" }}</dt>
+        <dd class="project-links">
+          {{ with .Params.repo }}
+          {{ partial "icon-link.html" (dict "href" . "label" "Repository" "icon" "github") }}
+          {{ end }}
+          {{ with .Params.live_url }}
+          {{ partial "icon-link.html" (dict "href" . "label" "Live site" "icon" "external") }}
+          {{ end }}
+        </dd>
+      </div>
+      {{ end }}
+    </dl>
+  </div>
+
+  {{ with .Params.cover }}
+  {{ $src := . }}
+  {{ if not (or (hasPrefix $src "/") (hasPrefix $src "http")) }}
+    {{ with $.Resources.GetMatch $src }}{{ $src = .RelPermalink }}{{ end }}
+  {{ end }}
+  <figure class="project-cover">
+    <img src="{{ $src }}" alt="{{ $.Title }} cover" loading="lazy">
+  </figure>
+  {{ end }}
+
+  {{ partial "table-of-contents" . }}
+  <div class="leading-normal prose lg:prose-lg post-content max-w-none">{{ .Content }}</div>
+</main>
+
+<div class="text-center lg:text-right block lg:fixed lg:bottom-2 lg:right-2 mb-3 lg:mb-0" data-pagefind-ignore>
+  {{ partial "back-to-top.html" . }}<br>
+  <p class="mb-0 mt-2">
+  {{ with .PrevInSection }}{{ if . }}<a href="{{ .RelPermalink }}">{{ T "prevPost" }}</a>{{ end }}{{ end }}
+  {{ with .NextInSection }}{{ if . }}<a href="{{ .RelPermalink }}">{{ T "nextPost" }}</a>{{ end }}{{ end }}
+  </p>
+</div>
+{{ end }}
