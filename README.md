@@ -39,10 +39,21 @@ hugo mod get github.com/darwin67/er
 ### Projects
 
 The theme ships a `projects` content type for case studies / portfolio
-work, with a dedicated single-page layout, a grid list, and a
-featured-work block on the homepage. Drop projects under
+work, with a dedicated single-page layout, a grid list, and an optional
+"Featured work" block on the homepage. Drop projects under
 `content/projects/` (either single markdown files or page bundles when
 you have a cover image + gallery).
+
+The homepage featured block is **opt-in**:
+
+```yaml
+params:
+  showFeaturedProjects: true
+```
+
+It surfaces up to 3 projects whose frontmatter sets `featured: true`,
+and renders nothing if none match — so flipping the param on without
+any featured content is also safe.
 
 Frontmatter schema (all fields optional except `title` and `date`):
 
