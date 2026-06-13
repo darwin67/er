@@ -1532,10 +1532,10 @@
       }
     }
   }
-  .hover\:text-\[var\(--color-neutral-accent\)\] {
+  .hover\:text-\[var\(--color-main-light\)\] {
     &:hover {
       @media (hover: hover) {
-        color: var(--color-neutral-accent);
+        color: var(--color-main-light);
       }
     }
   }
@@ -2098,7 +2098,7 @@ a {
   text-decoration-line: none;
 }
 a:hover {
-  color: var(--color-neutral-accent);
+  color: var(--color-main-light);
 }
 pre {
   overflow-x: auto;

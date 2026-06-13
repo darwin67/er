@@ -307,7 +307,7 @@ a {
 }
 
 a:hover {
-  @apply text-[var(--color-neutral-accent)];
+  @apply text-[var(--color-main-light)];
 }
 
 /* Code blocks */

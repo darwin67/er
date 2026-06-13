@@ -12,12 +12,12 @@
         {{ if or .Params.tags .Params.categories }}
         {{ if isset .Params "categories" }}
         <span class="block">
-          {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
+          {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-main-light)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ if isset .Params "tags" }}
         <span class="block">
-        {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
+        {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-main-light)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ end }}
