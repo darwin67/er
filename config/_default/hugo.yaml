@@ -5,6 +5,11 @@ summaryLength: 70
 
 sectionPagesMenu: main
 
+taxonomies:
+  category: categories
+  tag: tags
+  stack: stacks
+
 related:
   includeNewer: true
   threshold: 80

@@ -125,13 +125,15 @@ Smallest set that visibly raises the quality bar for prose.
 :CUSTOM_ID: track-2-content-type
 :END:
 
-- [ ] ~archetypes/projects.md~ with structured frontmatter:
+- [X] ~archetypes/projects.md~ with structured frontmatter:
   ~title~, ~date~, ~role~, ~client~, ~period~, ~stack: []~, ~repo~,
   ~live_url~, ~status~ (~shipped~ / ~wip~ / ~archived~), ~cover~,
   ~summary~, ~featured: false~.
-- [ ] Register a ~stacks~ taxonomy in ~config/_default/hugo.yaml~ so
-  ~/stacks/rust/~ etc. work out of the box.
-- [ ] Document the schema in ~README.md~ under a new "Projects" section.
+- [X] Register a ~stacks~ taxonomy in ~config/_default/hugo.yaml~ so
+  ~/stacks/rust/~ etc. work out of the box. (Default `category` and
+  `tag` taxonomies also declared explicitly so adding `stack` doesn't
+  silently drop them.)
+- [X] Document the schema in ~README.md~ under a new "Projects" section.
 
 ** Track 2 layouts
 
