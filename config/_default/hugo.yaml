@@ -24,4 +24,3 @@ related:
 
 build:
   noJSConfigInAssets: true
-  writeStats: true
