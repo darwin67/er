@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
-@source inline("prose-lg prose-sm top-3 border-collapse bg-black py-0 py-2 text-black underline callout callout-note callout-tip callout-warn callout-danger dropcap");
+@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap");
 
 /* Layout + typography constants are palette-independent. */
 @theme {
@@ -822,5 +822,3 @@ sup a[href^="#fn:"] {
   margin-top: 0.25rem;
 }
 
-/* make sure things that are supposed to be hidden are kept hidden with alpine.js */
-[x-cloak] { display: none !important; }
