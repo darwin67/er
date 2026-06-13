@@ -4,7 +4,7 @@
     {{ .Title }}
   </div>
 
-  <p class="text-gray-400 text-sm mt-1 mb-4 post-meta">
+  <p class="text-faint text-sm mt-1 mb-4 post-meta">
     {{ if not .Date.IsZero }}<time class="text-lg">{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}
     {{ if eq .Section "posts" }}
     <span class="reading-time">&middot; {{ i18n "readingTime" (dict "Count" .ReadingTime) }}</span>
@@ -12,12 +12,12 @@
     {{ if or .Params.tags .Params.categories .Params.series }}
     {{ if isset .Params "categories" }}
     <span class="block">
-    {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
+    {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="text-faint">{{ . }}</a> {{ end }} ]
     </span>
     {{ end }}
     {{ if isset .Params "tags" }}
     <span class="block">
-    {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-gray-400">{{ . }}</a> {{ end }} ]
+    {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="text-faint">{{ . }}</a> {{ end }} ]
     </span>
     {{ end }}
     {{ end }}
@@ -32,7 +32,7 @@
       {{ range . }}
       <li>
         <a href="{{ .RelPermalink }}" class="text-[var(--color-main)] hover:text-[var(--color-neutral-accent)]">{{ .Title }}</a>
-        {{ if not .Date.IsZero }}<span class="text-gray-400 text-sm ml-1">&middot; <time>{{ .Date.Format "02 Jan 2006" }}</time></span>{{ end }}
+        {{ if not .Date.IsZero }}<span class="text-faint text-sm ml-1">&middot; <time>{{ .Date.Format "02 Jan 2006" }}</time></span>{{ end }}
       </li>
       {{ end }}
     </ul>

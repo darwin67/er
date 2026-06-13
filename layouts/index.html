@@ -5,17 +5,17 @@
     {{ range $paginator.Pages }}
     <li class="mb-2 list-none">
       <a class="text-lg !text-[var(--color-main)] font-sans font-semibold no-underline" href="{{ .RelPermalink }}">{{ .Title }}</a>
-      <p class="text-sm mt-1 text-gray-400">
+      <p class="text-sm mt-1 text-faint">
         <time>{{ .Date.Format "02 Jan 2006" }}</time>
         {{ if or .Params.tags .Params.categories }}
         {{ if isset .Params "categories" }}
         <span class="block">
-          {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="no-underline text-gray-400 hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
+          {{ T "categories" }}: [ {{ range .Params.categories }}<a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ if isset .Params "tags" }}
         <span class="block">
-        {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="no-underline text-gray-400 hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
+        {{ T "tags" }}: [ {{ range .Params.tags }}<a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="no-underline text-faint hover:text-[var(--color-neutral-accent)]">{{ . }}</a> {{ end }} ]
         </span>
         {{ end }}
         {{ end }}

@@ -20,7 +20,7 @@
       {{- else if not (or (strings.HasPrefix .URL "http://") (strings.HasPrefix .URL "https://") (strings.HasPrefix .URL "#")) -}}
         {{- $url = .URL | relLangURL -}}
       {{- end -}}
-      <a class="hover:opacity-80 text-gray-700 text-sm inline-block uppercase tracking-wide" href='{{ $url }}' title="{{ .Name }}">{{ if .Identifier }}{{ or (T .Identifier) .Name }}{{ else }}{{ .Name }}{{ end }}</a>
+      <a class="hover:opacity-80 text-muted text-sm inline-block uppercase tracking-wide" href='{{ $url }}' title="{{ .Name }}">{{ if .Identifier }}{{ or (T .Identifier) .Name }}{{ else }}{{ .Name }}{{ end }}</a>
       {{ end }}
     </div>
     {{ end }}

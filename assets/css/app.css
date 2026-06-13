@@ -9,6 +9,8 @@
     --color-secondary: #afd5aa;
     --color-body-text: #3d3d3d;
     --color-heading-text: #383838;
+    --color-muted-text: #6b6b6b;
+    --color-faint-text: #9aa0a6;
     --color-background: #fff;
 
     /* Extended Palette */
@@ -33,6 +35,12 @@
 body {
   @apply font-[var(--font-sans)] text-[var(--color-body-text)] bg-[var(--color-background)];
 }
+
+/* Theme-aware text-color utilities — used wherever templates previously
+   reached for Tailwind's `text-gray-*` so the color flips with the theme. */
+.text-muted { color: var(--color-muted-text); }
+.text-faint { color: var(--color-faint-text); }
+.hover\:text-faint:hover { color: var(--color-faint-text); }
 
 .content-wrapper {
   @apply max-w-[var(--max-width-content)] mx-auto;
@@ -137,7 +145,8 @@ pre code {
 
 /* Blockquotes */
 blockquote {
-  @apply border-l-4 border-[var(--color-blush-accent)] pl-4 text-gray-600 italic;
+  @apply border-l-4 border-[var(--color-blush-accent)] pl-4 italic;
+  color: var(--color-muted-text);
 }
 
 /* Tables */
@@ -146,12 +155,13 @@ table {
 }
 
 tr:nth-child(2n) {
-  @apply bg-gray-100;
+  background-color: var(--color-background-alt);
 }
 
 th,
 td {
-  @apply p-2 border border-gray-300;
+  @apply p-2;
+  border: 1px solid var(--color-border);
 }
 
 ul {
@@ -168,7 +178,8 @@ ol {
 
 /* Footnotes */
 .footnotes {
-  @apply mt-10 pt-6 text-sm text-gray-600;
+  @apply mt-10 pt-6 text-sm;
+  color: var(--color-muted-text);
   border-top: 1px solid var(--color-border);
 }
 
@@ -187,7 +198,8 @@ sup a[href^="#fn:"] {
 }
 
 .footnote-backref {
-  @apply ml-1 text-gray-400 no-underline;
+  @apply ml-1 no-underline;
+  color: var(--color-faint-text);
 }
 
 /* Drop cap (opt-in via `dropcap: true` frontmatter; template adds the class). */
@@ -256,6 +268,8 @@ sup a[href^="#fn:"] {
   --color-secondary-dark: #8fb88a;
   --color-body-text: #d8d4cf;
   --color-heading-text: #ece7e2;
+  --color-muted-text: #b0aaa3;
+  --color-faint-text: #8a857f;
   --color-background: #1b1a18;
   --color-background-alt: #26241f;
   --color-border: #3a352f;
@@ -265,31 +279,22 @@ sup a[href^="#fn:"] {
   --color-blush-accent: #c49a8e;
 }
 
-/* Hard-coded Tailwind grays need explicit dark-mode swaps. */
-[data-theme="dark"] blockquote {
-  color: #b8b2ab;
+/* Chroma syntax highlighting palette is baked in for the light theme.
+   In dark mode, lift the darkest tokens so they read on the dark
+   code-block background. Targets inline `style="color:#…"` from Chroma. */
+[data-theme="dark"] pre,
+[data-theme="dark"] pre code {
+  color: var(--color-body-text);
 }
 
-[data-theme="dark"] tr:nth-child(2n) {
-  background-color: var(--color-background-alt);
-}
-
-[data-theme="dark"] th,
-[data-theme="dark"] td {
-  border-color: var(--color-border);
-}
-
-[data-theme="dark"] .footnotes {
+[data-theme="dark"] pre [style*="color:#3b4252"],
+[data-theme="dark"] pre [style*="color:#4c566a"],
+[data-theme="dark"] pre [style*="color:#bbc3d4"] {
   color: #a8a39d;
 }
 
-[data-theme="dark"] .footnote-backref {
-  color: #6e6862;
-}
-
-[data-theme="dark"] .post-meta,
-[data-theme="dark"] .text-gray-400 {
-  color: #8a857f !important;
+[data-theme="dark"] pre [style*="color:#eceff4"] {
+  color: var(--color-body-text);
 }
 
 /* Theme toggle button in the nav. */

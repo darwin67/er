@@ -8,7 +8,7 @@
   {{ $translation := where $.AllTranslations "Lang" .Language.Lang }}
   {{ $href := .Home.RelPermalink }}
   {{ with index $translation 0 }}{{ $href = .RelPermalink }}{{ end }}
-  <a class="block whitespace-nowrap px-3 py-1.5 hover:bg-[var(--color-background-alt)] {{ if eq $.Site.Language.Lang .Language.Lang }}text-[var(--color-main)]{{ else }}text-gray-500{{ end }}" href="{{ $href }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}"{{ if eq $.Site.Language.Lang .Language.Lang }} aria-current="true"{{ end }}>{{ .Language.Label | default .Language.Lang }}</a>
+  <a class="block whitespace-nowrap px-3 py-1.5 hover:bg-[var(--color-background-alt)] {{ if eq $.Site.Language.Lang .Language.Lang }}text-[var(--color-main)]{{ else }}text-muted{{ end }}" href="{{ $href }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}"{{ if eq $.Site.Language.Lang .Language.Lang }} aria-current="true"{{ end }}>{{ .Language.Label | default .Language.Lang }}</a>
   {{ end }}
   </div>
 </details>
