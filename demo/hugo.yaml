@@ -63,7 +63,7 @@ markup:
 params:
   search: true
   showFeaturedProjects: true
-  palette: nord
+  # palette: nord
 
 outputs:
   home:
