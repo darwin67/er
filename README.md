@@ -56,8 +56,10 @@ It surfaces up to 3 projects whose frontmatter sets `featured: true`,
 and renders nothing if none match — so flipping the param on without
 any featured content is also safe.
 
-To add intro text to the projects index, create `content/projects/_index.md`.
-Use `description` for a short lead line and the page body for longer markdown:
+To add intro text to top-level list pages such as `/projects/`, `/posts/`, or
+`/tags/`, create that page's `_index.md`; for the home page, use
+`content/_index.md`. Use `description` for a short lead line and the page body
+for longer markdown:
 
 ```markdown
 ---

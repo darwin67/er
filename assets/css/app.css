@@ -709,18 +709,19 @@ h6 > span.tags {
   border: 1px solid var(--color-border);
 }
 
-/* Project listing grid. */
-.project-list-description {
+/* Optional lead text for home, section, taxonomy, and project index pages. */
+.page-intro-description {
   margin: 0.25rem 0 0;
   color: var(--color-muted-text);
   font-size: 1.0625rem;
   line-height: 1.6;
 }
 
-.project-list-intro {
+.page-intro-content {
   margin-top: 0.75rem;
 }
 
+/* Project listing grid. */
 .project-grid {
   list-style: none;
   padding: 0;

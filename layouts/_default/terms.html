@@ -2,7 +2,7 @@
 <main class="content-shell my-4">
   {{ $type := .Type }}
   <h1 class="text-2xl font-semibold font-sans">{{ .Title }}</h1>
-  {{ .Content }}
+  {{ partial "page-intro.html" . }}
   <ul class="list-none p-0">
     {{ range $key, $value := .Data.Terms }}
       <li class="leading-normal inline-block bg-[var(--color-background-alt)] px-1 m-1">
