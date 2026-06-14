@@ -1437,10 +1437,6 @@
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .ring {
-    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
@@ -2590,6 +2586,171 @@ th, td {
   font-size: 0.8rem;
   color: var(--color-muted-text);
   margin-top: 0.25rem;
+}
+.er-pagefind-search {
+  --pf-text: var(--color-body-text);
+  --pf-text-secondary: var(--color-neutral-accent);
+  --pf-text-muted: var(--color-body-text);
+  --pf-background: var(--color-background);
+  --pf-border: var(--color-border);
+  --pf-border-focus: var(--color-main-light);
+  --pf-hover: var(--color-border);
+  --pf-mark: var(--color-main);
+  --pf-skeleton: var(--color-background-alt);
+  --pf-skeleton-shine: var(--color-border);
+  --pf-outline-focus: var(--color-main-light);
+  --pf-font: var(--font-sans);
+  --pf-input-height: 36px;
+  --pf-input-font-size: 16px;
+  --pf-summary-font-size: 12px;
+  --pf-result-title-font-size: 16px;
+  --pf-result-excerpt-font-size: 12px;
+  --pf-results-gap: 0;
+  --pf-border-radius: 4px;
+  --pf-modal-backdrop: rgb(0 0 0 / 0.5);
+  --pf-modal-max-width: 48rem;
+  --pf-modal-max-height: min(80dvh, 42rem);
+  --pf-modal-top: 5rem;
+}
+.er-pagefind-search .pf-trigger-btn {
+  height: auto !important;
+  gap: 0.75rem !important;
+  justify-content: space-between !important;
+  padding: 0.375rem 0.75rem !important;
+  background: var(--color-background-alt) !important;
+  border-color: var(--color-border) !important;
+  border-radius: 0.25rem !important;
+  color: var(--color-body-text) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+.er-pagefind-search .pf-trigger-btn:hover {
+  border-color: var(--color-background-alt) !important;
+}
+.er-pagefind-search .pf-trigger-icon {
+  width: 1rem !important;
+  height: 1rem !important;
+  background: var(--color-body-text) !important;
+}
+.er-pagefind-search .pf-trigger-text {
+  color: var(--color-body-text) !important;
+}
+.er-pagefind-search .pf-trigger-shortcut {
+  gap: 0.25rem !important;
+}
+.er-pagefind-search .pf-trigger-key, .er-pagefind-search .pf-keyboard-key {
+  min-width: auto !important;
+  height: auto !important;
+  padding: 0.125rem 0.375rem !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0.25rem !important;
+  background: var(--color-background-alt) !important;
+  color: var(--color-body-text) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  line-height: 1rem !important;
+}
+.er-pagefind-search dialog.pf-modal {
+  border-radius: 0.75rem !important;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
+  overflow: hidden !important;
+}
+.er-pagefind-search pagefind-modal-header, .er-pagefind-search .pf-modal-header {
+  padding: 0 !important;
+  border-bottom-color: var(--color-border) !important;
+}
+.er-pagefind-search pagefind-modal-header .pf-input {
+  height: 3rem !important;
+  color: var(--color-body-text) !important;
+  font-size: 0.875rem !important;
+}
+.er-pagefind-search pagefind-modal-header .pf-input::placeholder {
+  color: var(--color-main) !important;
+}
+.er-pagefind-search pagefind-modal-header .pf-input:focus, .er-pagefind-search pagefind-modal-header .pf-input:focus-visible {
+  outline: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.er-pagefind-search pagefind-modal-body, .er-pagefind-search .pf-modal-body {
+  max-height: 36rem !important;
+  padding: 0 !important;
+}
+.er-pagefind-search .pf-summary {
+  margin: 0 !important;
+  padding: 0.5rem 1rem !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  color: var(--color-neutral-accent) !important;
+  font-size: 0.75rem !important;
+}
+.er-pagefind-search .pf-summary:empty {
+  display: none !important;
+}
+.er-pagefind-search .pf-results {
+  max-height: 36rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+.er-pagefind-search .er-search-result {
+  margin: 0 !important;
+  list-style: none !important;
+}
+.er-pagefind-search .er-search-result-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  padding: 1rem !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--color-heading-text) !important;
+  text-decoration: none !important;
+}
+.er-pagefind-search .er-search-result-card:hover, .er-pagefind-search .er-search-result-card:focus, .er-pagefind-search .er-search-result-card:focus-visible, .er-pagefind-search .er-search-result-card[data-pf-selected] {
+  background: var(--color-border) !important;
+  color: var(--color-heading-text) !important;
+}
+.er-pagefind-search .er-search-result-heading {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+.er-pagefind-search .er-search-result-icon {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  flex: 0 0 1.5rem !important;
+}
+.er-pagefind-search .er-search-result-title {
+  margin: 0 !important;
+  color: var(--color-heading-text) !important;
+  font-weight: 600 !important;
+  line-height: 1.5rem !important;
+}
+.er-pagefind-search .er-search-result-excerpt {
+  display: block !important;
+  margin: 0 !important;
+  padding-left: 2rem !important;
+  color: var(--color-neutral-accent) !important;
+  line-height: 1rem !important;
+}
+.er-pagefind-search .er-search-result-excerpt mark {
+  background: transparent !important;
+  color: var(--color-main) !important;
+  font-weight: 600 !important;
+}
+.er-pagefind-search pagefind-modal-footer, .er-pagefind-search .pf-modal-footer {
+  padding: 0.75rem 1rem !important;
+  border-top-color: var(--color-border) !important;
+  background: var(--color-background) !important;
+  color: var(--color-neutral-accent) !important;
+}
+@media (max-width: 767px) {
+  .er-pagefind-search .pf-trigger-shortcut {
+    display: none !important;
+  }
 }
 @property --tw-rotate-x {
   syntax: "*";
