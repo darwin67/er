@@ -59,6 +59,8 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     var nodes = document.querySelectorAll('.post-content pre');
-    nodes.forEach(enhance);
+    nodes.forEach(function (pre) {
+      if (!pre.closest('.mermaid, .src-mermaid')) enhance(pre);
+    });
   });
 })();
