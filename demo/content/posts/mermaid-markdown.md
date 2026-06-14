@@ -11,7 +11,8 @@ description: "Flowcharts and sequence diagrams rendered from fenced Mermaid bloc
 ---
 
 Mermaid diagrams can live beside prose as ordinary fenced code blocks. The
-theme loads Mermaid only when a page contains at least one diagram.
+theme loads Mermaid only when a page contains at least one diagram and gives
+the result a hand-drawn appearance.
 
 ## Publishing workflow
 

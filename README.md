@@ -130,6 +130,18 @@ flowchart LR
 
 Mermaid is loaded only on pages that contain a diagram. Diagrams follow the
 active color palette and are re-rendered after a light or dark mode change.
+
+The default look is `classic`. Set `mermaidLook` to `handDrawn` for an
+Excalidraw-like appearance, or to `neo` for Mermaid's modern style. When using
+`handDrawn`, the fixed drawing seed keeps lines stable across re-renders; change
+it to produce a different variation:
+
+```yaml
+params:
+  mermaidLook: handDrawn
+  mermaidHandDrawnSeed: 12
+```
+
 The theme uses Mermaid 11.15.0 from jsDelivr by default. To self-host it or pin
 another compatible build, set the ESM module URL:
 

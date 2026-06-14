@@ -43,4 +43,4 @@ erDiagram
 #+END_SRC
 
 Like the Markdown examples, these diagrams use the site's active palette and
-are re-rendered when the light or dark theme changes.
+hand-drawn style, and are re-rendered when the light or dark theme changes.
