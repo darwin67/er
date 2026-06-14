@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
-@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap");
+@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap max-w-[650px] max-w-[var(--max-width-wide)] p-6 ring");
 
 /* Layout + typography constants are palette-independent. */
 @theme {
