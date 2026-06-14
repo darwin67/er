@@ -37,7 +37,7 @@ The code block feature enables something called "literate programming" – you c
 
 ** Publishing and Sharing Your Work
 One of Org Mode's most impressive features is its export system. A single Org file can be transformed into HTML, PDF, LaTeX, slides, or numerous other formats. This means you can write once and publish anywhere, from academic papers to blog posts to presentation slides.
-The HTML export is particularly noteworthy. Many websites and blogs are generated directly from Org Mode files, allowing authors to maintain their content in a familiar, structured format while producing professional web output.
+The HTML export is particularly noteworthy. Many websites and blogs are generated directly from Org Mode files, allowing authors to maintain their content in a familiar, structured format while producing professional web output. The [[https://orgmode.org/][Org Mode website]] documents the available publishing workflows.
 
 ** The Learning Curve Reality
 Org Mode isn't without its challenges. It lives within Emacs, which itself has a steep learning curve. The keybindings are numerous, and the full feature set can be overwhelming. You'll likely spend time customizing and configuring to match your specific needs.
