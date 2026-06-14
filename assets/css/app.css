@@ -255,7 +255,7 @@ html { scroll-behavior: smooth; }
 }
 
 .post-content img {
-  @apply block h-auto;
+  @apply block h-auto max-w-full;
 }
 
 .post-content table {

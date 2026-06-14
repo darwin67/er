@@ -2055,6 +2055,7 @@ html {
 .post-content img {
   display: block;
   height: auto;
+  max-width: 100%;
 }
 .post-content table {
   width: 100%;
