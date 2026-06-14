@@ -121,7 +121,7 @@ document.querySelectorAll('.src-mermaid').forEach(function(block) {
   if (!source) return;
 
   var diagram = document.createElement('pre');
-  diagram.className = 'mermaid';
+  diagram.className = 'mermaid flex justify-center max-w-[var(--max-width-wide)] mx-auto p-6 border border-[var(--color-border)] rounded bg-[var(--color-background-alt)] text-center';
   diagram.textContent = source.textContent;
   block.replaceWith(diagram);
 });
@@ -133,21 +133,67 @@ diagrams.forEach(function(diagram) {
 
 function themeVariables() {
   var styles = getComputedStyle(document.documentElement);
+  var darkMode = document.documentElement.getAttribute('data-theme') === 'dark';
   var color = function(name) {
     return styles.getPropertyValue(name).trim();
   };
+  var background = color('--color-background');
+  var backgroundAlt = color('--color-background-alt');
+  var bodyText = color('--color-body-text');
+  var border = color('--color-border');
+  var main = color('--color-main');
+  var muted = color('--color-muted-text');
+  var secondary = color('--color-secondary-light');
 
+  // Mermaid otherwise derives light-mode labels and hardcodes light ER rows.
   return {
-    background: color('--color-background'),
-    primaryColor: color('--color-background-alt'),
-    primaryTextColor: color('--color-body-text'),
-    primaryBorderColor: color('--color-main'),
-    lineColor: color('--color-muted-text'),
-    secondaryColor: color('--color-secondary-light'),
-    tertiaryColor: color('--color-background'),
-    noteBkgColor: color('--color-background-alt'),
-    noteTextColor: color('--color-body-text'),
-    noteBorderColor: color('--color-border')
+    darkMode: darkMode,
+    fontFamily: color('--font-sans'),
+    background: background,
+    primaryColor: backgroundAlt,
+    primaryTextColor: bodyText,
+    primaryBorderColor: main,
+    secondaryColor: secondary,
+    secondaryTextColor: darkMode ? background : bodyText,
+    secondaryBorderColor: color('--color-secondary-dark'),
+    tertiaryColor: background,
+    tertiaryTextColor: bodyText,
+    tertiaryBorderColor: border,
+    lineColor: muted,
+    arrowheadColor: muted,
+    textColor: bodyText,
+    mainBkg: backgroundAlt,
+    nodeBkg: backgroundAlt,
+    nodeTextColor: bodyText,
+    clusterBkg: background,
+    clusterBorder: border,
+    edgeLabelBackground: backgroundAlt,
+    actorBkg: backgroundAlt,
+    actorBorder: main,
+    actorTextColor: bodyText,
+    actorLineColor: muted,
+    signalColor: bodyText,
+    signalTextColor: bodyText,
+    labelBoxBkgColor: backgroundAlt,
+    labelBoxBorderColor: border,
+    labelTextColor: bodyText,
+    loopTextColor: bodyText,
+    stateBkg: backgroundAlt,
+    stateLabelColor: bodyText,
+    transitionColor: muted,
+    transitionLabelColor: bodyText,
+    labelBackgroundColor: backgroundAlt,
+    compositeBackground: background,
+    compositeTitleBackground: backgroundAlt,
+    altBackground: background,
+    rowOdd: backgroundAlt,
+    rowEven: background,
+    attributeBackgroundColorOdd: backgroundAlt,
+    attributeBackgroundColorEven: background,
+    classText: bodyText,
+    noteBkgColor: backgroundAlt,
+    noteTextColor: bodyText,
+    noteBorderColor: border
   };
 }
 

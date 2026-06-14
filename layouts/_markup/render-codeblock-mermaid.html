@@ -1,4 +1,4 @@
 {{- .Page.Store.Set "hasMermaid" true -}}
-<pre class="mermaid">
+<pre class="mermaid flex justify-center max-w-[var(--max-width-wide)] mx-auto p-6 border border-[var(--color-border)] rounded bg-[var(--color-background-alt)] text-center">
   {{- .Inner | htmlEscape | safeHTML -}}
 </pre>

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
-@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap");
+@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap flex justify-center max-w-[var(--max-width-wide)] mx-auto p-6 border border-[var(--color-border)] rounded bg-[var(--color-background-alt)] text-center");
 
 /* Layout + typography constants are palette-independent. */
 @theme {
@@ -256,10 +256,9 @@ html { scroll-behavior: smooth; }
 /* Code, tables, figures, images, callouts, and pullquotes get the full
    canvas. `:has(> img:only-child)` widens paragraphs that wrap a lone
    image (Hugo's default for plain markdown `![](…)`). */
-.post-content pre,
+.post-content pre:not(.mermaid),
 .post-content .highlight,
 .post-content .code-block,
-.post-content .mermaid,
 .post-content figure,
 .post-content table,
 .post-content .pullquote,
@@ -327,15 +326,6 @@ pre code {
   background-color: transparent;
   color: inherit;
   padding: 0;
-}
-
-.post-content pre.mermaid {
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-background-alt);
-  text-align: center;
 }
 
 .post-content .mermaid svg {
