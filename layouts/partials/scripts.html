@@ -121,7 +121,7 @@ document.querySelectorAll('.src-mermaid').forEach(function(block) {
   if (!source) return;
 
   var diagram = document.createElement('pre');
-  diagram.className = 'mermaid flex justify-center max-w-[var(--max-width-wide)] mx-auto p-6 border border-[var(--color-border)] rounded bg-[var(--color-background-alt)] text-center';
+  diagram.className = 'mermaid';
   diagram.textContent = source.textContent;
   block.replaceWith(diagram);
 });

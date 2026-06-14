@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
-@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap flex justify-center max-w-[var(--max-width-wide)] mx-auto p-6 border border-[var(--color-border)] rounded bg-[var(--color-background-alt)] text-center");
+@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap");
 
 /* Layout + typography constants are palette-independent. */
 @theme {
@@ -132,8 +132,14 @@ body {
 .text-faint { color: var(--color-faint-text); }
 .hover\:text-faint:hover { color: var(--color-faint-text); }
 
-.content-wrapper {
+.content-shell {
   @apply max-w-[var(--max-width-content)] mx-auto;
+}
+
+.mermaid {
+  @apply mx-auto flex max-w-[var(--max-width-wide)] justify-center rounded
+    border border-[var(--color-border)] bg-[var(--color-background-alt)]
+    p-6 text-center;
 }
 
 /* Typography */
