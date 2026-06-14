@@ -100,3 +100,92 @@ document.addEventListener('DOMContentLoaded', function() {
           throwOnError: false
         });"></script>
 {{end}}
+
+{{- $hasMermaid := .Store.Get "hasMermaid" -}}
+{{- if .IsPage -}}
+  {{- $orgMermaidBlocks := findRE `(?im)^#\+begin_src[[:space:]]+mermaid(?:[[:space:]]|$)` .RawContent 1 -}}
+  {{- $hasMermaid = or $hasMermaid (gt (len $orgMermaidBlocks) 0) -}}
+{{- end -}}
+{{- if $hasMermaid }}
+{{- $mermaidLook := .Site.Params.mermaidLook | default "classic" -}}
+{{- if not (in (slice "classic" "handDrawn" "neo") $mermaidLook) -}}
+  {{- errorf "Invalid params.mermaidLook %q: expected classic, handDrawn, or neo" $mermaidLook -}}
+{{- end -}}
+<script type="module">
+import mermaid from '{{ .Site.Params.mermaidURL | default "https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.esm.min.mjs" }}';
+
+// go-org renders source blocks through Hugo's highlighter. Restore the
+// original text shape Mermaid expects before rendering the diagrams.
+document.querySelectorAll('.src-mermaid').forEach(function(block) {
+  var source = block.querySelector('pre');
+  if (!source) return;
+
+  var diagram = document.createElement('pre');
+  diagram.className = 'mermaid';
+  diagram.textContent = source.textContent;
+  block.replaceWith(diagram);
+});
+
+var diagrams = Array.from(document.querySelectorAll('pre.mermaid'));
+diagrams.forEach(function(diagram) {
+  diagram.dataset.mermaidSource = diagram.textContent.trim();
+});
+
+function themeVariables() {
+  var styles = getComputedStyle(document.documentElement);
+  var color = function(name) {
+    return styles.getPropertyValue(name).trim();
+  };
+
+  return {
+    background: color('--color-background'),
+    primaryColor: color('--color-background-alt'),
+    primaryTextColor: color('--color-body-text'),
+    primaryBorderColor: color('--color-main'),
+    lineColor: color('--color-muted-text'),
+    secondaryColor: color('--color-secondary-light'),
+    tertiaryColor: color('--color-background'),
+    noteBkgColor: color('--color-background-alt'),
+    noteTextColor: color('--color-body-text'),
+    noteBorderColor: color('--color-border')
+  };
+}
+
+var renderQueue = Promise.resolve();
+
+function renderMermaid() {
+  renderQueue = renderQueue.catch(function(error) {
+    console.error('Unable to render Mermaid diagram:', error);
+  }).then(async function() {
+    diagrams.forEach(function(diagram) {
+      diagram.removeAttribute('data-processed');
+      diagram.textContent = diagram.dataset.mermaidSource;
+    });
+
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      theme: 'base',
+      look: {{ $mermaidLook | jsonify | safeJS }},
+      handDrawnSeed: {{ .Site.Params.mermaidHandDrawnSeed | default 7 }},
+      themeVariables: themeVariables()
+    });
+    await mermaid.run({ nodes: diagrams });
+  });
+}
+
+renderMermaid();
+
+new MutationObserver(function(mutations) {
+  if (mutations.some(function(mutation) {
+    return mutation.attributeName === 'data-theme' ||
+      mutation.attributeName === 'data-palette';
+  })) {
+    renderMermaid();
+  }
+}).observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ['data-theme', 'data-palette']
+});
+</script>
+{{- end }}

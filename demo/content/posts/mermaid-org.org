@@ -1,0 +1,46 @@
+#+TITLE: Mermaid Diagrams in Org Mode
+#+DATE: <2025-10-13 Mon>
+#+TAGS[]: mermaid diagrams orgmode
+#+CATEGORY: Documentation
+#+DESCRIPTION: State and entity relationship diagrams rendered from Org source blocks.
+
+Mermaid also works in Org content. Use a source block whose language is
+=mermaid=; the theme converts Hugo's highlighted Org output before rendering
+the diagram.
+
+* Release states
+
+State diagrams can summarize a workflow without maintaining a separate image:
+
+#+BEGIN_SRC mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Review: Open pull request
+    Review --> Draft: Request changes
+    Review --> Published: Approve and merge
+    Published --> [*]
+#+END_SRC
+
+* Content model
+
+Entity relationship diagrams are useful for describing structured content:
+
+#+BEGIN_SRC mermaid
+erDiagram
+    AUTHOR ||--o{ POST : writes
+    POST }o--o{ TAG : uses
+    AUTHOR {
+        string name
+        string email
+    }
+    POST {
+        string title
+        date published
+    }
+    TAG {
+        string name
+    }
+#+END_SRC
+
+Like the Markdown examples, these diagrams use the site's active palette and
+hand-drawn style, and are re-rendered when the light or dark theme changes.

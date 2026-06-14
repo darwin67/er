@@ -259,6 +259,7 @@ html { scroll-behavior: smooth; }
 .post-content pre,
 .post-content .highlight,
 .post-content .code-block,
+.post-content .mermaid,
 .post-content figure,
 .post-content table,
 .post-content .pullquote,
@@ -326,6 +327,20 @@ pre code {
   background-color: transparent;
   color: inherit;
   padding: 0;
+}
+
+.post-content pre.mermaid {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background-alt);
+  text-align: center;
+}
+
+.post-content .mermaid svg {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Wrapper added at runtime by code-copy.js so we can pin the language label
@@ -909,4 +924,3 @@ td {
   color: var(--color-muted-text);
   margin-top: 0.25rem;
 }
-

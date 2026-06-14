@@ -63,6 +63,8 @@ markup:
 params:
   search: true
   showFeaturedProjects: true
+  mermaidLook: handDrawn
+  mermaidHandDrawnSeed: 7
   # palette: nord
 
 outputs:
