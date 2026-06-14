@@ -281,12 +281,19 @@ h6 > span.tags {
   @apply hidden;
 }
 
-:where(.post-content, .prose) a {
-  @apply text-inherit no-underline;
+:is(.post-content, .prose) :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  @apply text-[var(--color-main)] underline decoration-[0.08em]
+    underline-offset-[0.15em];
+  text-decoration-color: color-mix(in srgb, var(--color-main) 55%, transparent);
 }
 
-:where(.post-content, .prose) a:hover {
-  @apply text-[var(--color-main-light)];
+:is(.post-content, .prose) :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover {
+  @apply text-[var(--color-main-light)] decoration-current;
+}
+
+:is(.post-content, .prose) :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):focus-visible {
+  @apply rounded-[0.125rem] outline-2 outline-offset-2
+    outline-[var(--color-main-light)];
 }
 
 /* Code blocks */
