@@ -1,3 +1,16 @@
+## v0.3.0 - 2026-06-14
+
+### Features
+
+- *(content)* Support Mermaid diagrams (#22)
+
+### Bug Fixes
+
+- *(content)* Improve Mermaid styling and dark mode contrast (#24)
+
+### Refactor
+
+- *(css)* Centralize theme styles with Tailwind (#25)
 ## v0.2.0 - 2026-06-13
 
 ### Features
@@ -6,6 +19,10 @@
 - Multi lang support (#19)
 - *(theme)* Improve long-form reading experience (#20)
 - *(theme)* Add project portfolio support (#21)
+
+### Miscellaneous Tasks
+
+- *(release)* V0.2.0 (#18)
 ## v0.1.1 - 2026-06-09
 
 ### Miscellaneous Tasks
