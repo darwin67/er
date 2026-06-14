@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
-@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap flex justify-center max-w-[var(--max-width-wide)] mx-auto p-6 border border-[var(--color-border)] rounded bg-[var(--color-background-alt)] text-center");
+@source inline("prose-lg prose-sm callout callout-note callout-tip callout-warn callout-danger dropcap max-w-[650px] max-w-[var(--max-width-wide)] p-6 ring");
 
 /* Layout + typography constants are palette-independent. */
 @theme {
@@ -132,8 +132,14 @@ body {
 .text-faint { color: var(--color-faint-text); }
 .hover\:text-faint:hover { color: var(--color-faint-text); }
 
-.content-wrapper {
+.content-shell {
   @apply max-w-[var(--max-width-content)] mx-auto;
+}
+
+.mermaid {
+  @apply mx-auto flex max-w-[var(--max-width-wide)] justify-center rounded
+    border border-[var(--color-border)] bg-[var(--color-background-alt)]
+    p-6 text-center;
 }
 
 /* Typography */
@@ -149,25 +155,14 @@ h6 {
 
 /* Inline, collapsible table of contents at the top of a post. */
 .post-toc {
-  max-width: var(--max-width-content);
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid var(--color-border);
-  border-radius: 0.375rem;
-  background-color: var(--color-background-alt);
+  @apply mx-auto max-w-[var(--max-width-content)] rounded-md border
+    border-[var(--color-border)] bg-[var(--color-background-alt)];
 }
 
 .post-toc-summary {
-  list-style: none;
-  cursor: pointer;
-  padding: 0.5rem 0.875rem;
+  @apply flex cursor-pointer list-none items-center gap-2 px-3.5 py-2
+    font-semibold tracking-[0.02em] text-[var(--color-heading-text)];
   font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--color-heading-text);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .post-toc-summary::-webkit-details-marker { display: none; }
@@ -183,7 +178,7 @@ h6 {
 .post-toc[open] > .post-toc-summary::before { transform: rotate(90deg); }
 
 .post-toc-body {
-  padding: 0.25rem 0.875rem 0.875rem;
+  @apply px-3.5 pt-1 pb-3.5;
   font-size: 0.9rem;
 }
 
@@ -220,19 +215,12 @@ html { scroll-behavior: smooth; }
    element types rather than direct children so org-mode's nested
    `.outline-*` wrappers don't break the rule. */
 .post-main {
-  max-width: var(--max-width-wide);
+  @apply max-w-[var(--max-width-wide)];
 }
 
-.post-header {
-  max-width: var(--max-width-content);
-  margin-left: auto;
-  margin-right: auto;
-}
-
+.post-header,
 .related-posts {
-  max-width: var(--max-width-content);
-  margin-left: auto;
-  margin-right: auto;
+  @apply mx-auto max-w-[var(--max-width-content)];
 }
 
 
@@ -248,9 +236,7 @@ html { scroll-behavior: smooth; }
 .post-content h6,
 .post-content dl,
 .post-content hr {
-  max-width: var(--max-width-content);
-  margin-left: auto;
-  margin-right: auto;
+  @apply mx-auto max-w-[var(--max-width-content)];
 }
 
 /* Code, tables, figures, images, callouts, and pullquotes get the full
@@ -265,18 +251,15 @@ html { scroll-behavior: smooth; }
 .post-content .callout,
 .post-content img,
 .post-content p:has(> img:only-child) {
-  max-width: var(--max-width-wide);
-  margin-left: auto;
-  margin-right: auto;
+  @apply mx-auto max-w-[var(--max-width-wide)];
 }
 
 .post-content img {
-  display: block;
-  height: auto;
+  @apply block h-auto;
 }
 
 .post-content table {
-  width: 100%;
+  @apply w-full;
 }
 
 /* Prose readability: longer measure-aware line-height and modular heading scale. */
@@ -298,31 +281,31 @@ h6 > span.tags {
   @apply hidden;
 }
 
-a {
+:where(.post-content, .prose) a {
   @apply text-inherit no-underline;
 }
 
-a:hover {
+:where(.post-content, .prose) a:hover {
   @apply text-[var(--color-main-light)];
 }
 
 /* Code blocks */
-pre {
+:where(.post-content, .prose) pre:not(.mermaid) {
   @apply text-sm px-5 py-3 leading-snug overflow-x-auto rounded;
   background-color: var(--color-background-alt);
 }
 
 /* Inline code: tinted with the theme palette instead of flat gray. */
-p code,
-li code,
-td code {
+:where(.post-content, .prose) p code,
+:where(.post-content, .prose) li code,
+:where(.post-content, .prose) td code {
   @apply py-0.5 px-1.5 text-sm rounded;
   background-color: var(--color-background-alt);
   color: var(--color-main-dark);
 }
 
 /* Don't double-style code that already lives inside a highlighted <pre>. */
-pre code {
+:where(.post-content, .prose) pre code {
   background-color: transparent;
   color: inherit;
   padding: 0;
@@ -336,33 +319,25 @@ pre code {
 /* Wrapper added at runtime by code-copy.js so we can pin the language label
    and copy button without changing the underlying <pre> structure. */
 .code-block {
-  position: relative;
+  @apply relative;
 }
 
 .code-block-lang {
-  position: absolute;
-  top: 0.5rem;
-  right: 3.5rem;
+  @apply pointer-events-none absolute top-2 right-14 uppercase;
   font-size: 0.7rem;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
   color: var(--color-neutral-accent);
-  pointer-events: none;
 }
 
 .code-block-copy {
-  position: absolute;
+  @apply absolute right-2 cursor-pointer rounded border
+    border-[var(--color-border)] bg-[var(--color-background)]
+    text-[var(--color-body-text)];
   top: 0.4rem;
-  right: 0.5rem;
   font-size: 0.7rem;
   padding: 0.15rem 0.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: 0.25rem;
-  background-color: var(--color-background);
-  color: var(--color-body-text);
   opacity: 0;
   transition: opacity 0.15s ease-in-out;
-  cursor: pointer;
 }
 
 .code-block:hover .code-block-copy,
@@ -371,22 +346,22 @@ pre code {
 }
 
 /* Blockquotes */
-blockquote {
+:where(.post-content, .prose) blockquote {
   @apply border-l-4 border-[var(--color-blush-accent)] pl-4 italic;
   color: var(--color-muted-text);
 }
 
 /* Tables */
-table {
+:where(.post-content, .prose) table {
   @apply text-sm my-8 mx-auto w-full border-collapse;
 }
 
-tr:nth-child(2n) {
+:where(.post-content, .prose) tr:nth-child(2n) {
   background-color: var(--color-background-alt);
 }
 
-th,
-td {
+:where(.post-content, .prose) th,
+:where(.post-content, .prose) td {
   @apply p-2;
   border: 1px solid var(--color-border);
 }
@@ -606,18 +581,18 @@ td {
 /* Chroma syntax highlighting palette is baked in for the light theme.
    In dark mode, lift the darkest tokens so they read on the dark
    code-block background. Targets inline `style="color:#…"` from Chroma. */
-[data-theme="dark"] pre,
-[data-theme="dark"] pre code {
+[data-theme="dark"] :where(.post-content, .prose) pre,
+[data-theme="dark"] :where(.post-content, .prose) pre code {
   color: var(--color-body-text);
 }
 
-[data-theme="dark"] pre [style*="color:#3b4252"],
-[data-theme="dark"] pre [style*="color:#4c566a"],
-[data-theme="dark"] pre [style*="color:#bbc3d4"] {
+[data-theme="dark"] :where(.post-content, .prose) pre [style*="color:#3b4252"],
+[data-theme="dark"] :where(.post-content, .prose) pre [style*="color:#4c566a"],
+[data-theme="dark"] :where(.post-content, .prose) pre [style*="color:#bbc3d4"] {
   color: #a8a39d;
 }
 
-[data-theme="dark"] pre [style*="color:#eceff4"] {
+[data-theme="dark"] :where(.post-content, .prose) pre [style*="color:#eceff4"] {
   color: var(--color-body-text);
 }
 
@@ -660,17 +635,14 @@ td {
 .status-archived { background-color: var(--color-faint-text); }
 
 .stack-pill {
-  display: inline-block;
+  @apply inline-block rounded-full border border-[var(--color-border)]
+    bg-[var(--color-background-alt)] text-[var(--color-muted-text)]
+    no-underline;
   padding: 0.1rem 0.5rem;
   margin: 0.1rem 0.25rem 0.1rem 0;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--color-muted-text);
-  background-color: var(--color-background-alt);
-  border: 1px solid var(--color-border);
-  border-radius: 9999px;
-  text-decoration: none;
 }
 
 .stack-pill:hover {
@@ -705,17 +677,12 @@ td {
 }
 
 .project-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  @apply flex flex-wrap gap-3;
 }
 
 .icon-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  color: var(--color-main);
-  text-decoration: none;
+  @apply inline-flex items-center gap-[0.35rem] text-[var(--color-main)]
+    no-underline;
 }
 
 .icon-link:hover { color: var(--color-neutral-accent); }
@@ -749,10 +716,8 @@ td {
 }
 
 .project-card {
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  background-color: var(--color-background-alt);
+  @apply overflow-hidden rounded-lg border border-[var(--color-border)]
+    bg-[var(--color-background-alt)];
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
@@ -829,13 +794,10 @@ td {
 }
 
 .featured-project a {
-  display: block;
-  padding: 0.6rem 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: 0.375rem;
-  color: inherit;
-  text-decoration: none;
-  background-color: var(--color-background-alt);
+  @apply block rounded-md border border-[var(--color-border)]
+    bg-[var(--color-background-alt)] px-3 text-inherit no-underline;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
   transition: border-color 0.15s ease;
 }
 
@@ -891,13 +853,9 @@ td {
 .results-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem auto;
-  max-width: var(--max-width-wide);
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  background-color: var(--color-background-alt);
+  @apply mx-auto my-6 max-w-[var(--max-width-wide)] gap-4 rounded-lg
+    border border-[var(--color-border)] bg-[var(--color-background-alt)]
+    py-4 px-5;
 }
 
 .result-cell { text-align: center; }
@@ -913,4 +871,210 @@ td {
   font-size: 0.8rem;
   color: var(--color-muted-text);
   margin-top: 0.25rem;
+}
+
+/* Pagefind's component stylesheet is loaded separately and uses high
+   specificity, so these theme overrides intentionally retain !important. */
+.er-pagefind-search {
+  --pf-text: var(--color-body-text);
+  --pf-text-secondary: var(--color-neutral-accent);
+  --pf-text-muted: var(--color-body-text);
+  --pf-background: var(--color-background);
+  --pf-border: var(--color-border);
+  --pf-border-focus: var(--color-main-light);
+  --pf-hover: var(--color-border);
+  --pf-mark: var(--color-main);
+  --pf-skeleton: var(--color-background-alt);
+  --pf-skeleton-shine: var(--color-border);
+  --pf-outline-focus: var(--color-main-light);
+  --pf-font: var(--font-sans);
+  --pf-input-height: 36px;
+  --pf-input-font-size: 16px;
+  --pf-summary-font-size: 12px;
+  --pf-result-title-font-size: 16px;
+  --pf-result-excerpt-font-size: 12px;
+  --pf-results-gap: 0;
+  --pf-border-radius: 4px;
+  --pf-modal-backdrop: rgb(0 0 0 / 0.5);
+  --pf-modal-max-width: 48rem;
+  --pf-modal-max-height: min(80dvh, 42rem);
+  --pf-modal-top: 5rem;
+}
+
+.er-pagefind-search .pf-trigger-btn {
+  height: auto !important;
+  gap: 0.75rem !important;
+  justify-content: space-between !important;
+  padding: 0.375rem 0.75rem !important;
+  background: var(--color-background-alt) !important;
+  border-color: var(--color-border) !important;
+  border-radius: 0.25rem !important;
+  color: var(--color-body-text) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.er-pagefind-search .pf-trigger-btn:hover {
+  border-color: var(--color-background-alt) !important;
+}
+
+.er-pagefind-search .pf-trigger-icon {
+  width: 1rem !important;
+  height: 1rem !important;
+  background: var(--color-body-text) !important;
+}
+
+.er-pagefind-search .pf-trigger-text {
+  color: var(--color-body-text) !important;
+}
+
+.er-pagefind-search .pf-trigger-shortcut {
+  gap: 0.25rem !important;
+}
+
+.er-pagefind-search .pf-trigger-key,
+.er-pagefind-search .pf-keyboard-key {
+  min-width: auto !important;
+  height: auto !important;
+  padding: 0.125rem 0.375rem !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0.25rem !important;
+  background: var(--color-background-alt) !important;
+  color: var(--color-body-text) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  line-height: 1rem !important;
+}
+
+.er-pagefind-search dialog.pf-modal {
+  border-radius: 0.75rem !important;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
+  /* Clip the rounded shell so child borders end at the curve
+     instead of bleeding past it. */
+  overflow: hidden !important;
+}
+
+.er-pagefind-search pagefind-modal-header,
+.er-pagefind-search .pf-modal-header {
+  padding: 0 !important;
+  border-bottom-color: var(--color-border) !important;
+}
+
+.er-pagefind-search pagefind-modal-header .pf-input {
+  height: 3rem !important;
+  color: var(--color-body-text) !important;
+  font-size: 0.875rem !important;
+}
+
+.er-pagefind-search pagefind-modal-header .pf-input::placeholder {
+  color: var(--color-main) !important;
+}
+
+/* Suppress pagefind's curved focus ring around the modal input. The
+   modal itself is the focus container, so the input doesn't need a
+   second ring that visually competes with the divider below. */
+.er-pagefind-search pagefind-modal-header .pf-input:focus,
+.er-pagefind-search pagefind-modal-header .pf-input:focus-visible {
+  outline: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.er-pagefind-search pagefind-modal-body,
+.er-pagefind-search .pf-modal-body {
+  max-height: 36rem !important;
+  padding: 0 !important;
+}
+
+.er-pagefind-search .pf-summary {
+  margin: 0 !important;
+  padding: 0.5rem 1rem !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  color: var(--color-neutral-accent) !important;
+  font-size: 0.75rem !important;
+}
+
+.er-pagefind-search .pf-summary:empty {
+  display: none !important;
+}
+
+.er-pagefind-search .pf-results {
+  max-height: 36rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.er-pagefind-search .er-search-result {
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+.er-pagefind-search .er-search-result-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  padding: 1rem !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--color-heading-text) !important;
+  text-decoration: none !important;
+}
+
+.er-pagefind-search .er-search-result-card:hover,
+.er-pagefind-search .er-search-result-card:focus,
+.er-pagefind-search .er-search-result-card:focus-visible,
+.er-pagefind-search .er-search-result-card[data-pf-selected] {
+  background: var(--color-border) !important;
+  color: var(--color-heading-text) !important;
+}
+
+.er-pagefind-search .er-search-result-heading {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.er-pagefind-search .er-search-result-icon {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  flex: 0 0 1.5rem !important;
+}
+
+.er-pagefind-search .er-search-result-title {
+  margin: 0 !important;
+  color: var(--color-heading-text) !important;
+  font-weight: 600 !important;
+  line-height: 1.5rem !important;
+}
+
+.er-pagefind-search .er-search-result-excerpt {
+  display: block !important;
+  margin: 0 !important;
+  padding-left: 2rem !important;
+  color: var(--color-neutral-accent) !important;
+  line-height: 1rem !important;
+}
+
+.er-pagefind-search .er-search-result-excerpt mark {
+  background: transparent !important;
+  color: var(--color-main) !important;
+  font-weight: 600 !important;
+}
+
+.er-pagefind-search pagefind-modal-footer,
+.er-pagefind-search .pf-modal-footer {
+  padding: 0.75rem 1rem !important;
+  border-top-color: var(--color-border) !important;
+  background: var(--color-background) !important;
+  color: var(--color-neutral-accent) !important;
+}
+
+@media (max-width: 767px) {
+  .er-pagefind-search .pf-trigger-shortcut {
+    display: none !important;
+  }
 }
