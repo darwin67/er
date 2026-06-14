@@ -56,6 +56,18 @@ It surfaces up to 3 projects whose frontmatter sets `featured: true`,
 and renders nothing if none match — so flipping the param on without
 any featured content is also safe.
 
+To add intro text to the projects index, create `content/projects/_index.md`.
+Use `description` for a short lead line and the page body for longer markdown:
+
+```markdown
+---
+title: "Projects"
+description: "Selected work across infrastructure, tools, and product systems."
+---
+
+Short intro copy can live here with normal Markdown formatting.
+```
+
 Frontmatter schema (all fields optional except `title` and `date`):
 
 ```yaml

@@ -2,7 +2,8 @@
 <main class="post-main mx-auto my-4 px-3 lg:px-0">
   <header class="post-header">
     <h1 class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans mb-2">{{ .Title }}</h1>
-    {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    {{ with .Description }}<p class="project-list-description">{{ . }}</p>{{ end }}
+    {{ with .Content }}<div class="prose project-list-intro">{{ . }}</div>{{ end }}
   </header>
 
   <ul class="project-grid">

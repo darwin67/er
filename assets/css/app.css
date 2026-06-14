@@ -710,6 +710,17 @@ h6 > span.tags {
 }
 
 /* Project listing grid. */
+.project-list-description {
+  margin: 0.25rem 0 0;
+  color: var(--color-muted-text);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.project-list-intro {
+  margin-top: 0.75rem;
+}
+
 .project-grid {
   list-style: none;
   padding: 0;
