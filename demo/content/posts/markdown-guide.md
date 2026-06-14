@@ -142,6 +142,8 @@ You can also use reference-style links:
 [reference]: https://example.com "Optional title"
 ```
 
+Rendered example: [Visit example.com](https://example.com) to see how links appear in body text.
+
 ### Images
 
 Images use similar syntax to links but start with an exclamation mark:
