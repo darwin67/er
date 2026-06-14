@@ -1,3 +1,8 @@
+## v0.3.1 - 2026-06-14
+
+### Bug Fixes
+
+- *(css)* Distinguish links in prose (#26)
 ## v0.3.0 - 2026-06-14
 
 ### Features
@@ -11,6 +16,10 @@
 ### Refactor
 
 - *(css)* Centralize theme styles with Tailwind (#25)
+
+### Miscellaneous Tasks
+
+- *(release)* V0.3.0 (#23)
 ## v0.2.0 - 2026-06-13
 
 ### Features
