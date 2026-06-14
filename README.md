@@ -13,6 +13,7 @@ Checkout the [demo](https://er-6wj.pages.dev).
 - Tag and category pages
 - Collapsible table of contents at the top of each post (built from Hugo's native `.TableOfContents`)
 - Light and dark mode with a `clay` (warm-earth) or `nord` (arctic) color palette
+- Mermaid diagrams in Markdown and Org content
 <!-- - Renders Math with KaTeX -->
 - Tag cloud on big screens
 - Hugo multilingual sites
@@ -106,6 +107,36 @@ params:
 ```
 
 If unset, the site uses `clay`.
+
+### Mermaid diagrams
+
+Use a fenced `mermaid` code block in Markdown:
+
+````markdown
+```mermaid
+flowchart LR
+    Write --> Build --> Publish
+```
+````
+
+In Org content, use a Mermaid source block:
+
+```org
+#+BEGIN_SRC mermaid
+flowchart LR
+    Write --> Build --> Publish
+#+END_SRC
+```
+
+Mermaid is loaded only on pages that contain a diagram. Diagrams follow the
+active color palette and are re-rendered after a light or dark mode change.
+The theme uses Mermaid 11.15.0 from jsDelivr by default. To self-host it or pin
+another compatible build, set the ESM module URL:
+
+```yaml
+params:
+  mermaidURL: /js/mermaid.esm.min.mjs
+```
 
 ### Favicon
 
