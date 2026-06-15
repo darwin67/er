@@ -26,6 +26,7 @@
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
+    --font-weight-normal: 400;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --tracking-wide: 0.025em;
@@ -1095,9 +1096,6 @@
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
-  .mb-0 {
-    margin-bottom: calc(var(--spacing) * 0);
-  }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
   }
@@ -1142,6 +1140,9 @@
   }
   .inline-block {
     display: inline-block;
+  }
+  .inline-flex {
+    display: inline-flex;
   }
   .table {
     display: table;
@@ -1594,31 +1595,6 @@
       }
     }
   }
-  .lg\:fixed {
-    @media (width >= 64rem) {
-      position: fixed;
-    }
-  }
-  .lg\:right-2 {
-    @media (width >= 64rem) {
-      right: calc(var(--spacing) * 2);
-    }
-  }
-  .lg\:right-8 {
-    @media (width >= 64rem) {
-      right: calc(var(--spacing) * 8);
-    }
-  }
-  .lg\:bottom-2 {
-    @media (width >= 64rem) {
-      bottom: calc(var(--spacing) * 2);
-    }
-  }
-  .lg\:bottom-8 {
-    @media (width >= 64rem) {
-      bottom: calc(var(--spacing) * 8);
-    }
-  }
   .lg\:prose-lg {
     @media (width >= 64rem) {
       font-size: 1.125rem;
@@ -1825,11 +1801,6 @@
       margin-top: calc(var(--spacing) * 10);
     }
   }
-  .lg\:mb-0 {
-    @media (width >= 64rem) {
-      margin-bottom: calc(var(--spacing) * 0);
-    }
-  }
   .lg\:block {
     @media (width >= 64rem) {
       display: block;
@@ -1853,11 +1824,6 @@
   .lg\:text-left {
     @media (width >= 64rem) {
       text-align: left;
-    }
-  }
-  .lg\:text-right {
-    @media (width >= 64rem) {
-      text-align: right;
     }
   }
 }
@@ -2485,6 +2451,130 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
   color: var(--color-main);
   --tw-outline-style: none;
   outline-style: none;
+}
+.page-actions {
+  margin-inline: auto;
+  margin-top: calc(var(--spacing) * 14);
+  margin-bottom: calc(var(--spacing) * 6);
+  max-width: var(--max-width-content);
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  border-color: var(--color-border);
+  padding-inline: calc(var(--spacing) * 3);
+  padding-top: calc(var(--spacing) * 6);
+  text-align: center;
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+}
+.back-to-top-link {
+  display: inline-flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background-color: var(--color-main);
+  padding-inline: calc(var(--spacing) * 6);
+  padding-block: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-white);
+  text-decoration-line: none;
+  --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+.back-to-top-link:hover, .back-to-top-link:focus-visible {
+  background-color: var(--color-main-light);
+  color: var(--color-white);
+  --tw-outline-style: none;
+  outline-style: none;
+}
+.post-nav-links {
+  margin-top: calc(var(--spacing) * 3);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+}
+.post-nav-link {
+  min-width: calc(var(--spacing) * 32);
+  flex: 1;
+  border-radius: var(--radius-md);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--color-border);
+  background-color: var(--color-background-alt);
+  padding-inline: calc(var(--spacing) * 3);
+  padding-block: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-main);
+  text-decoration-line: none;
+}
+.post-nav-link:hover, .post-nav-link:focus-visible {
+  border-color: var(--color-main-light);
+  color: var(--color-main-light);
+  --tw-outline-style: none;
+  outline-style: none;
+}
+.pagination-status {
+  margin-top: calc(var(--spacing) * 3);
+  margin-bottom: calc(var(--spacing) * 0);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  color: var(--color-muted-text);
+}
+@media (min-width: 1024px) {
+  .page-actions {
+    position: fixed;
+    right: calc(var(--spacing) * 2);
+    bottom: calc(var(--spacing) * 2);
+    margin: calc(var(--spacing) * 0);
+    max-width: none;
+    border-style: var(--tw-border-style);
+    border-width: 0px;
+    padding: calc(var(--spacing) * 0);
+    text-align: right;
+  }
+  .tag-page-actions {
+    right: calc(var(--spacing) * 8);
+    bottom: calc(var(--spacing) * 8);
+  }
+  .back-to-top-link {
+    margin-bottom: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 2);
+    padding-block: calc(var(--spacing) * 1);
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-normal);
+    --tw-shadow: 0 0 #0000;
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .post-nav-links {
+    margin-top: calc(var(--spacing) * 2);
+    display: block;
+  }
+  .post-nav-link {
+    min-width: calc(var(--spacing) * 0);
+    flex: none;
+    border-style: var(--tw-border-style);
+    border-width: 0px;
+    background-color: transparent;
+    padding: calc(var(--spacing) * 0);
+    --tw-font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-normal);
+    color: inherit;
+  }
+  .post-nav-link + .post-nav-link {
+    margin-left: calc(var(--spacing) * 2);
+  }
+  .pagination-status {
+    margin-top: calc(var(--spacing) * 2);
+  }
 }
 .status-dot {
   display: inline-block;

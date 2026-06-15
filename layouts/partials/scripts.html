@@ -45,7 +45,7 @@ window.onscroll = function() {
 
   {{ if .Site.Params.showScrollToTop | default true }}
   if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
-      document.getElementById("scroll-to-top").style.display = "inline";
+      document.getElementById("scroll-to-top").style.display = "inline-flex";
       document.getElementById("scroll-to-top").style.visibility = "visible";
       document.getElementById("scroll-to-top").style.opacity = "1";
   } else {

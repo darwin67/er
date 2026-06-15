@@ -691,6 +691,74 @@ h6 > span.tags {
     outline-none;
 }
 
+/* Bottom page actions: distinct mobile strip, compact fixed desktop links. */
+.page-actions {
+  @apply mx-auto mt-14 mb-6 max-w-[var(--max-width-content)] border-t
+    border-[var(--color-border)] px-3 pt-6 text-center text-sm;
+}
+
+.back-to-top-link {
+  @apply inline-flex cursor-pointer items-center justify-center rounded-md
+    bg-[var(--color-main)] px-6 py-2 text-sm font-semibold text-white
+    no-underline shadow-sm;
+}
+
+.back-to-top-link:hover,
+.back-to-top-link:focus-visible {
+  @apply bg-[var(--color-main-light)] text-white outline-none;
+}
+
+.post-nav-links {
+  @apply mt-3 flex flex-wrap justify-center gap-2;
+}
+
+.post-nav-link {
+  @apply min-w-32 flex-1 rounded-md border border-[var(--color-border)]
+    bg-[var(--color-background-alt)] px-3 py-2 text-sm font-semibold
+    text-[var(--color-main)] no-underline;
+}
+
+.post-nav-link:hover,
+.post-nav-link:focus-visible {
+  @apply border-[var(--color-main-light)] text-[var(--color-main-light)]
+    outline-none;
+}
+
+.pagination-status {
+  @apply mt-3 mb-0 text-sm text-[var(--color-muted-text)];
+}
+
+@media (min-width: 1024px) {
+  .page-actions {
+    @apply fixed right-2 bottom-2 m-0 max-w-none border-0 p-0 text-right;
+  }
+
+  .tag-page-actions {
+    @apply right-8 bottom-8;
+  }
+
+  .back-to-top-link {
+    @apply mb-1 px-2 py-1 text-sm font-normal shadow-none;
+  }
+
+  .post-nav-links {
+    @apply mt-2 block;
+  }
+
+  .post-nav-link {
+    @apply min-w-0 flex-none border-0 bg-transparent p-0 font-normal
+      text-inherit;
+  }
+
+  .post-nav-link + .post-nav-link {
+    @apply ml-2;
+  }
+
+  .pagination-status {
+    @apply mt-2;
+  }
+}
+
 /* ── Projects ─────────────────────────────────────────────────────────
    Case-study meta, status indicator, stack pills, cover image, grid
    listing, and the homepage featured-work block. */
