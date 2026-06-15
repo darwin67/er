@@ -605,16 +605,12 @@ h6 > span.tags {
 
 /* Theme toggle button in the nav. */
 .theme-toggle {
-  background: transparent;
-  border: 0;
-  padding: 0.25rem 0.4rem;
-  cursor: pointer;
-  color: var(--color-body-text);
-  line-height: 1;
+  @apply inline-flex size-8 cursor-pointer items-center justify-center
+    border-0 bg-transparent leading-none text-[var(--color-body-text)];
 }
 
 .theme-toggle:hover {
-  color: var(--color-neutral-accent);
+  @apply text-[var(--color-neutral-accent)];
 }
 
 .theme-toggle .icon-moon { display: inline; }
@@ -622,6 +618,146 @@ h6 > span.tags {
 
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 [data-theme="dark"] .theme-toggle .icon-sun  { display: inline; }
+
+/* Mobile navigation menu. */
+.mobile-nav {
+  @apply relative;
+}
+
+.mobile-nav-toggle {
+  @apply inline-flex size-8 cursor-pointer list-none items-center justify-center
+    rounded-md border border-[var(--color-border)]
+    bg-[var(--color-background-alt)] text-[var(--color-body-text)];
+}
+
+.mobile-nav-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-nav-toggle:hover,
+.mobile-nav-toggle:focus-visible {
+  @apply border-[var(--color-main-light)] text-[var(--color-heading-text)]
+    outline-none;
+}
+
+.mobile-nav-icon,
+.mobile-nav-icon::before,
+.mobile-nav-icon::after {
+  @apply block h-0.5 w-4 rounded-full bg-current;
+}
+
+.mobile-nav-icon {
+  @apply relative;
+}
+
+.mobile-nav-icon::before,
+.mobile-nav-icon::after {
+  content: "";
+  @apply absolute left-0;
+}
+
+.mobile-nav-icon::before {
+  @apply top-[-0.35rem];
+}
+
+.mobile-nav-icon::after {
+  @apply top-[0.35rem];
+}
+
+.mobile-nav[open] .mobile-nav-panel {
+  @apply block;
+}
+
+.mobile-nav-panel {
+  @apply absolute right-0 z-30 mt-2 hidden min-w-48 rounded-lg
+    border border-[var(--color-border)] bg-[var(--color-background)]
+    p-[0.35rem] shadow-[0_0.75rem_2rem_rgb(0_0_0_/_0.12)];
+}
+
+.mobile-nav-section + .mobile-nav-section {
+  @apply mt-[0.35rem] border-t border-[var(--color-border)] pt-[0.35rem];
+}
+
+.mobile-nav-link {
+  @apply block rounded-[0.35rem] px-[0.65rem] py-[0.55rem]
+    text-sm font-bold leading-[1.2] text-[var(--color-muted-text)]
+    no-underline uppercase;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:focus-visible,
+.mobile-nav-link.is-active {
+  @apply bg-[var(--color-background-alt)] text-[var(--color-main)]
+    outline-none;
+}
+
+/* Bottom page actions: distinct mobile strip, compact fixed desktop links. */
+.page-actions {
+  @apply mx-auto mt-14 mb-6 max-w-[var(--max-width-content)] border-t
+    border-[var(--color-border)] px-3 pt-6 text-center text-sm;
+}
+
+.back-to-top-link {
+  @apply inline-flex cursor-pointer items-center justify-center rounded-md
+    bg-[var(--color-main)] px-6 py-2 text-sm font-semibold text-white
+    no-underline shadow-sm;
+}
+
+.back-to-top-link:hover,
+.back-to-top-link:focus-visible {
+  @apply bg-[var(--color-main-light)] text-white outline-none;
+}
+
+.post-nav-links {
+  @apply mt-3 flex flex-wrap justify-center gap-2;
+}
+
+.post-nav-link {
+  @apply min-w-32 flex-1 rounded-md border border-[var(--color-border)]
+    bg-[var(--color-background-alt)] px-3 py-2 text-sm font-semibold
+    text-[var(--color-main)] no-underline;
+}
+
+.post-nav-link:hover,
+.post-nav-link:focus-visible {
+  @apply border-[var(--color-main-light)] text-[var(--color-main-light)]
+    outline-none;
+}
+
+.pagination-status {
+  @apply mt-3 mb-0 text-sm text-[var(--color-muted-text)];
+}
+
+@media (min-width: 1024px) {
+  .page-actions {
+    @apply fixed right-2 bottom-2 m-0 max-w-none border-0 p-0 text-right;
+  }
+
+  .tag-page-actions {
+    @apply right-8 bottom-8;
+  }
+
+  .back-to-top-link {
+    @apply mb-1 px-2 py-1 text-sm font-normal shadow-none;
+  }
+
+  .post-nav-links {
+    @apply mt-2 block;
+  }
+
+  .post-nav-link {
+    @apply min-w-0 flex-none border-0 bg-transparent p-0 font-normal
+      text-inherit;
+  }
+
+  .post-nav-link + .post-nav-link {
+    @apply ml-2;
+  }
+
+  .pagination-status {
+    @apply mt-2;
+  }
+}
 
 /* ── Projects ─────────────────────────────────────────────────────────
    Case-study meta, status indicator, stack pills, cover image, grid
@@ -707,6 +843,18 @@ h6 > span.tags {
   height: auto;
   border-radius: 0.375rem;
   border: 1px solid var(--color-border);
+}
+
+/* Optional lead text for home, section, taxonomy, and project index pages. */
+.page-intro-description {
+  margin: 0.25rem 0 0;
+  color: var(--color-muted-text);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.page-intro-content {
+  margin-top: 0.75rem;
 }
 
 /* Project listing grid. */
@@ -1081,6 +1229,31 @@ h6 > span.tags {
 }
 
 @media (max-width: 767px) {
+  .er-pagefind-search {
+    --pf-modal-max-height: calc(100dvh - 1rem);
+    --pf-modal-top: 0.5rem;
+  }
+
+  .er-pagefind-search dialog.pf-modal {
+    inset: 0.5rem !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: calc(100dvh - 1rem) !important;
+    margin: 0 !important;
+    border-radius: 0.5rem !important;
+  }
+
+  .er-pagefind-search pagefind-modal-body,
+  .er-pagefind-search .pf-modal-body,
+  .er-pagefind-search .pf-results {
+    max-height: calc(100dvh - 4rem) !important;
+  }
+
+  .er-pagefind-search pagefind-modal-footer,
+  .er-pagefind-search .pf-modal-footer {
+    display: none !important;
+  }
+
   .er-pagefind-search .pf-trigger-shortcut {
     display: none !important;
   }
