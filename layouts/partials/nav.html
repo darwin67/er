@@ -1,3 +1,4 @@
+{{- $mainMenu := .Site.Menus.main -}}
 <nav class="flex justify-between box-border p-3 pl-3 lg:pl-3 pr-2 lg:pr-2 mt-1 md:mt-0" id="navbar" data-pagefind-ignore>
   <div class="flex space-x-5">
     <span class="text-white">
@@ -11,7 +12,7 @@
       </a>
     </span>
 
-    {{ with .Site.Menus.main }}
+    {{ with $mainMenu }}
     <div class="hidden md:flex md:space-x-3 mt-2 md:mt-0 py-1 font-bold">
       {{ range . }}
       {{- $url := .URL -}}
@@ -40,5 +41,37 @@
       <span class="icon-moon" aria-hidden="true">&#9789;</span>
       <span class="icon-sun"  aria-hidden="true">&#9728;</span>
     </button>
+    {{ if or $mainMenu (gt (len hugo.Sites) 1) }}
+    <details class="mobile-nav md:hidden">
+      <summary class="mobile-nav-toggle" aria-label="{{ T "menu" | default "Menu" }}">
+        <span class="mobile-nav-icon" aria-hidden="true"></span>
+      </summary>
+      <div class="mobile-nav-panel">
+        {{ with $mainMenu }}
+        <div class="mobile-nav-section">
+          {{ range . }}
+          {{- $url := .URL -}}
+          {{- if .Page -}}
+            {{- $url = .Page.RelPermalink -}}
+          {{- else if not (or (strings.HasPrefix .URL "http://") (strings.HasPrefix .URL "https://") (strings.HasPrefix .URL "#")) -}}
+            {{- $url = .URL | relLangURL -}}
+          {{- end -}}
+          <a class="mobile-nav-link" href='{{ $url }}' title="{{ .Name }}">{{ if .Identifier }}{{ or (T .Identifier) .Name }}{{ else }}{{ .Name }}{{ end }}</a>
+          {{ end }}
+        </div>
+        {{ end }}
+        {{ if gt (len hugo.Sites) 1 }}
+        <div class="mobile-nav-section mobile-nav-languages" aria-label="{{ T "languageSwitcher" }}">
+          {{ range hugo.Sites }}
+          {{ $translation := where $.AllTranslations "Lang" .Language.Lang }}
+          {{ $href := .Home.RelPermalink }}
+          {{ with index $translation 0 }}{{ $href = .RelPermalink }}{{ end }}
+          <a class="mobile-nav-link {{ if eq $.Site.Language.Lang .Language.Lang }}is-active{{ end }}" href="{{ $href }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}"{{ if eq $.Site.Language.Lang .Language.Lang }} aria-current="true"{{ end }}>{{ .Language.Label | default .Language.Lang }}</a>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </details>
+    {{ end }}
   </div>
 </nav>

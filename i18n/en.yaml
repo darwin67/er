@@ -4,6 +4,8 @@ searchPlaceholder:
   other: Search...
 languageSwitcher:
   other: Languages
+menu:
+  other: Menu
 tags:
   other: tags
 categories:

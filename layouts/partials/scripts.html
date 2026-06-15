@@ -1,5 +1,30 @@
 <script defer src="{{ "js/code-copy.js" | absURL }}"></script>
 
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+  var mobileNav = document.querySelector('.mobile-nav');
+  if (!mobileNav) return;
+
+  document.addEventListener('pointerdown', function(event) {
+    if (mobileNav.open && !mobileNav.contains(event.target)) {
+      mobileNav.open = false;
+    }
+  });
+
+  document.addEventListener('focusin', function(event) {
+    if (mobileNav.open && !mobileNav.contains(event.target)) {
+      mobileNav.open = false;
+    }
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      mobileNav.open = false;
+    }
+  });
+});
+</script>
+
 {{ if or (.Site.Params.showTagCloud | default true) (.Site.Params.showScrollToTop | default true) }}
 <script type="text/javascript">
 var prevScrollpos = window.pageYOffset;
