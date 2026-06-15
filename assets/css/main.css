@@ -2902,6 +2902,24 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
   color: var(--color-neutral-accent) !important;
 }
 @media (max-width: 767px) {
+  .er-pagefind-search {
+    --pf-modal-max-height: calc(100dvh - 1rem);
+    --pf-modal-top: 0.5rem;
+  }
+  .er-pagefind-search dialog.pf-modal {
+    inset: 0.5rem !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: calc(100dvh - 1rem) !important;
+    margin: 0 !important;
+    border-radius: 0.5rem !important;
+  }
+  .er-pagefind-search pagefind-modal-body, .er-pagefind-search .pf-modal-body, .er-pagefind-search .pf-results {
+    max-height: calc(100dvh - 4rem) !important;
+  }
+  .er-pagefind-search pagefind-modal-footer, .er-pagefind-search .pf-modal-footer {
+    display: none !important;
+  }
   .er-pagefind-search .pf-trigger-shortcut {
     display: none !important;
   }
