@@ -605,8 +605,8 @@ h6 > span.tags {
 
 /* Theme toggle button in the nav. */
 .theme-toggle {
-  @apply cursor-pointer border-0 bg-transparent px-[0.4rem] py-1
-    leading-none text-[var(--color-body-text)];
+  @apply inline-flex size-8 cursor-pointer items-center justify-center
+    border-0 bg-transparent leading-none text-[var(--color-body-text)];
 }
 
 .theme-toggle:hover {
@@ -621,7 +621,7 @@ h6 > span.tags {
 
 /* Mobile navigation menu. */
 .mobile-nav {
-  @apply relative ml-1;
+  @apply relative;
 }
 
 .mobile-nav-toggle {
