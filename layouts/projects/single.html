@@ -21,12 +21,17 @@
       {{ with .Params.period }}
       <div><dt>{{ T "projectPeriod" | default "Period" }}</dt><dd>{{ . }}</dd></div>
       {{ end }}
-      {{ with .Params.stack }}
+      {{ with (or .Params.stacks .Params.stack) }}
       <div>
         <dt>{{ T "projectStack" | default "Stack" }}</dt>
         <dd>
           {{ range . }}
-          <a class="stack-pill" href='{{ "/stacks/" | relLangURL }}{{ . | urlize }}'>{{ . }}</a>
+          {{ $term := $.Site.GetPage (printf "/stacks/%s" (. | urlize)) }}
+          {{ if $term }}
+          <a class="stack-pill" href="{{ $term.RelPermalink }}">{{ . }}</a>
+          {{ else }}
+          <span class="stack-pill">{{ . }}</span>
+          {{ end }}
           {{ end }}
         </dd>
       </div>

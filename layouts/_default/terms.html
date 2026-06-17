@@ -4,10 +4,10 @@
   <h1 class="text-2xl font-semibold font-sans">{{ .Title }}</h1>
   {{ partial "page-intro.html" . }}
   <ul class="list-none p-0">
-    {{ range $key, $value := .Data.Terms }}
+    {{ range .Data.Terms.Alphabetical }}
       <li class="leading-normal inline-block bg-[var(--color-background-alt)] px-1 m-1">
-        <a href="{{ $key | urlize }}" class="no-underline text-sm hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">
-          {{ $key }}&nbsp;({{ len $value }})
+        <a href="{{ .Page.RelPermalink }}" class="no-underline text-sm hover:border-[var(--color-body-text)] hover:text-[var(--color-body-text)]">
+          {{ .Page.LinkTitle }}&nbsp;({{ .Count }})
         </a>
       </li>
     {{ end }}
