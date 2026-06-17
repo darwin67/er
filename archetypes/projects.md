@@ -7,7 +7,7 @@ draft: true
 role:        ""           # e.g. "Lead engineer"
 client:      ""           # e.g. "Acme Co" — omit for personal work
 period:      ""           # e.g. "2024 – 2025"
-stack:       []           # e.g. [go, postgres, terraform]
+stacks:      []           # e.g. [go, postgres, terraform]
 
 # Links — both optional; rendered as icon badges when set.
 repo:        ""           # https://github.com/...

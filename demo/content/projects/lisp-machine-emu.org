@@ -2,7 +2,7 @@
 #+DATE: <2022-08-14 Sun>
 #+ROLE: Solo
 #+PERIOD: 2021 – 2022
-#+STACK[]: common-lisp sbcl docker
+#+STACKS[]: common-lisp sbcl docker
 #+REPO: https://github.com/example/lisp-machine-emu
 #+STATUS: archived
 #+SUMMARY: A weekend-project emulator for early-80s Lisp Machine instructions; usable but unmaintained.

@@ -80,7 +80,7 @@ date: 2025-03-12
 role:     "Lead engineer"
 client:   "Acme Co"            # omit for personal work
 period:   "2024 – 2025"
-stack:    [go, postgres, terraform]
+stacks:   [go, postgres, terraform]
 
 repo:     "https://github.com/you/acme"
 live_url: "https://acme.example"
@@ -99,8 +99,16 @@ Helpful shortcodes inside a project page:
 - `{{< results >}} ... {{< /results >}}` — metric strip at the top of
   a case study.
 
-Stacks are a real Hugo taxonomy, so `/stacks/rust/` etc. work out of
-the box.
+Stacks are rendered as a Hugo taxonomy using the `stacks` front matter
+key. If your site config declares custom `taxonomies`, keep the theme's
+stack taxonomy alongside Hugo's defaults:
+
+```yaml
+taxonomies:
+  category: categories
+  tag: tags
+  stack: stacks
+```
 
 ### Color palette
 

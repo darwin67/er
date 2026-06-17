@@ -4,7 +4,7 @@ date: 2025-03-12
 role: "Lead engineer"
 client: "Trattoria della Nonna"
 period: "2024 – 2025"
-stack: [go, postgres, terraform, kafka]
+stacks: [go, postgres, terraform, kafka]
 repo: "https://github.com/example/pasta-pipeline"
 live_url: "https://pasta.example"
 status: shipped
