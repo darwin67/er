@@ -1,0 +1,11 @@
+{{- $status := .status -}}
+{{- if $status -}}
+{{- $class := $status -}}
+{{- if eq $status "active" -}}
+  {{- $class = "shipped" -}}
+{{- else if eq $status "closed" -}}
+  {{- $class = "archived" -}}
+{{- end -}}
+{{- $label := T (printf "projectStatus_%s" $status) | default (humanize $status) -}}
+<span class="status-dot status-{{ $class }}" title="{{ $label }}"></span>{{ if .label }}{{ $label }}{{ end }}
+{{- end -}}

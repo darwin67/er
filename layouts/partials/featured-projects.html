@@ -17,7 +17,7 @@
       <a href="{{ .RelPermalink }}">
         <div class="featured-project-title-row">
           {{ if .Params.status }}
-          <span class="status-dot status-{{ .Params.status }}" title="{{ humanize .Params.status }}"></span>
+          {{ partial "project-status.html" (dict "status" .Params.status) }}
           {{ end }}
           <span class="featured-project-title">{{ .Title }}</span>
         </div>

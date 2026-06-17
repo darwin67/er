@@ -21,12 +21,17 @@
       {{ with .Params.period }}
       <div><dt>{{ T "projectPeriod" | default "Period" }}</dt><dd>{{ . }}</dd></div>
       {{ end }}
-      {{ with .Params.stack }}
+      {{ with .Params.tags }}
       <div>
-        <dt>{{ T "projectStack" | default "Stack" }}</dt>
+        <dt>{{ T "projectTags" | default "Tags" }}</dt>
         <dd>
           {{ range . }}
-          <a class="stack-pill" href='{{ "/stacks/" | relLangURL }}{{ . | urlize }}'>{{ . }}</a>
+          {{ $term := $.Site.GetPage (printf "/tags/%s" (. | urlize)) }}
+          {{ if $term }}
+          <a class="stack-pill" href="{{ $term.RelPermalink }}">{{ . }}</a>
+          {{ else }}
+          <span class="stack-pill">{{ . }}</span>
+          {{ end }}
           {{ end }}
         </dd>
       </div>
@@ -34,7 +39,7 @@
       {{ if .Params.status }}
       <div>
         <dt>{{ T "projectStatus" | default "Status" }}</dt>
-        <dd><span class="status-dot status-{{ .Params.status }}"></span>{{ T (printf "projectStatus_%s" .Params.status) | default (humanize .Params.status) }}</dd>
+        <dd>{{ partial "project-status.html" (dict "status" .Params.status "label" true) }}</dd>
       </div>
       {{ end }}
       {{ if or .Params.repo .Params.live_url }}

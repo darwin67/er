@@ -40,12 +40,18 @@ tableOfContents:
   other: Auf dieser Seite
 projects:
   other: Projekte
+post:
+  other: Beitrag
+project:
+  other: Projekt
 projectRole:
   other: Rolle
 projectClient:
   other: Kunde
 projectPeriod:
   other: Zeitraum
+projectTags:
+  other: Schlagworte
 projectStack:
   other: Stack
 projectStatus:
@@ -54,9 +60,13 @@ projectLinks:
   other: Links
 projectStatus_shipped:
   other: Live
+projectStatus_active:
+  other: Aktiv
 projectStatus_wip:
   other: In Arbeit
 projectStatus_archived:
   other: Archiviert
+projectStatus_closed:
+  other: Geschlossen
 featuredProjects:
   other: Ausgewaehlte Arbeiten

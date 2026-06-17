@@ -80,12 +80,12 @@ date: 2025-03-12
 role:     "Lead engineer"
 client:   "Acme Co"            # omit for personal work
 period:   "2024 – 2025"
-stack:    [go, postgres, terraform]
+tags:     [go, postgres, terraform]
 
 repo:     "https://github.com/you/acme"
 live_url: "https://acme.example"
 
-status:   "shipped"            # shipped | wip | archived
+status:   "shipped"            # shipped | active | wip | archived | closed
 cover:    "cover.jpg"          # relative to the page bundle
 summary:  "Rebuilt the order pipeline; cut p99 latency by 38%."
 
@@ -99,8 +99,8 @@ Helpful shortcodes inside a project page:
 - `{{< results >}} ... {{< /results >}}` — metric strip at the top of
   a case study.
 
-Stacks are a real Hugo taxonomy, so `/stacks/rust/` etc. work out of
-the box.
+Project stack pills use Hugo's default `tags` taxonomy, so terms like
+`go` and `postgres` link to `/tags/go/` and `/tags/postgres/`.
 
 ### Color palette
 

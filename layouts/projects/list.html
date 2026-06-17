@@ -6,28 +6,48 @@
   </header>
 
   <ul class="project-grid">
+    {{ $knownStatuses := slice "shipped" "active" "wip" "archived" "closed" }}
+    {{ $statusGroups := slice (slice "shipped" "active") (slice "wip") (slice "archived" "closed") }}
+    {{ $projects := slice }}
+    {{ range $statusGroups }}
+      {{ $projects = $projects | append (where $.Pages.ByDate.Reverse "Params.status" "in" .) }}
+    {{ end }}
     {{ range .Pages.ByDate.Reverse }}
+      {{ if not (in $knownStatuses .Params.status) }}
+        {{ $projects = $projects | append . }}
+      {{ end }}
+    {{ end }}
+    {{ range $projects }}
     {{ $page := . }}
     <li class="project-card">
       <a href="{{ $page.RelPermalink }}" class="project-card-link">
         {{ partial "project-cover.html" (dict "page" $page) }}
-        <div class="project-card-body">
+      </a>
+      <div class="project-card-body">
+        <a href="{{ $page.RelPermalink }}" class="project-card-link">
           <div class="project-card-title-row">
             {{ if $page.Params.status }}
-            <span class="status-dot status-{{ $page.Params.status }}" title="{{ humanize $page.Params.status }}"></span>
+            {{ partial "project-status.html" (dict "status" $page.Params.status) }}
             {{ end }}
             <h2 class="project-card-title">{{ $page.Title }}</h2>
           </div>
           {{ with $page.Params.summary }}
           <p class="project-card-summary">{{ . }}</p>
           {{ end }}
-          {{ with $page.Params.stack }}
-          <p class="project-card-stack">
-            {{ range first 5 . }}<span class="stack-pill">{{ . }}</span>{{ end }}
-          </p>
+        </a>
+        {{ with $page.Params.tags }}
+        <p class="project-card-stack">
+          {{ range first 5 . }}
+          {{ $term := $.Site.GetPage (printf "/tags/%s" (. | urlize)) }}
+          {{ if $term }}
+          <a class="stack-pill" href="{{ $term.RelPermalink }}">{{ . }}</a>
+          {{ else }}
+          <span class="stack-pill">{{ . }}</span>
           {{ end }}
-        </div>
-      </a>
+          {{ end }}
+        </p>
+        {{ end }}
+      </div>
     </li>
     {{ end }}
   </ul>

@@ -40,12 +40,18 @@ tableOfContents:
   other: On this page
 projects:
   other: Projects
+post:
+  other: Post
+project:
+  other: Project
 projectRole:
   other: Role
 projectClient:
   other: Client
 projectPeriod:
   other: Period
+projectTags:
+  other: Tags
 projectStack:
   other: Stack
 projectStatus:
@@ -54,9 +60,13 @@ projectLinks:
   other: Links
 projectStatus_shipped:
   other: Shipped
+projectStatus_active:
+  other: Active
 projectStatus_wip:
   other: In progress
 projectStatus_archived:
   other: Archived
+projectStatus_closed:
+  other: Closed
 featuredProjects:
   other: Featured work

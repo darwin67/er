@@ -3,7 +3,7 @@ title: "notes-cli"
 date: 2025-09-04
 role: "Solo"
 period: "2025 –"
-stack: [rust, sqlite]
+tags: [rust, sqlite]
 repo: "https://github.com/example/notes-cli"
 status: wip
 summary: "Local-first plain-text notes CLI with full-text search and tagging."
