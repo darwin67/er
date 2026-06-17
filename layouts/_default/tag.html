@@ -8,12 +8,12 @@
     {{ range .Data.Pages }}
       <li class="leading-relaxed flex justify-between">
         <span>
-          {{ if eq .Section "projects" }}
-          <span class="text-faint text-xs uppercase tracking-wide mr-2">{{ T "project" | default "Project" }}</span>
-          {{ else if eq .Section "posts" }}
-          <span class="text-faint text-xs uppercase tracking-wide mr-2">{{ T "post" | default "Post" }}</span>
-          {{ end }}
           <a href="{{ .RelPermalink }}" class="no-underline text-base text-inherit hover:text-[var(--color-main-light)]">{{ .Title }}</a>
+          {{ if eq .Section "projects" }}
+          <span class="text-faint text-xs uppercase tracking-wide ml-4">{{ T "project" | default "Project" }}</span>
+          {{ else if eq .Section "posts" }}
+          <span class="text-faint text-xs uppercase tracking-wide ml-4">{{ T "post" | default "Post" }}</span>
+          {{ end }}
         </span>
         <time>{{ .Date.Format "02 Jan 2006" }}</time>
       </li>
