@@ -40,12 +40,18 @@ tableOfContents:
   other: 目次
 projects:
   other: プロジェクト
+post:
+  other: 記事
+project:
+  other: プロジェクト
 projectRole:
   other: 役割
 projectClient:
   other: クライアント
 projectPeriod:
   other: 期間
+projectTags:
+  other: タグ
 projectStack:
   other: 使用技術
 projectStatus:

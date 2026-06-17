@@ -40,12 +40,18 @@ tableOfContents:
   other: On this page
 projects:
   other: Projects
+post:
+  other: Post
+project:
+  other: Project
 projectRole:
   other: Role
 projectClient:
   other: Client
 projectPeriod:
   other: Period
+projectTags:
+  other: Tags
 projectStack:
   other: Stack
 projectStatus:

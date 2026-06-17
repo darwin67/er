@@ -40,12 +40,18 @@ tableOfContents:
   other: Auf dieser Seite
 projects:
   other: Projekte
+post:
+  other: Beitrag
+project:
+  other: Projekt
 projectRole:
   other: Rolle
 projectClient:
   other: Kunde
 projectPeriod:
   other: Zeitraum
+projectTags:
+  other: Schlagworte
 projectStack:
   other: Stack
 projectStatus:
