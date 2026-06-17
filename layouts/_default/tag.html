@@ -12,9 +12,9 @@
         </span>
         <span>
           {{ if eq .Section "projects" }}
-          <span class="text-faint text-xs uppercase tracking-wide mr-2">{{ T "project" | default "Project" }}</span>
+          <span class="text-faint text-xs uppercase tracking-wide mr-4">{{ T "project" | default "Project" }}</span>
           {{ else if eq .Section "posts" }}
-          <span class="text-faint text-xs uppercase tracking-wide mr-2">{{ T "post" | default "Post" }}</span>
+          <span class="text-faint text-xs uppercase tracking-wide mr-4">{{ T "post" | default "Post" }}</span>
           {{ end }}
           <time>{{ .Date.Format "02 Jan 2006" }}</time>
         </span>
