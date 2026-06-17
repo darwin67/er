@@ -60,9 +60,13 @@ projectLinks:
   other: リンク
 projectStatus_shipped:
   other: 公開済み
+projectStatus_active:
+  other: アクティブ
 projectStatus_wip:
   other: 開発中
 projectStatus_archived:
   other: アーカイブ済み
+projectStatus_closed:
+  other: 終了
 featuredProjects:
   other: 主なプロジェクト

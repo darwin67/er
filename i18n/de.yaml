@@ -60,9 +60,13 @@ projectLinks:
   other: Links
 projectStatus_shipped:
   other: Live
+projectStatus_active:
+  other: Aktiv
 projectStatus_wip:
   other: In Arbeit
 projectStatus_archived:
   other: Archiviert
+projectStatus_closed:
+  other: Geschlossen
 featuredProjects:
   other: Ausgewaehlte Arbeiten

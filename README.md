@@ -85,7 +85,7 @@ tags:     [go, postgres, terraform]
 repo:     "https://github.com/you/acme"
 live_url: "https://acme.example"
 
-status:   "shipped"            # shipped | wip | archived
+status:   "shipped"            # shipped | active | wip | archived | closed
 cover:    "cover.jpg"          # relative to the page bundle
 summary:  "Rebuilt the order pipeline; cut p99 latency by 38%."
 

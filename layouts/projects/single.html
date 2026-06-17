@@ -39,7 +39,7 @@
       {{ if .Params.status }}
       <div>
         <dt>{{ T "projectStatus" | default "Status" }}</dt>
-        <dd><span class="status-dot status-{{ .Params.status }}"></span>{{ T (printf "projectStatus_%s" .Params.status) | default (humanize .Params.status) }}</dd>
+        <dd>{{ partial "project-status.html" (dict "status" .Params.status "label" true) }}</dd>
       </div>
       {{ end }}
       {{ if or .Params.repo .Params.live_url }}

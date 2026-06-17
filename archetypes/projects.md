@@ -13,7 +13,7 @@ tags:        []           # e.g. [go, postgres, terraform]
 repo:        ""           # https://github.com/...
 live_url:    ""           # https://...
 
-# Status drives the dot indicator: shipped | wip | archived.
+# Status drives the dot indicator: shipped | active | wip | archived | closed.
 status:      "shipped"
 
 # Cover image (relative to the page bundle or static path) and one-line
