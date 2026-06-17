@@ -4,7 +4,6 @@ defaultContentLanguage: en
 taxonomies:
   category: categories
   tag: tags
-  stack: stacks
 
 languages:
   en:

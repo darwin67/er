@@ -4,14 +4,13 @@ date: 2025-03-12
 role: "Lead engineer"
 client: "Trattoria della Nonna"
 period: "2024 – 2025"
-stacks: [go, postgres, terraform, kafka]
 repo: "https://github.com/example/pasta-pipeline"
 live_url: "https://pasta.example"
 status: shipped
 cover: "ingredients.jpg"
 summary: "Rebuilt the order pipeline end-to-end; cut p99 latency from 3.2s to under a second."
 featured: true
-tags: [backend, distributed-systems]
+tags: [go, postgres, terraform, kafka, backend, distributed-systems]
 ---
 
 {{< results >}}

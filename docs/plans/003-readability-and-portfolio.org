@@ -126,19 +126,17 @@ Smallest set that visibly raises the quality bar for prose.
 :END:
 
 - [X] ~archetypes/projects.md~ with structured frontmatter:
-  ~title~, ~date~, ~role~, ~client~, ~period~, ~stack: []~, ~repo~,
+  ~title~, ~date~, ~role~, ~client~, ~period~, ~tags: []~, ~repo~,
   ~live_url~, ~status~ (~shipped~ / ~wip~ / ~archived~), ~cover~,
   ~summary~, ~featured: false~.
-- [X] Register a ~stacks~ taxonomy in ~config/_default/hugo.yaml~ so
-  ~/stacks/rust/~ etc. work out of the box. (Default `category` and
-  `tag` taxonomies also declared explicitly so adding `stack` doesn't
-  silently drop them.)
+- [X] Use Hugo's default ~tags~ taxonomy for project technologies so
+  ~/tags/rust/~ etc. work out of the box without a custom taxonomy.
 - [X] Document the schema in ~README.md~ under a new "Projects" section.
 
 ** Track 2 layouts
 
 - [X] ~layouts/projects/single.html~ — case-study template:
-  hero/cover image, meta block (role, client, period, stack, status,
+  hero/cover image, meta block (role, client, period, tags, status,
   repo, live link), body. (Outcome strip + gallery land with the
   shortcode commit.)
 - [X] ~layouts/projects/list.html~ — grid of projects with cover thumbnail,
@@ -196,7 +194,8 @@ Suggested order. Each step is its own commit (or small series).
   (Leaning: follow system, persist override.)
 - Reading time: always on, or behind a site param? (Leaning: always on for
   posts, off for pages — gate by ~Section == "posts"~.)
-- Should ~stacks~ be a separate taxonomy or reuse ~tags~? (Leaning:
-  separate — tags describe topics, stacks describe technologies.)
+- Should ~stacks~ be a separate taxonomy or reuse ~tags~? Decided:
+  reuse ~tags~ so project technology links work without site-level
+  taxonomy configuration.
 - Copy-button on code blocks: inline JS in the partial, or a tiny
   ~static/js/~ file? (Leaning: tiny static file, loaded with ~defer~.)
