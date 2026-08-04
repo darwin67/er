@@ -95,9 +95,10 @@ params:
     - key: email
       value: you@example.com
     - key: rss
+      header: true
       value: true
 
 outputs:
   home:
-  - HTML
-  - RSS
+    - HTML
+    - RSS
