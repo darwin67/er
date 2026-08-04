@@ -12,6 +12,10 @@
 {{- if not $social }}{{ return }}{{ end -}}
 {{- $mode := .mode | default "footer" -}}
 {{- $showLabel := .showLabel | default false -}}
+{{- $rssURL := "" -}}
+{{- with .Site.Home.OutputFormats.Get "RSS" -}}
+  {{- $rssURL = .RelPermalink -}}
+{{- end -}}
 
 {{- /* Known URL prefixes per platform. Empty prefix means the value is
      used verbatim (e.g. mastodon, which needs a full instance URL). */ -}}
@@ -39,7 +43,7 @@
     {{- $label := printf "%s%s" (upper (substr $key 0 1)) (substr $key 1) -}}
     {{- if eq $key "rss" -}}
       {{- if eq $value true -}}
-        {{- $url = "/feed.xml" | relLangURL -}}
+        {{- $url = $rssURL -}}
       {{- else -}}
         {{- $url = $value -}}
       {{- end -}}
@@ -56,6 +60,7 @@
         {{- end -}}
       {{- end -}}
     {{- end -}}
+    {{- if not $url }}{{ continue }}{{ end -}}
 
     <a class="social-link" href="{{ $url }}" aria-label="{{ $label }}" title="{{ $label }}"{{ if not (or (strings.HasPrefix $url "mailto:") (strings.HasPrefix $url "/")) }} rel="noopener" target="_blank"{{ end }}>
       {{- if eq $key "github" -}}
