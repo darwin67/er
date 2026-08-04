@@ -40,7 +40,9 @@
 {{ end }}
 type="image/x-icon"/>
 
-<link href='{{ "/feed.xml" | relLangURL }}' rel="alternate" type="application/atom+xml" title="{{ .Site.Title }}" />
+{{ with .Site.Home.OutputFormats.Get "RSS" }}
+<link href="{{ .RelPermalink }}" rel="alternate" type="application/atom+xml" title="{{ $.Site.Title }}" />
+{{ end }}
 
 {{ hugo.Generator }}
 {{ partial "open_graph.html" . }}
