@@ -859,7 +859,7 @@ h6 > span.tags {
 }
 
 .social-links--footer {
-  @apply flex-wrap gap-x-3 gap-y-2;
+  @apply max-w-full flex-wrap justify-center gap-x-3 gap-y-2;
 }
 
 .social-link-label {
@@ -869,7 +869,7 @@ h6 > span.tags {
 
 /* Footer stacks icons above the "Powered by" line. */
 .footer-social {
-  @apply mb-2 flex justify-center lg:justify-start;
+  @apply mb-2 flex justify-center;
 }
 
 .project-cover {
