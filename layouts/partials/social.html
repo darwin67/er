@@ -28,7 +28,7 @@
   "email"     "mailto:"
 -}}
 
-<div class="social-links">
+<div class="social-links social-links--{{ $mode }}">
   {{- range $social -}}
     {{- $key := lower (printf "%v" .key) -}}
     {{- $value := .value -}}

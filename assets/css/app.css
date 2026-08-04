@@ -834,20 +834,37 @@ h6 > span.tags {
 
 /* Social link bar — used in nav (icon-only) and footer (with labels). */
 .social-links {
-  @apply inline-flex items-center gap-1.5;
+  @apply inline-flex items-center;
 }
 
 .social-link {
   @apply inline-flex items-center gap-[0.35rem] text-[var(--color-muted-text)]
-    no-underline;
+    no-underline whitespace-nowrap leading-none;
+}
+
+.social-link svg {
+  @apply block size-4 shrink-0;
 }
 
 .social-link:hover {
   color: var(--color-neutral-accent);
 }
 
+.social-links--header {
+  @apply gap-0;
+}
+
+.social-links--header .social-link {
+  @apply size-8 justify-center;
+}
+
+.social-links--footer {
+  @apply flex-wrap gap-x-3 gap-y-2;
+}
+
 .social-link-label {
   font-size: 0.85rem;
+  line-height: 1rem;
 }
 
 /* Footer stacks icons above the "Powered by" line. */
