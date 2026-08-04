@@ -832,6 +832,24 @@ h6 > span.tags {
 
 .icon-link-label { font-size: 0.85rem; }
 
+/* Social link bar — used in nav (icon-only) and footer (with labels). */
+.social-links {
+  @apply inline-flex items-center gap-1.5;
+}
+
+.social-link {
+  @apply inline-flex items-center gap-[0.35rem] text-[var(--color-muted-text)]
+    no-underline;
+}
+
+.social-link:hover {
+  color: var(--color-neutral-accent);
+}
+
+.social-link-label {
+  font-size: 0.85rem;
+}
+
 .project-cover {
   max-width: var(--max-width-wide);
   margin: 1rem auto 1.5rem;

@@ -70,6 +70,18 @@ params:
   mermaidLook: handDrawn
   mermaidHandDrawnSeed: 7
   # palette: nord
+  social:
+    github: darwin67
+    gitlab: darwin67
+    mastodon: https://example.com/@darwin
+    bluesky: darwin
+    twitter: darwin67
+    linkedin: darwin67
+    youtube: darwin67
+    instagram: darwin67
+    facebook: darwin67
+    email: darwin@example.com
+    rss: true
 
 outputs:
   home:

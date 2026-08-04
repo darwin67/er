@@ -1,0 +1,83 @@
+{{- /* Social link bar. Reads Site.Params.social (map of platform -> value).
+     For platforms with a known URL prefix the value may be just the
+     user handle; full URLs (starting with http/mailto/) and paths
+     (starting with /) are used as-is. `rss: true` links to the site
+     feed. Renders an inline SVG icon per known platform key with
+     optional text labels. Unknown keys fall back to an external-link
+     icon. Pass showLabel=true to render labels. */ -}}
+{{- $social := .Site.Params.social -}}
+{{- if not $social }}{{ return }}{{ end -}}
+{{- $showLabel := .showLabel | default false -}}
+
+{{- /* Known URL prefixes per platform. Empty prefix means the value is
+     used verbatim (e.g. mastodon, which needs a full instance URL). */ -}}
+{{- $prefixes := dict
+  "github"    "https://github.com/"
+  "gitlab"    "https://gitlab.com/"
+  "twitter"   "https://twitter.com/"
+  "x"         "https://x.com/"
+  "bluesky"   "https://bsky.app/profile/"
+  "linkedin"  "https://linkedin.com/in/"
+  "instagram" "https://instagram.com/"
+  "facebook"  "https://facebook.com/"
+  "youtube"   "https://youtube.com/@"
+  "email"     "mailto:"
+-}}
+
+<div class="social-links">
+  {{- range $key, $value := $social -}}
+    {{- $key = lower (printf "%v" $key) -}}
+    {{- $url := "" -}}
+    {{- $label := printf "%s%s" (upper (substr $key 0 1)) (substr $key 1) -}}
+    {{- if eq $key "rss" -}}
+      {{- if eq $value true -}}
+        {{- $url = "/feed.xml" | relLangURL -}}
+      {{- else -}}
+        {{- $url = $value -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $v := printf "%v" $value -}}
+      {{- if or (strings.HasPrefix $v "http://") (strings.HasPrefix $v "https://") (strings.HasPrefix $v "mailto:") (strings.HasPrefix $v "/") -}}
+        {{- $url = $v -}}
+      {{- else -}}
+        {{- $prefix := index $prefixes $key -}}
+        {{- if $prefix -}}
+          {{- $url = printf "%s%s" $prefix $v -}}
+        {{- else -}}
+          {{- $url = $v -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    <a class="social-link" href="{{ $url }}" aria-label="{{ $label }}" title="{{ $label }}"{{ if not (or (strings.HasPrefix $url "mailto:") (strings.HasPrefix $url "/")) }} rel="noopener" target="_blank"{{ end }}>
+      {{- if eq $key "github" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.02c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.39.97.1-.75.41-1.27.74-1.56-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.45.11-3.02 0 0 .97-.31 3.18 1.17a11 11 0 0 1 5.8 0c2.2-1.48 3.17-1.17 3.17-1.17.63 1.57.23 2.73.12 3.02.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.26 5.65.42.36.8 1.07.8 2.16v3.2c0 .31.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+      {{- else if eq $key "gitlab" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="m23.6 9.6-.03-.09L20.32.86a.85.85 0 0 0-.83-.57.85.85 0 0 0-.82.57l-2.2 6.74H7.53L5.33.86a.85.85 0 0 0-.82-.57.85.85 0 0 0-.83.57L.43 9.51l-.03.09a6.1 6.1 0 0 0 2.22 7.04l.01.01.03.02 7.83 5.86 3.87 2.92 3.87-2.92 7.86-5.88.02-.02A6.1 6.1 0 0 0 23.6 9.6Z"/></svg>
+      {{- else if eq $key "mastodon" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M23.27 5.33c-.36-2.67-2.7-4.77-5.47-5.18C17.32.07 15.97 0 12 0h-.03C7.99 0 7.2.07 6.2.15 3.44.56 1.1 2.66.74 5.33.56 6.67.54 8.12.55 9.47c.02 2.16.1 3.84.16 5.02.13 2.66.95 4.95 2.7 6.34 1.4 1.12 3.2 1.65 5.1 1.84 1.5.15 2.94-.03 2.94-.03.07-.01.13-.08.13-.15v-2.4a.16.16 0 0 0-.18-.16c-1.4.16-2.97.18-4.4-.34-1.04-.38-1.6-1.04-1.74-1.86-.06-.34.27-.55.6-.46 1.6.45 3.27.7 4.96.6 1.36-.08 2.7-.3 3.94-.78 1.97-.76 3.13-2.18 3.4-4.36.13-1.1.13-2.2.13-3.3 0-1.32.02-2.65-.07-3.97ZM18.7 14.6h-2.06V9.43c0-1.07-.45-1.62-1.35-1.62-1 0-1.5.65-1.5 1.92v2.78h-2.05V9.73c0-1.27-.5-1.92-1.5-1.92-.9 0-1.35.55-1.35 1.62v5.17H6.78V9.27c0-1.07.27-1.92.83-2.55.56-.63 1.3-.95 2.2-.95 1.06 0 1.86.4 2.4 1.22l.5.85.5-.85c.55-.81 1.35-1.22 2.4-1.22.9 0 1.64.32 2.2.95.56.63.84 1.48.84 2.55v5.33Z"/></svg>
+      {{- else if or (eq $key "x") (eq $key "twitter") -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.97 6.82H1.66l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23Zm-1.16 17.52h1.83L7.01 4.13H5.05l12.03 15.64Z"/></svg>
+      {{- else if eq $key "bluesky" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M12 10.8C10.6 8.1 6.6 3.2 3.5 1.4.9-.1.2 1.3.1 2.4-.1 4.5 0 6.7.3 9.1c.2 1.6.5 3.4.5 3.4s-1.2 1.8-1.6 4.6c-.3 2 .2 3.3 1.2 3.8 1.4.7 3.6.3 5.9-1.7 2-1.7 3.7-4 4.7-5.8 1 1.7 2.7 4 4.7 5.8 2.3 2 4.5 2.4 5.9 1.7 1-.5 1.5-1.8 1.2-3.8-.4-2.8-1.6-4.6-1.6-4.6s.3-1.8.5-3.4c.3-2.4.4-4.6.2-6.7-.1-1.1-.8-2.5-3.4-1-3.1 1.8-7.1 6.7-8.5 9.4Z"/></svg>
+      {{- else if eq $key "linkedin" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.4v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+      {{- else if eq $key "youtube" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 0 0 .5 6.2C0 8.07 0 12 0 12s0 3.93.5 5.8a3.02 3.02 0 0 0 2.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg>
+      {{- else if eq $key "instagram" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      {{- else if eq $key "facebook" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07Z"/></svg>
+      {{- else if eq $key "email" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+      {{- else if eq $key "rss" -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M6.18 17.82a2.18 2.18 0 1 1-4.36 0 2.18 2.18 0 0 1 4.36 0ZM4 4.44v3.04c7.06 0 12.78 5.72 12.78 12.78h3.04C19.82 11.48 12.52 4.18 4 4.44Zm0 5.66v3.04a7.13 7.13 0 0 1 7.12 7.12h3.04A10.17 10.17 0 0 0 4 10.1Z"/></svg>
+      {{- else -}}
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+      {{- end -}}
+      {{- if $showLabel -}}
+      <span class="social-link-label">{{ $label }}</span>
+      {{- end -}}
+    </a>
+  {{- end -}}
+</div>
