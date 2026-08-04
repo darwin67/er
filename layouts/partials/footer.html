@@ -1,3 +1,10 @@
-<footer class="content-shell mt-0 lg:mt-10 mb-4 text-sm px-3 text-muted text-center lg:text-left" data-pagefind-ignore>
-  Powered by <a href="https://gohugo.io/" target="_blank" class="hover:opacity-80">Hugo</a>, based on the <a href="https://github.com/darwin67/er" target="_blank" class="text-[var(--color-main)] hover:opacity-80">Er</a> theme. {{ with .Site.Copyright }}{{ . }}{{end}}
+<footer class="content-shell mt-0 lg:mt-10 mb-4 text-sm px-3 text-muted text-center" data-pagefind-ignore>
+  {{ with .Site.Params.social }}
+  <div class="footer-social">
+    {{ partial "social.html" (dict "Site" $.Site "mode" "footer") }}
+  </div>
+  {{ end }}
+  <div class="footer-text">
+    Powered by <a href="https://gohugo.io/" target="_blank" class="hover:opacity-80">Hugo</a>, based on the <a href="https://github.com/darwin67/er" target="_blank" class="text-[var(--color-main)] hover:opacity-80">Er</a> theme. {{ with .Site.Copyright }}{{ . }}{{end}}
+  </div>
 </footer>

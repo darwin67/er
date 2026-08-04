@@ -70,8 +70,35 @@ params:
   mermaidLook: handDrawn
   mermaidHandDrawnSeed: 7
   # palette: nord
+  social:
+    - key: github
+      value: yourusername
+      header: true
+    - key: mastodon
+      value: https://example.com/@yourusername
+      header: true
+    - key: bluesky
+      value: yourusername
+      header: true
+    - key: twitter
+      value: yourusername
+    - key: linkedin
+      value: yourusername
+    - key: youtube
+      value: yourusername
+    - key: instagram
+      value: yourusername
+    - key: facebook
+      value: yourusername
+    - key: gitlab
+      value: yourusername
+    - key: email
+      value: you@example.com
+    - key: rss
+      header: true
+      value: true
 
 outputs:
   home:
-  - HTML
-  - RSS
+    - HTML
+    - RSS
