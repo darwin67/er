@@ -71,17 +71,31 @@ params:
   mermaidHandDrawnSeed: 7
   # palette: nord
   social:
-    github: yourusername
-    gitlab: yourusername
-    mastodon: https://example.com/@yourusername
-    bluesky: yourusername
-    twitter: yourusername
-    linkedin: yourusername
-    youtube: yourusername
-    instagram: yourusername
-    facebook: yourusername
-    email: you@example.com
-    rss: true
+    - key: github
+      value: yourusername
+      header: true
+    - key: mastodon
+      value: https://example.com/@yourusername
+      header: true
+    - key: bluesky
+      value: yourusername
+      header: true
+    - key: twitter
+      value: yourusername
+    - key: linkedin
+      value: yourusername
+    - key: youtube
+      value: yourusername
+    - key: instagram
+      value: yourusername
+    - key: facebook
+      value: yourusername
+    - key: gitlab
+      value: yourusername
+    - key: email
+      value: you@example.com
+    - key: rss
+      value: true
 
 outputs:
   home:

@@ -1,12 +1,16 @@
-{{- /* Social link bar. Reads Site.Params.social (map of platform -> value).
+{{- /* Social link bar. Reads Site.Params.social (list of maps with
+     `key`, `value`, and optional `header` fields).
      For platforms with a known URL prefix the value may be just the
      user handle; full URLs (starting with http/mailto/) and paths
-     (starting with /) are used as-is. `rss: true` links to the site
-     feed. Renders an inline SVG icon per known platform key with
-     optional text labels. Unknown keys fall back to an external-link
-     icon. Pass showLabel=true to render labels. */ -}}
+     (starting with /) are used as-is. `value: true` for rss links to
+     the site feed. `header: true` marks entries shown when mode=header.
+     Renders an inline SVG icon per known platform key with optional
+     text labels. Unknown keys fall back to an external-link icon.
+     Pass mode="header" to filter to header-flagged entries, or
+     mode="footer" to show all. Pass showLabel=true to render labels. */ -}}
 {{- $social := .Site.Params.social -}}
 {{- if not $social }}{{ return }}{{ end -}}
+{{- $mode := .mode | default "footer" -}}
 {{- $showLabel := .showLabel | default false -}}
 
 {{- /* Known URL prefixes per platform. Empty prefix means the value is
@@ -25,8 +29,12 @@
 -}}
 
 <div class="social-links">
-  {{- range $key, $value := $social -}}
-    {{- $key = lower (printf "%v" $key) -}}
+  {{- range $social -}}
+    {{- $key := lower (printf "%v" .key) -}}
+    {{- $value := .value -}}
+    {{- if eq $mode "header" }}
+      {{- if not .header }}{{ continue }}{{ end -}}
+    {{- end -}}
     {{- $url := "" -}}
     {{- $label := printf "%s%s" (upper (substr $key 0 1)) (substr $key 1) -}}
     {{- if eq $key "rss" -}}

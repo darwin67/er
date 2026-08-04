@@ -37,12 +37,13 @@
   {{ end }}
 {{ end }}{{ end }}
 {{ if .IsPage }}
+{{ $ogSocial := .Site.Params.Social }}{{ if reflect.IsMap $ogSocial }}
 {{ range .Site.Params.Authors }}{{ with .Social.facebook }}
-<meta property="article:author" content="https://www.facebook.com/{{ . }}" />{{ end }}{{ with .Site.Params.Social.facebook }}
+<meta property="article:author" content="https://www.facebook.com/{{ . }}" />{{ end }}{{ with $ogSocial.facebook }}
 <meta property="article:publisher" content="https://www.facebook.com/{{ . }}" />{{ end }}
 <meta property="article:section" content="{{ .Section }}" />
 {{ with .Params.tags }}{{ range first 6 . }}
   <meta property="article:tag" content="{{ . }}" />{{ end }}{{ end }}
-{{ end }}{{ end }}
+{{ end }}{{ end }}{{ end }}
 <!-- Facebook Page Admin ID for Domain Insights -->
-{{ with .Site.Params.Social.facebook_admin }}<meta property="fb:admins" content="{{ . }}" />{{ end }}
+{{ $ogSocial := .Site.Params.Social }}{{ if reflect.IsMap $ogSocial }}{{ with $ogSocial.facebook_admin }}<meta property="fb:admins" content="{{ . }}" />{{ end }}{{ end }}
