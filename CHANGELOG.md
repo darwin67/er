@@ -1,8 +1,18 @@
+## v0.4.0 - 2026-08-04
+
+### Features
+
+- Add social links with icons (#33)
+
+### Bug Fixes
+
+- RSS feed (#35)
 ## v0.3.3 - 2026-06-17
 
 ### Miscellaneous Tasks
 
 - *(projects)* Use tags and status-aware sorting (#31)
+- *(release)* V0.3.3 (#32)
 ## v0.3.2 - 2026-06-15
 
 ### Bug Fixes
