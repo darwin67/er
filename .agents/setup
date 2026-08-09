@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+nix_profile="$HOME/.nix-profile"
+nix_binary="/nix/var/nix/profiles/default/bin/nix"
+nix_daemon_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+profile_start_marker="# >>> er Hugo theme Nix development shell >>>"
+profile_end_marker="# <<< er Hugo theme Nix development shell <<<"
+# shellcheck disable=SC1091
+source "$(dirname "${BASH_SOURCE[0]}")/tailscale.sh"
+
+log_step() {
+  printf '\n==> %s\n' "$1"
+}
+
+if ! tailscale_require_configuration; then
+  exit 1
+fi
+
+log_step "Installing Nix when needed"
+if [ ! -x "$nix_binary" ]; then
+  sudo apt-get update
+  sudo apt-get install -y --no-install-recommends ca-certificates curl xz-utils
+  sh <(curl -fsSL https://nixos.org/nix/install) --daemon --yes
+fi
+
+if ! sudo grep -Eq '^experimental-features[[:space:]]*=' /etc/nix/nix.conf; then
+  printf '%s\n' 'experimental-features = nix-command flakes' | sudo tee -a /etc/nix/nix.conf >/dev/null
+fi
+
+# The installer cannot update this script's environment.
+if [ -f "$nix_daemon_profile" ]; then
+  unset __ETC_PROFILE_NIX_SOURCED
+  # shellcheck disable=SC1091
+  source "$nix_daemon_profile"
+else
+  # shellcheck disable=SC1091
+  source "$nix_profile/etc/profile.d/nix.sh"
+fi
+
+log_step "Warming the pinned Nix development shell"
+nix develop "$repo_root" --command bash -c '
+  command -v hugo
+  command -v pagefind
+  command -v tailwindcss
+  command -v go
+'
+
+if ! command -v tailscale >/dev/null 2>&1; then
+  log_step "Installing Tailscale"
+  curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg |
+    sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+  curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list |
+    sudo tee /etc/apt/sources.list.d/tailscale.list >/dev/null
+  sudo apt-get update
+  sudo apt-get install -y tailscale
+fi
+
+log_step "Configuring Tailscale for the orb network"
+sudo install -d /etc/systemd/system/tailscaled.service.d
+sudo tee /etc/systemd/system/tailscaled.service.d/amp-orb.conf >/dev/null <<'EOF'
+[Service]
+Environment=TS_ASSUME_NETWORK_UP_FOR_TEST=true
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable tailscaled
+sudo systemctl restart tailscaled
+
+if ! tailscale_enroll_and_wait 60s 55s 5s; then
+  exit 1
+fi
+
+log_step "Configuring the login-shell development environment"
+touch "$HOME/.bash_profile"
+if grep -Fqx '# er Hugo theme Nix development shell' "$HOME/.bash_profile"; then
+  sed -i '/^# er Hugo theme Nix development shell$/,$d' "$HOME/.bash_profile"
+fi
+awk -v start="$profile_start_marker" -v end="$profile_end_marker" '
+  $0 == start { skip = 1; next }
+  $0 == end { skip = 0; next }
+  !skip { print }
+' "$HOME/.bash_profile" > "$HOME/.bash_profile.amp-tmp"
+{
+  printf '\n%s\n' "$profile_start_marker"
+  printf '%s\n' 'if [[ -z "${IN_NIX_SHELL:-}" && -z "${AMP_ER_NIX_ENV_LOADED:-}" && ( "${PWD}" == '"$repo_root"' || "${PWD}" == '"$repo_root"'/* ) ]]; then'
+  printf '%s\n' '  if ! command -v nix >/dev/null 2>&1 && [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then'
+  printf '%s\n' '    unset __ETC_PROFILE_NIX_SOURCED'
+  printf '%s\n' '    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+  printf '%s\n' '  fi'
+  printf '%s\n' '  if nix_dev_env="$(nix print-dev-env '"$repo_root"')"; then'
+  printf '%s\n' '    eval "$nix_dev_env"'
+  printf '%s\n' '    export AMP_ER_NIX_ENV_LOADED=1'
+  printf '%s\n' '  fi'
+  printf '%s\n' 'fi'
+  printf '%s\n' "$profile_end_marker"
+} >> "$HOME/.bash_profile.amp-tmp"
+mv "$HOME/.bash_profile.amp-tmp" "$HOME/.bash_profile"
+
+log_step "Setup complete"

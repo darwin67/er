@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+nix_daemon_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+
+if ! timeout --kill-after=0.5s 8s bash -c '
+  set -euo pipefail
+  source "$1"
+  if [ -f "$2" ]; then
+    unset __ETC_PROFILE_NIX_SOURCED
+    source "$2"
+  fi
+  command -v nix >/dev/null 2>&1
+  command -v tailscale >/dev/null 2>&1
+  timeout 2s sudo systemctl restart tailscaled
+  tailscale_require_configuration
+  tailscale_login_and_wait 5s 3s 2s
+' bash "$(dirname "${BASH_SOURCE[0]}")/tailscale.sh" "$nix_daemon_profile"; then
+  echo "Tailscale did not reconnect during resume; run .agents/setup after verifying the tailnet trust policy." >&2
+  exit 1
+fi
+
+echo "Nix development shell is ready."
