@@ -3,6 +3,8 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 nix_daemon_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+# shellcheck disable=SC1091
+source "$(dirname "${BASH_SOURCE[0]}")/tailscale.sh"
 
 if [ -f "$nix_daemon_profile" ]; then
   unset __ETC_PROFILE_NIX_SOURCED
@@ -20,14 +22,18 @@ if ! nix flake metadata "$repo_root" --no-write-lock-file >/dev/null; then
   exit 1
 fi
 
-if command -v tailscale >/dev/null 2>&1; then
-  if ! timeout 3s sudo systemctl restart tailscaled; then
-    echo "Tailscale did not reconnect during resume; run .agents/setup after verifying the tailnet trust policy." >&2
-    exit 1
-  fi
+if ! command -v tailscale >/dev/null 2>&1; then
+  echo "Tailscale is unavailable; run .agents/setup to repair this orb." >&2
+  exit 1
+fi
 
-  if ! tailscale_status="$(timeout 3s sudo tailscale status --json)" || \
-    ! grep -q '"BackendState": "Running"' <<<"$tailscale_status"; then
+if ! timeout 2s sudo systemctl restart tailscaled; then
+  echo "Tailscale did not restart during resume; run .agents/setup to repair this orb." >&2
+  exit 1
+fi
+
+if ! tailscale_wait 2s; then
+  if ! tailscale_require_configuration || ! tailscale_enroll 3s || ! tailscale_wait 2s; then
     echo "Tailscale did not reconnect during resume; run .agents/setup after verifying the tailnet trust policy." >&2
     exit 1
   fi

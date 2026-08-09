@@ -5,15 +5,16 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 nix_profile="$HOME/.nix-profile"
 nix_binary="/nix/var/nix/profiles/default/bin/nix"
 nix_daemon_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-profile_marker="# er Hugo theme Nix development shell"
-tailscale_tag="tag:amp-demo"
+profile_start_marker="# >>> er Hugo theme Nix development shell >>>"
+profile_end_marker="# <<< er Hugo theme Nix development shell <<<"
+# shellcheck disable=SC1091
+source "$(dirname "${BASH_SOURCE[0]}")/tailscale.sh"
 
 log_step() {
   printf '\n==> %s\n' "$1"
 }
 
-if [ -z "${TAILSCALE_CLIENT_ID:-}" ] || [ -z "${TAILSCALE_TRUST_AUDIENCE:-}" ]; then
-  echo "TAILSCALE_CLIENT_ID and TAILSCALE_TRUST_AUDIENCE must be configured for remote orbs." >&2
+if ! tailscale_require_configuration; then
   exit 1
 fi
 
@@ -66,38 +67,34 @@ sudo systemctl daemon-reload
 sudo systemctl enable tailscaled
 sudo systemctl restart tailscaled
 
-if ! tailscale_identity_token="$(
-  amp orb id-token --audience "$TAILSCALE_TRUST_AUDIENCE" --ttl-seconds 600
-)"; then
-  echo "Amp workload identity is unavailable; rerun setup from an Amp-managed orb." >&2
+if ! tailscale_enroll 60s; then
   exit 1
 fi
-
-if ! sudo tailscale up \
-  --client-id="${TAILSCALE_CLIENT_ID}?ephemeral=true&preauthorized=true" \
-  --id-token="$tailscale_identity_token" \
-  --advertise-tags="$tailscale_tag" \
-  --hostname="amp-er-${HOSTNAME##*-}"; then
-  unset tailscale_identity_token
-  echo "Tailscale enrollment failed. Configure the Amp OIDC trust credential and $tailscale_tag policy before rerunning setup." >&2
-  exit 1
-fi
-unset tailscale_identity_token
 
 log_step "Configuring the login-shell development environment"
 touch "$HOME/.bash_profile"
-if ! grep -Fqx "$profile_marker" "$HOME/.bash_profile"; then
-  {
-    printf '\n%s\n' "$profile_marker"
-    printf '%s\n' 'if [[ -z "${IN_NIX_SHELL:-}" && -z "${AMP_ER_NIX_ENV_LOADED:-}" && ( "${PWD}" == '"$repo_root"' || "${PWD}" == '"$repo_root"'/* ) ]]; then'
-    printf '%s\n' '  if ! command -v nix >/dev/null 2>&1 && [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then'
-    printf '%s\n' '    unset __ETC_PROFILE_NIX_SOURCED'
-    printf '%s\n' '    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-    printf '%s\n' '  fi'
-    printf '%s\n' '  export AMP_ER_NIX_ENV_LOADED=1'
-    printf '%s\n' '  eval "$(nix print-dev-env '"$repo_root"')"'
-    printf '%s\n' 'fi'
-  } >> "$HOME/.bash_profile"
+if grep -Fqx '# er Hugo theme Nix development shell' "$HOME/.bash_profile"; then
+  sed -i '/^# er Hugo theme Nix development shell$/,$d' "$HOME/.bash_profile"
 fi
+awk -v start="$profile_start_marker" -v end="$profile_end_marker" '
+  $0 == start { skip = 1; next }
+  $0 == end { skip = 0; next }
+  !skip { print }
+' "$HOME/.bash_profile" > "$HOME/.bash_profile.amp-tmp"
+{
+  printf '\n%s\n' "$profile_start_marker"
+  printf '%s\n' 'if [[ -z "${IN_NIX_SHELL:-}" && -z "${AMP_ER_NIX_ENV_LOADED:-}" && ( "${PWD}" == '"$repo_root"' || "${PWD}" == '"$repo_root"'/* ) ]]; then'
+  printf '%s\n' '  if ! command -v nix >/dev/null 2>&1 && [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then'
+  printf '%s\n' '    unset __ETC_PROFILE_NIX_SOURCED'
+  printf '%s\n' '    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+  printf '%s\n' '  fi'
+  printf '%s\n' '  if nix_dev_env="$(nix print-dev-env '"$repo_root"')"; then'
+  printf '%s\n' '    eval "$nix_dev_env"'
+  printf '%s\n' '    export AMP_ER_NIX_ENV_LOADED=1'
+  printf '%s\n' '  fi'
+  printf '%s\n' 'fi'
+  printf '%s\n' "$profile_end_marker"
+} >> "$HOME/.bash_profile.amp-tmp"
+mv "$HOME/.bash_profile.amp-tmp" "$HOME/.bash_profile"
 
 log_step "Setup complete"
