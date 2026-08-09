@@ -21,8 +21,13 @@ if ! nix flake metadata "$repo_root" --no-write-lock-file >/dev/null; then
 fi
 
 if command -v tailscale >/dev/null 2>&1; then
-  if ! timeout 3s sudo systemctl restart tailscaled || \
-    ! timeout 3s sudo tailscale status --json | grep -q '"BackendState": "Running"'; then
+  if ! timeout 3s sudo systemctl restart tailscaled; then
+    echo "Tailscale did not reconnect during resume; run .agents/setup after verifying the tailnet trust policy." >&2
+    exit 1
+  fi
+
+  if ! tailscale_status="$(timeout 3s sudo tailscale status --json)" || \
+    ! grep -q '"BackendState": "Running"' <<<"$tailscale_status"; then
     echo "Tailscale did not reconnect during resume; run .agents/setup after verifying the tailnet trust policy." >&2
     exit 1
   fi
