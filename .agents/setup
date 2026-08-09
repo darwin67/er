@@ -67,7 +67,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable tailscaled
 sudo systemctl restart tailscaled
 
-if ! tailscale_enroll 60s; then
+if ! tailscale_enroll_and_wait 60s 55s 5s; then
   exit 1
 fi
 

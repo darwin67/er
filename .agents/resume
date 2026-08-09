@@ -1,42 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 nix_daemon_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-# shellcheck disable=SC1091
-source "$(dirname "${BASH_SOURCE[0]}")/tailscale.sh"
 
-if [ -f "$nix_daemon_profile" ]; then
-  unset __ETC_PROFILE_NIX_SOURCED
-  # shellcheck disable=SC1091
-  source "$nix_daemon_profile"
-fi
-
-if ! command -v nix >/dev/null 2>&1; then
-  echo "Nix is unavailable; run .agents/setup to repair this orb."
-  exit 1
-fi
-
-if ! nix flake metadata "$repo_root" --no-write-lock-file >/dev/null; then
-  echo "The Nix development shell could not be evaluated; run .agents/setup to repair this orb."
-  exit 1
-fi
-
-if ! command -v tailscale >/dev/null 2>&1; then
-  echo "Tailscale is unavailable; run .agents/setup to repair this orb." >&2
-  exit 1
-fi
-
-if ! timeout 2s sudo systemctl restart tailscaled; then
-  echo "Tailscale did not restart during resume; run .agents/setup to repair this orb." >&2
-  exit 1
-fi
-
-if ! tailscale_wait 2s; then
-  if ! tailscale_require_configuration || ! tailscale_enroll 3s || ! tailscale_wait 2s; then
-    echo "Tailscale did not reconnect during resume; run .agents/setup after verifying the tailnet trust policy." >&2
-    exit 1
+if ! timeout --kill-after=0.5s 8s bash -c '
+  set -euo pipefail
+  source "$1"
+  if [ -f "$2" ]; then
+    unset __ETC_PROFILE_NIX_SOURCED
+    source "$2"
   fi
+  command -v nix >/dev/null 2>&1
+  command -v tailscale >/dev/null 2>&1
+  timeout 2s sudo systemctl restart tailscaled
+  tailscale_require_configuration
+  tailscale_login_and_wait 5s 3s 2s
+' bash "$(dirname "${BASH_SOURCE[0]}")/tailscale.sh" "$nix_daemon_profile"; then
+  echo "Tailscale did not reconnect during resume; run .agents/setup after verifying the tailnet trust policy." >&2
+  exit 1
 fi
 
 echo "Nix development shell is ready."
