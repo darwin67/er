@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+nix_profile="$HOME/.nix-profile"
+nix_binary="/nix/var/nix/profiles/default/bin/nix"
+nix_daemon_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+profile_marker="# er Hugo theme Nix development shell"
+
+log_step() {
+  printf '\n==> %s\n' "$1"
+}
+
+log_step "Installing Nix when needed"
+if [ ! -x "$nix_binary" ]; then
+  sudo apt-get update
+  sudo apt-get install -y --no-install-recommends ca-certificates curl xz-utils
+  sh <(curl -fsSL https://nixos.org/nix/install) --daemon --yes
+fi
+
+if ! sudo grep -Eq '^experimental-features[[:space:]]*=' /etc/nix/nix.conf; then
+  printf '%s\n' 'experimental-features = nix-command flakes' | sudo tee -a /etc/nix/nix.conf >/dev/null
+fi
+
+# The installer cannot update this script's environment.
+if [ -f "$nix_daemon_profile" ]; then
+  unset __ETC_PROFILE_NIX_SOURCED
+  # shellcheck disable=SC1091
+  source "$nix_daemon_profile"
+else
+  # shellcheck disable=SC1091
+  source "$nix_profile/etc/profile.d/nix.sh"
+fi
+
+log_step "Warming the pinned Nix development shell"
+nix develop "$repo_root" --command bash -c '
+  command -v hugo
+  command -v pagefind
+  command -v tailwindcss
+  command -v go
+'
+
+log_step "Configuring the login-shell development environment"
+touch "$HOME/.bash_profile"
+if ! grep -Fqx "$profile_marker" "$HOME/.bash_profile"; then
+  {
+    printf '\n%s\n' "$profile_marker"
+    printf '%s\n' 'if [[ -z "${IN_NIX_SHELL:-}" && -z "${AMP_ER_NIX_ENV_LOADED:-}" && ( "${PWD}" == '"$repo_root"' || "${PWD}" == '"$repo_root"'/* ) ]]; then'
+    printf '%s\n' '  if ! command -v nix >/dev/null 2>&1 && [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then'
+    printf '%s\n' '    unset __ETC_PROFILE_NIX_SOURCED'
+    printf '%s\n' '    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+    printf '%s\n' '  fi'
+    printf '%s\n' '  export AMP_ER_NIX_ENV_LOADED=1'
+    printf '%s\n' '  eval "$(nix print-dev-env '"$repo_root"')"'
+    printf '%s\n' 'fi'
+  } >> "$HOME/.bash_profile"
+fi
+
+log_step "Setup complete"

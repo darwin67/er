@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+nix_daemon_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+
+if [ -f "$nix_daemon_profile" ]; then
+  unset __ETC_PROFILE_NIX_SOURCED
+  # shellcheck disable=SC1091
+  source "$nix_daemon_profile"
+fi
+
+if ! command -v nix >/dev/null 2>&1; then
+  echo "Nix is unavailable; run .agents/setup to repair this orb."
+  exit 1
+fi
+
+if ! nix flake metadata "$repo_root" --no-write-lock-file >/dev/null; then
+  echo "The Nix development shell could not be evaluated; run .agents/setup to repair this orb."
+  exit 1
+fi
+
+echo "Nix development shell is ready."
