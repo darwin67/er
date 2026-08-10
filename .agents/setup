@@ -50,6 +50,23 @@ nix develop "$repo_root" --command bash -c '
   command -v ruby
 '
 
+log_step "Initializing the colocated Jujutsu workspace"
+git_name="$(git -C "$repo_root" config user.name 2>/dev/null || true)"
+git_email="$(git -C "$repo_root" config user.email 2>/dev/null || true)"
+if [ ! -d "$repo_root/.jj" ]; then
+  if [ -n "$git_name" ] && [ -n "$git_email" ]; then
+    JJ_USER="$git_name" JJ_EMAIL="$git_email" \
+      nix develop "$repo_root" --command jj git init --colocate "$repo_root"
+  else
+    nix develop "$repo_root" --command jj git init --colocate "$repo_root"
+  fi
+fi
+
+if [ -n "$git_name" ] && [ -n "$git_email" ]; then
+  nix develop "$repo_root" --command jj -R "$repo_root" config set --repo user.name "$git_name"
+  nix develop "$repo_root" --command jj -R "$repo_root" config set --repo user.email "$git_email"
+fi
+
 if ! command -v tailscale >/dev/null 2>&1; then
   log_step "Installing Tailscale"
   curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg |
