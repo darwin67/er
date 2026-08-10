@@ -1,19 +1,28 @@
 // Attach a copy-to-clipboard button to every <pre> inside post content.
 (function () {
-  function copyText(text, btn) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text).then(function () {
-        showCopied(btn);
-      });
-    }
+  function copyFallback(text, btn) {
     var ta = document.createElement('textarea');
     ta.value = text;
     ta.style.position = 'fixed';
     ta.style.opacity = '0';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); showCopied(btn); } catch (e) { /* ignore */ }
+    try {
+      if (document.execCommand('copy')) showCopied(btn);
+    } catch (e) { /* ignore */ }
     document.body.removeChild(ta);
+  }
+
+  function copyText(text, btn) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        showCopied(btn);
+      }).catch(function () {
+        copyFallback(text, btn);
+      });
+      return;
+    }
+    copyFallback(text, btn);
   }
 
   function showCopied(btn) {

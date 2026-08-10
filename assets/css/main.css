@@ -1909,9 +1909,8 @@
 }
 body {
   background-color: var(--color-background);
-  --tw-font-weight: var(--font-sans);
-  font-weight: var(--font-sans);
   color: var(--color-body-text);
+  font-family: var(--font-sans);
 }
 .text-muted {
   color: var(--color-muted-text);
@@ -2006,8 +2005,10 @@ h1, h2, h3, h4, h5, h6 {
 .post-toc-body a:hover {
   color: var(--color-main);
 }
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 .post-main {
   max-width: var(--max-width-wide);
@@ -2385,8 +2386,6 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
 .mobile-nav-toggle:hover, .mobile-nav-toggle:focus-visible {
   border-color: var(--color-main-light);
   color: var(--color-heading-text);
-  --tw-outline-style: none;
-  outline-style: none;
 }
 .mobile-nav-icon, .mobile-nav-icon::before, .mobile-nav-icon::after {
   display: block;
@@ -2453,8 +2452,6 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
 .mobile-nav-link:hover, .mobile-nav-link:focus-visible, .mobile-nav-link.is-active {
   background-color: var(--color-background-alt);
   color: var(--color-main);
-  --tw-outline-style: none;
-  outline-style: none;
 }
 .page-actions {
   margin-inline: auto;
@@ -2491,8 +2488,6 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
 .back-to-top-link:hover, .back-to-top-link:focus-visible {
   background-color: var(--color-main-light);
   color: var(--color-white);
-  --tw-outline-style: none;
-  outline-style: none;
 }
 .post-nav-links {
   margin-top: calc(var(--spacing) * 3);
@@ -2521,8 +2516,10 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
 .post-nav-link:hover, .post-nav-link:focus-visible {
   border-color: var(--color-main-light);
   color: var(--color-main-light);
-  --tw-outline-style: none;
-  outline-style: none;
+}
+.mobile-nav-toggle:focus-visible, .mobile-nav-link:focus-visible, .back-to-top-link:focus-visible, .post-nav-link:focus-visible {
+  outline: 2px solid var(--color-main-light);
+  outline-offset: 2px;
 }
 .pagination-status {
   margin-top: calc(var(--spacing) * 3);
@@ -2746,6 +2743,17 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
 .project-card:hover {
   transform: translateY(-2px);
   border-color: var(--color-main-light);
+}
+@media (prefers-reduced-motion: reduce) {
+  .footnotes li:target, .footnotes .footnote-definition:target, .post-content sup:target, .post-content sup.footnote-reference:target {
+    animation: none;
+  }
+  .project-card {
+    transition: border-color 0.15s ease;
+  }
+  .project-card:hover {
+    transform: none;
+  }
 }
 .project-card-link {
   display: block;

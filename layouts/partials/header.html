@@ -46,7 +46,7 @@
 type="image/x-icon"/>
 
 {{ with .Site.Home.OutputFormats.Get "RSS" }}
-<link href="{{ .RelPermalink }}" rel="alternate" type="application/atom+xml" title="{{ $.Site.Title }}" />
+<link href="{{ .RelPermalink }}" rel="alternate" type="{{ .MediaType.Type }}" title="{{ $.Site.Title }}" />
 {{ end }}
 
 {{ hugo.Generator }}

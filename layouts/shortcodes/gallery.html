@@ -5,7 +5,7 @@
     cols:  preferred min column width in px (default 220)
 */ -}}
 {{- $match := .Get "match" | default "*.{jpg,jpeg,png,webp,gif}" -}}
-{{- $cols := .Get "cols" | default "220" -}}
+{{- $cols := math.Max 1 (.Get "cols" | default 220 | int) -}}
 {{- $images := .Page.Resources.Match $match -}}
 {{- if $images -}}
 <div class="gallery" style="--gallery-min: {{ $cols }}px;">
