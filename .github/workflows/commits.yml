@@ -1,4 +1,4 @@
-name: PR Conventional Commit Validation
+name: Pull Request Checks
 
 on:
   pull_request:
@@ -9,7 +9,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PR Conventional Commit Validation
-        uses: ytanikin/pr-conventional-commits@1.5.2
+        uses: ytanikin/pr-conventional-commits@639145d78959c53c43112365837e3abd21ed67c1 # 1.5.2
         with:
           # This list should match cliff.toml.
           task_types: '["feat","fix","doc","docs","test","ci","refactor","perf","chore","revert","style","security"]'
+
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@786fff0690178f1234e4e1fe9b536e94f5433196 # v20
+
+      - name: Build theme and Pagefind index
+        run: nix develop -c make build
+
+      - name: Check generated CSS
+        run: git diff --exit-code -- assets/css/main.css
+
+      - name: Build multilingual demo and Pagefind index
+        working-directory: demo
+        run: nix develop .. -c sh -c 'hugo -b http://example.test && pagefind --site public'
+
+      - name: Validate plan status
+        run: scripts/check-plan-status.sh
+
+      - name: Validate workflow YAML
+        run: nix develop -c ruby -e 'require "yaml"; Dir[".github/workflows/*.yml"].each { |f| YAML.load_file(f) }'

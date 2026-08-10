@@ -77,10 +77,13 @@
             pagefind
             tailwindcssV4
             watchexec
+            watchman
             go # Added Go for Hugo modules
+            jujutsu
 
             # Tools
             git-cliff
+            ruby
             yaml-language-server
             vscode-json-languageserver
             tailwindcss-language-server

@@ -6,6 +6,12 @@ languageSwitcher:
   other: Sprachen
 menu:
   other: Menue
+backToTop:
+  other: Nach oben
+imagePreview:
+  other: Bildvorschau
+closeImagePreview:
+  other: Bildvorschau schliessen
 tags:
   other: Schlagworte
 categories:

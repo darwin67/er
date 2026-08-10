@@ -98,6 +98,10 @@ Helpful shortcodes inside a project page:
 - `{{< gallery >}}` — responsive image grid with lightbox.
 - `{{< results >}} ... {{< /results >}}` — metric strip at the top of
   a case study.
+- `{{< figure src="cover.jpg" alt="Description" caption="Caption" >}}` —
+  image with an optional caption. Its optional `class` argument accepts CSS
+  classes already supplied by the theme or your site's custom stylesheet;
+  downstream Tailwind utility names are not compiled into the theme asset.
 
 Project stack pills use Hugo's default `tags` taxonomy, so terms like
 `go` and `postgres` link to `/tags/go/` and `/tags/postgres/`.
@@ -297,16 +301,14 @@ To run the demo site from the repository root:
 make dev
 ```
 
-This builds the demo into `demo/public/`, rebuilds its Pagefind index, and then
-starts Hugo's live-reload server at `http://127.0.0.1:1414/`. While the server
-runs, a file watcher refreshes `demo/public/pagefind/` after content, template,
-asset, or config changes.
+This regenerates the theme CSS, builds the demo into `demo/public/`, rebuilds
+its Pagefind index, and then starts Hugo's live-reload server at
+`http://127.0.0.1:1414/`. While the server runs, file watchers refresh both the
+generated CSS and `demo/public/pagefind/` after relevant changes. Running
+`make dev` from `demo/` delegates to the same workflow.
 
-To modify the theme styles:
-
-1. Run `make dev` from the repo root
-2. Run `make css-watch` from the repo root to rebuild CSS live as the demo
-   templates change
+Use `make css-watch` only when you want to rebuild theme styles without running
+the demo server.
 
 At the theme root, `make build` runs `pagefind --site public` after Hugo and
 writes `public/pagefind/` for the root fixture.

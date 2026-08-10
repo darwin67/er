@@ -1,3 +1,3 @@
 .PHONY: dev
 dev:
-	hugo serve
+	$(MAKE) -C .. dev

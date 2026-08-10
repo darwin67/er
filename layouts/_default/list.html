@@ -11,7 +11,9 @@
     {{ end }}
   </ul>
 </main>
+{{ if ne .Site.Params.showScrollToTop false }}
 <div class="page-actions" data-pagefind-ignore>
 {{ partial "back-to-top.html" . }}
 </div>
+{{ end }}
 {{ end }}

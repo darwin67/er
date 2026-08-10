@@ -25,82 +25,131 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-{{ if or (.Site.Params.showTagCloud | default true) (.Site.Params.showScrollToTop | default true) }}
+{{ if or (ne .Site.Params.showTagCloud false) (ne .Site.Params.showScrollToTop false) }}
 <script type="text/javascript">
 var prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
+window.addEventListener('scroll', function() {
   var currentScrollPos = window.pageYOffset;
 
-  {{ if .Site.Params.showTagCloud | default true }}
-  if (document.getElementById("tag-cloud") !== null) {
+  {{ if ne .Site.Params.showTagCloud false }}
+  var tagCloud = document.getElementById('tag-cloud');
+  if (tagCloud) {
     if (prevScrollpos > currentScrollPos) { // scroll up
-      document.getElementById("tag-cloud").style.visibility = "visible";
-      document.getElementById("tag-cloud").style.opacity = "1";
+      tagCloud.style.visibility = 'visible';
+      tagCloud.style.opacity = '1';
     } else {
-      document.getElementById("tag-cloud").style.visibility = "hidden";
-      document.getElementById("tag-cloud").style.opacity = "0";
+      tagCloud.style.visibility = 'hidden';
+      tagCloud.style.opacity = '0';
     }
   }
   {{ end }}
 
-  {{ if .Site.Params.showScrollToTop | default true }}
-  if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
-      document.getElementById("scroll-to-top").style.display = "inline-flex";
-      document.getElementById("scroll-to-top").style.visibility = "visible";
-      document.getElementById("scroll-to-top").style.opacity = "1";
-  } else {
-      document.getElementById("scroll-to-top").style.visibility = "hidden";
-      document.getElementById("scroll-to-top").style.opacity = "0";
+  {{ if ne .Site.Params.showScrollToTop false }}
+  var scrollToTop = document.getElementById('scroll-to-top');
+  if (scrollToTop) {
+    if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+      scrollToTop.style.display = 'inline-flex';
+      scrollToTop.style.visibility = 'visible';
+      scrollToTop.style.opacity = '1';
+    } else {
+      scrollToTop.style.visibility = 'hidden';
+      scrollToTop.style.opacity = '0';
+    }
   }
   {{ end }}
   prevScrollpos = currentScrollPos;
-}
-{{ if .Site.Params.showScrollToTop | default true }}
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-}
+});
+</script>
 {{ end }}
 
-// Image modal functionality
-function openImageModal(imgSrc, imgAlt) {
-  const modal = document.getElementById('image-modal');
-  const modalImage = document.getElementById('modal-image');
-  modalImage.src = imgSrc;
-  modalImage.alt = imgAlt;
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeImageModal() {
-  const modal = document.getElementById('image-modal');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
-  document.body.style.overflow = '';
-}
-
-// Add click handlers to all images in post content
+<script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-  const images = document.querySelectorAll('.post-content img, .content img, article img');
+  var scrollToTop = document.getElementById('scroll-to-top');
+  var modal = document.getElementById('image-modal');
+  var modalImage = document.getElementById('modal-image');
+  var closeButton = document.getElementById('image-modal-close');
+  var activeImageTrigger = null;
+  var inertSiblings = [];
+  var previousBodyOverflow = '';
+
+  if (scrollToTop) {
+    scrollToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  function openImageModal(image) {
+    activeImageTrigger = image;
+    previousBodyOverflow = document.body.style.overflow;
+    inertSiblings = Array.from(document.body.children).filter(function(element) {
+      return element !== modal && !element.inert;
+    });
+    inertSiblings.forEach(function(element) {
+      element.inert = true;
+    });
+    modalImage.src = image.currentSrc || image.src;
+    modalImage.alt = image.alt;
+    modal.hidden = false;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    closeButton.focus();
+  }
+
+  function closeImageModal() {
+    if (modal.hidden) return;
+
+    modal.hidden = true;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = previousBodyOverflow;
+    inertSiblings.forEach(function(element) {
+      element.inert = false;
+    });
+    inertSiblings = [];
+    modalImage.src = '';
+    if (activeImageTrigger) activeImageTrigger.focus();
+    activeImageTrigger = null;
+  }
+
+  closeButton.addEventListener('click', closeImageModal);
+  modal.addEventListener('click', function(event) {
+    if (event.target === modal) closeImageModal();
+  });
+
+  var imagePreviewLabel = {{ T "imagePreview" | jsonify | safeJS }};
+  var images = document.querySelectorAll('.post-content img, .content img, article img');
   images.forEach(function(img) {
+    if (img.closest('a')) return;
+
     img.style.cursor = 'pointer';
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-haspopup', 'dialog');
+    img.setAttribute('aria-label', img.alt ? imagePreviewLabel + ': ' + img.alt : imagePreviewLabel);
     img.addEventListener('click', function() {
-      openImageModal(this.src, this.alt);
+      openImageModal(this);
+    });
+    img.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openImageModal(this);
+      }
     });
   });
-  
-  // Close modal on Escape key
+
   document.addEventListener('keydown', function(event) {
+    if (modal.hidden) return;
+
     if (event.key === 'Escape') {
       closeImageModal();
+    } else if (event.key === 'Tab') {
+      event.preventDefault();
+      closeButton.focus();
     }
   });
 });
-
 </script>
-{{ end }}
 
 {{ if .Params.math }}
 <!-- KaTeX 0.16.9 (cdnjs) — loaded only on pages with `math: true`. -->
