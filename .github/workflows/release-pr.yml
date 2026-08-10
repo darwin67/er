@@ -52,13 +52,13 @@ jobs:
     steps:
       - name: Create release app token
         id: release-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
         with:
           app-id: ${{ secrets.RELEASE_APP_ID }}
           private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
           token: ${{ steps.release-token.outputs.token }}
@@ -106,7 +106,7 @@ jobs:
       - name: Compute next version
         if: steps.skip.outputs.skip == 'false' && steps.changes.outputs.ahead != '0'
         id: next-version
-        uses: orhun/git-cliff-action@v4
+        uses: orhun/git-cliff-action@f50e11560dce63f7c33227798f90b924471a88b5 # v4
         with:
           config: cliff.toml
           args: --bumped-version
@@ -144,7 +144,7 @@ jobs:
 
       - name: Generate changelog
         if: steps.skip.outputs.skip == 'false' && steps.changes.outputs.ahead != '0' && steps.version-check.outputs.skip == 'false'
-        uses: orhun/git-cliff-action@v4
+        uses: orhun/git-cliff-action@f50e11560dce63f7c33227798f90b924471a88b5 # v4
         with:
           config: cliff.toml
           args: --tag ${{ steps.normalized-version.outputs.tag }}
@@ -154,7 +154,7 @@ jobs:
 
       - name: Generate release notes preview
         if: steps.skip.outputs.skip == 'false' && steps.changes.outputs.ahead != '0' && steps.version-check.outputs.skip == 'false'
-        uses: orhun/git-cliff-action@v4
+        uses: orhun/git-cliff-action@f50e11560dce63f7c33227798f90b924471a88b5 # v4
         with:
           config: cliff.toml
           args: --unreleased --tag ${{ steps.normalized-version.outputs.tag }} --strip header
