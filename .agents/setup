@@ -44,7 +44,10 @@ nix develop "$repo_root" --command bash -c '
   command -v hugo
   command -v pagefind
   command -v tailwindcss
+  command -v watchman
   command -v go
+  command -v jj
+  command -v ruby
 '
 
 if ! command -v tailscale >/dev/null 2>&1; then
