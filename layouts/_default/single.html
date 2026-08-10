@@ -1,9 +1,9 @@
 {{ define "main" }}
 <main class="post-main mx-auto my-4 px-3 lg:px-0{{ if .Params.dropcap }} dropcap{{ end }}" data-pagefind-body>
   <div class="post-header">
-    <div class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans">
+    <h1 class="text-3xl font-semibold text-[var(--color-heading-text)] font-sans">
       {{ .Title }}
-    </div>
+    </h1>
 
     <p class="text-faint text-sm mt-1 mb-4 post-meta">
       {{ if not .Date.IsZero }}<time class="text-lg">{{ .Date.Format "02 Jan 2006" }}</time> {{ end }}

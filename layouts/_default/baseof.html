@@ -3,9 +3,9 @@
 <head>{{ partial "header.html" . }}</head>
 <body class="font-sans min-h-screen flex flex-col">
   {{ partial "nav.html" . }}
-  <main class="flex-grow px-2">
+  <div class="flex-grow px-2">
     {{ block "main" . }}{{ end }}
-  </main>
+  </div>
   {{ partial "footer.html" . }}
   {{ partial "image-modal.html" . }}
   {{ partial "scripts.html" . }}

@@ -1,12 +1,17 @@
+{{- $palette := .Site.Params.palette | default "clay" -}}
+{{- if not (in (slice "clay" "nord") $palette) -}}
+  {{- errorf "Invalid params.palette %q: expected clay or nord" $palette -}}
+{{- end -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta content='text/html; charset=utf-8' http-equiv='content-type' />
 <meta data-pagefind-meta="title[content]" content="{{ .Title }}" />
 <meta data-pagefind-meta="summary[content]" content="{{ .Summary | plainify }}" />
 <meta data-pagefind-meta="type[content]" content="{{ .Type }}" />
+<link rel="canonical" href="{{ .Permalink }}" />
 
 <script>
-  document.documentElement.setAttribute('data-palette', '{{ .Site.Params.palette | default "clay" }}');
+  document.documentElement.setAttribute('data-palette', {{ $palette | jsonify | safeJS }});
   (function () {
     try {
       var stored = localStorage.getItem('theme');

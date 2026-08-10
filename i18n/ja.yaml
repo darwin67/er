@@ -6,6 +6,12 @@ languageSwitcher:
   other: 言語
 menu:
   other: メニュー
+backToTop:
+  other: ページ上部へ
+imagePreview:
+  other: 画像プレビュー
+closeImagePreview:
+  other: 画像プレビューを閉じる
 tags:
   other: タグ
 categories:

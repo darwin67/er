@@ -6,6 +6,12 @@ languageSwitcher:
   other: Languages
 menu:
   other: Menu
+backToTop:
+  other: Back to top
+imagePreview:
+  other: Image preview
+closeImagePreview:
+  other: Close image preview
 tags:
   other: tags
 categories:
