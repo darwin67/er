@@ -2518,7 +2518,7 @@ h1 > span.tags, h2 > span.tags, h3 > span.tags, h4 > span.tags, h5 > span.tags, 
   color: var(--color-main-light);
 }
 .mobile-nav-toggle:focus-visible, .mobile-nav-link:focus-visible, .back-to-top-link:focus-visible, .post-nav-link:focus-visible {
-  outline: 2px solid var(--color-main-light);
+  outline: 2px solid var(--color-main);
   outline-offset: 2px;
 }
 .pagination-status {
