@@ -26,13 +26,22 @@ Prefer these commit types because they are grouped or validated today:
 Use standard conventional commit formatting such as `fix(feed): support Hugo
 0.162` or `ci(release): align changelog tag validation`.
 
+## Version Control
+
+- Prefer `jj` over `git` whenever Jujutsu supports the operation, including
+  status, diffs, history, commits, bookmarks, rebases, fetches, and pushes.
+- Use `git` only when required by repository tooling, an external integration,
+  or an operation that `jj` does not support.
+- Keep the Jujutsu workspace colocated with Git so Git-dependent tooling and
+  GitHub integrations continue to work.
+
 ## Development Commands
 
 ### Environment
 
 - `nix develop` enters the preferred development shell. It provides Hugo,
-  Pagefind, Watchexec, the Tailwind v4 standalone CLI, Go, and `git-cliff`.
-  There is no Node toolchain.
+  Pagefind, Watchexec, the Tailwind v4 standalone CLI, Go, Jujutsu, and
+  `git-cliff`. There is no Node toolchain.
 
 ### Building
 
