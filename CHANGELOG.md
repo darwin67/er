@@ -1,3 +1,10 @@
+## v0.4.1 - 2026-09-05
+
+### Bug Fixes
+
+- *(orb)* Prepare Nix and Tailscale lifecycle (#36)
+- *(theme)* Improve accessibility and build reliability (#38)
+- *(theme)* Improve frontend and orb robustness (#39)
 ## v0.4.0 - 2026-08-04
 
 ### Features
@@ -7,6 +14,10 @@
 ### Bug Fixes
 
 - RSS feed (#35)
+
+### Miscellaneous Tasks
+
+- *(release)* V0.4.0 (#34)
 ## v0.3.3 - 2026-06-17
 
 ### Miscellaneous Tasks
